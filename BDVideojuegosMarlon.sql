@@ -1,4 +1,4 @@
-/*BD Facturacion*/
+/*BD VideojuegosMarlo*/
 CREATE DATABASE IF NOT EXISTS BDVideojuegosMarlon;
 USE BDVideojuegosMarlon;
 
@@ -57,6 +57,101 @@ CREATE TABLE Bitacora (
     fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_bitacora)
 );
+
+/*Trigger*/
+
+/*Trigger para inserción*/
+
+DELIMITER //
+CREATE TRIGGER InsertarBitacoraAfterInsert
+AFTER INSERT ON Usuario FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (evento) VALUES ('Se insertó un registro en la tabla Usuario');
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER InsertarBitacoraAfterInsertCategoria
+AFTER INSERT ON Categoria FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (evento) VALUES ('Se insertó un registro en la tabla Categoria');
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER InsertarBitacoraAfterInsertProducto
+AFTER INSERT ON Producto FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (evento) VALUES ('Se insertó un registro en la tabla Producto');
+END;
+//
+DELIMITER ;
+
+-- Repite el proceso para las otras tablas que desees monitorear e insertar en la bitácora.
+
+/*Trigger para actualización*/
+
+DELIMITER //
+CREATE TRIGGER InsertarBitacoraAfterUpdate
+AFTER UPDATE ON Usuario FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (evento) VALUES ('Se actualizó un registro en la tabla Usuario');
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER InsertarBitacoraAfterUpdateCategoria
+AFTER UPDATE ON Categoria FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (evento) VALUES ('Se actualizó un registro en la tabla Categoria');
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER InsertarBitacoraAfterUpdateProducto
+AFTER UPDATE ON Producto FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (evento) VALUES ('Se actualizó un registro en la tabla Producto');
+END;
+//
+DELIMITER ;
+
+-- Repite el proceso para las otras tablas que desees monitorear e insertar en la bitácora.
+
+/*Trigger para eliminación*/
+
+DELIMITER //
+CREATE TRIGGER InsertarBitacoraAfterDelete
+AFTER DELETE ON Usuario FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (evento) VALUES ('Se eliminó un registro en la tabla Usuario');
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER InsertarBitacoraAfterDeleteCategoria
+AFTER DELETE ON Categoria FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (evento) VALUES ('Se eliminó un registro en la tabla Categoria');
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER InsertarBitacoraAfterDeleteProducto
+AFTER DELETE ON Producto FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (evento) VALUES ('Se eliminó un registro en la tabla Producto');
+END;
+//
+DELIMITER ;
+
+-- Repite el proceso para las otras tablas que desees monitorear e insertar en la bitácora.
 
 
 

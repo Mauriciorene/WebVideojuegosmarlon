@@ -4,7 +4,8 @@
   "description": "Esta es una aplicacion de juegos.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "Mauricio Rubio - Byron Garcia",
   "license": "ISC",
