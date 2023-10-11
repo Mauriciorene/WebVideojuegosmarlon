@@ -29,28 +29,6 @@ function Header() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
               <Nav.Link href="#home">Inicio</Nav.Link>
-              <NavDropdown title="Clientes" id="clientes">
-                <NavDropdown.Item href="#">Registrar Cliente</NavDropdown.Item>
-                <NavDropdown.Item href="#">
-                  Actualizar Cliente
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#">Ver Cliente</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#">
-                  Eliminar Cliente
-                </NavDropdown.Item>
-              </NavDropdown>
-              <NavDropdown title="Empleados" id="empleados">
-                <NavDropdown.Item href="#">Registrar Empleado</NavDropdown.Item>
-                <NavDropdown.Item href="#">
-                  Actualizar Empleado
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#">Ver Empleado</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#">
-                  Eliminar Empleado
-                </NavDropdown.Item>
-              </NavDropdown>
               <NavDropdown title="Productos" id="productos">
                 <NavDropdown.Item href="#">Registrar Producto</NavDropdown.Item>
                 <NavDropdown.Item href="#">
@@ -60,6 +38,28 @@ function Header() {
                 <NavDropdown.Divider />
                 <NavDropdown.Item href="#">
                   Eliminar Producto
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="Catálogo" id="catálogo">
+                <NavDropdown.Item href="#">Registrar Nuevo Catálogo</NavDropdown.Item>
+                <NavDropdown.Item href="#">
+                  Actualizar Catálogo
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#">Ver Catálogo</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#">
+                  Eliminar Catálogo
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="Ventas" id="ventas">
+                <NavDropdown.Item href="#">Registrar Nueva Venta</NavDropdown.Item>
+                <NavDropdown.Item href="#">
+                  Actualizar Venta
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#">Ver Ventas</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#">
+                  Eliminar Registro de una venta
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
@@ -86,28 +86,6 @@ function Header() {
         <Offcanvas.Body>
           <Nav className="flex-column">
             <Nav.Link href="#home">Inicio</Nav.Link>
-            <NavDropdown title="Clientes" id="clientes">
-              <NavDropdown.Item href="#">Registrar Cliente</NavDropdown.Item>
-              <NavDropdown.Item href="#">
-                Actualizar Cliente
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#">Ver Cliente</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#">
-                Eliminar Cliente
-              </NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown title="Empleados" id="empleados">
-              <NavDropdown.Item href="#">Registrar Empleado</NavDropdown.Item>
-              <NavDropdown.Item href="#">
-                Actualizar Empleado
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#">Ver Empleado</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#">
-                Eliminar Empleado
-              </NavDropdown.Item>
-            </NavDropdown>
             <NavDropdown title="Productos" id="productos">
               <NavDropdown.Item href="#">Registrar Producto</NavDropdown.Item>
               <NavDropdown.Item href="#">
@@ -117,6 +95,28 @@ function Header() {
               <NavDropdown.Divider />
               <NavDropdown.Item href="#">
                 Eliminar Producto
+              </NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title="Catálogo" id="catálogo">
+              <NavDropdown.Item href="#">Registrar Nuevo Catálogo</NavDropdown.Item>
+              <NavDropdown.Item href="#">
+                Actualizar Catálogo
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#">Ver Catálogo</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#">
+                Eliminar Catálogo
+              </NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title="Ventas" id="ventas">
+              <NavDropdown.Item href="#">Registrar Nueva Venta</NavDropdown.Item>
+              <NavDropdown.Item href="#">
+                Actualizar Venta
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#">Ver Venta</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#">
+                Eliminar Registro de una Venta
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
