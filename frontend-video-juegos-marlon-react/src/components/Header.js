@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Importa el CSS de Bootstrap
-import Navbar from 'react-bootstrap/Navbar'; // Importa el componente Navbar de Bootstrap
-import Nav from 'react-bootstrap/Nav'; // Importa el componente Nav de Bootstrap
-import Offcanvas from 'react-bootstrap/Offcanvas'; // Importa el componente Offcanvas de Bootstrap
-import Button from 'react-bootstrap/Button'; // Importa el componente Button de Bootstrap
-import NavDropdown from 'react-bootstrap/NavDropdown'; // Importa el componente NavDropDown de Bootstrap
-import Container from 'react-bootstrap/Container'; // Importa el componente Container de Bootstrap
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Navbar, Nav, Offcanvas, Button, NavDropdown, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
@@ -20,51 +15,55 @@ function Header() {
       {/* Navbar principal */}
       <Navbar className="navbar-color" variant="dark" expand="md">
         <Container>
-          <Navbar.Brand href="#home">VideoJuegos Marlon</Navbar.Brand>
-          <Navbar.Toggle 
+          <Navbar.Brand href="#home">Videojuegos Marlon</Navbar.Brand>
+          <Navbar.Toggle
             aria-controls="basic-navbar-nav"
             style={{ display: 'none' }}
             className="d-sm-none d-xs-none"
           />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <Nav.Link href="#home">Inicio</Nav.Link>
+
+              <Nav.Link>
+                <Link to="/" className="link-unstyled">Inicio</Link>
+              </Nav.Link>
+
+              <Nav.Link>
+                <Link to="/about" className="link-unstyled">Informacion</Link>
+              </Nav.Link>
+
               <NavDropdown title="Productos" id="productos">
-                <NavDropdown.Item href="#">Registrar Producto</NavDropdown.Item>
-                <NavDropdown.Item href="#">
-                  Actualizar Producto
+                <NavDropdown.Item>
+                  <Link to="/customer" className="link-unstyled">Registrar Producto</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#">Ver Producto</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#">
-                  Eliminar Producto
+
+                <NavDropdown.Item>
+                  <Link to="/actualizar-producto" className="link-unstyled">Listar Productos</Link>
                 </NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown title="Catálogo" id="catálogo">
-                <NavDropdown.Item href="#">Registrar Nuevo Catálogo</NavDropdown.Item>
-                <NavDropdown.Item href="#">
-                  Actualizar Catálogo
+
+              <NavDropdown title="Categoria" id="categoria">
+                <NavDropdown.Item>
+                  <Link to="/customer" className="link-unstyled">Registrar Categoria</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#">Ver Catálogo</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#">
-                  Eliminar Catálogo
+
+                <NavDropdown.Item>
+                  <Link to="/actualizar-categoria" className="link-unstyled">Ver Categorias</Link>
                 </NavDropdown.Item>
               </NavDropdown>
+
               <NavDropdown title="Ventas" id="ventas">
-                <NavDropdown.Item href="#">Registrar Nueva Venta</NavDropdown.Item>
-                <NavDropdown.Item href="#">
-                  Actualizar Venta
+                <NavDropdown.Item>
+                  <Link to="/teacher" className="link-unstyled">Registrar Ventas</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#">Ver Ventas</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#">
-                  Eliminar Registro de una venta
+
+                <NavDropdown.Item>
+                  <Link to="/teacherList" className="link-unstyled">Listar Ventas</Link>
                 </NavDropdown.Item>
               </NavDropdown>
+
             </Nav>
           </Navbar.Collapse>
-          {/* Botón para mostrar/ocultar el menú lateral */}
           <Button
             variant="outline-light"
             onClick={toggleMenu}
@@ -77,7 +76,6 @@ function Header() {
         </Container>
       </Navbar>
 
-
       {/* Menú lateral (Offcanvas) */}
       <Offcanvas show={showMenu} onHide={toggleMenu} placement="start">
         <Offcanvas.Header closeButton>
@@ -85,40 +83,43 @@ function Header() {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="flex-column">
-            <Nav.Link href="#home">Inicio</Nav.Link>
+
+            <Nav.Link>
+              <Link to="/" className="link-unstyled">Inicio</Link>
+            </Nav.Link>
+
+            <Nav.Link>
+              <Link to="/about" className="link-unstyled">about</Link>
+            </Nav.Link>
+
             <NavDropdown title="Productos" id="productos">
-              <NavDropdown.Item href="#">Registrar Producto</NavDropdown.Item>
-              <NavDropdown.Item href="#">
-                Actualizar Producto
+              <NavDropdown.Item>
+                <Link to="/customer" className="link-unstyled">Registrar Producto</Link>
               </NavDropdown.Item>
-              <NavDropdown.Item href="#">Ver Producto</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#">
-                Eliminar Producto
+              <NavDropdown.Item>
+                <Link to="/actualizar-producto" className="link-unstyled">Listar Productos</Link>
               </NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Catálogo" id="catálogo">
-              <NavDropdown.Item href="#">Registrar Nuevo Catálogo</NavDropdown.Item>
-              <NavDropdown.Item href="#">
-                Actualizar Catálogo
+
+            <NavDropdown title="Categoria" id="categoria">
+              <NavDropdown.Item>
+                <Link to="/customer" className="link-unstyled">Registrar Categoria</Link>
               </NavDropdown.Item>
-              <NavDropdown.Item href="#">Ver Catálogo</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#">
-                Eliminar Catálogo
+              <NavDropdown.Item>
+                <Link to="/actualizar-categoria" className="link-unstyled">Ver Categoria</Link>
               </NavDropdown.Item>
             </NavDropdown>
+
             <NavDropdown title="Ventas" id="ventas">
-              <NavDropdown.Item href="#">Registrar Nueva Venta</NavDropdown.Item>
-              <NavDropdown.Item href="#">
-                Actualizar Venta
+              <NavDropdown.Item>
+                <Link to="/teacher" className="link-unstyled">Registrar Ventas</Link>
               </NavDropdown.Item>
-              <NavDropdown.Item href="#">Ver Venta</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#">
-                Eliminar Registro de una Venta
+
+              <NavDropdown.Item>
+                <Link to="/teacherList" className="link-unstyled">Listar Ventas</Link>
               </NavDropdown.Item>
             </NavDropdown>
+
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
