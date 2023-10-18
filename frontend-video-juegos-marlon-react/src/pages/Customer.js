@@ -3,14 +3,12 @@ import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bo
 import Header from '../components/Header';
 import '../styles/App.css';
 
-function Customer() {
+function Cliente() {
 
   // Crear un estado para cada campo del formulario
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
-  const [cedula, setCedula] = useState('');
-  const [direccionEnvio, setDireccionEnvio] = useState('');
-  const [historialdecompras, setHistorialDeCompras] = useState('');
+  const [telefono, setTelefono] = useState('');
 
   // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
@@ -20,14 +18,12 @@ function Customer() {
     const formData = {
       nombre,
       apellido,
-      cedula,
-      direccionEnvio,
-      historialdecompras,
+      telefono,
     };
 
     try {
       // Realizar una solicitud HTTP al backend para enviar los datos
-      const response = await fetch('http://localhost:5000/crud/createClientes', {
+      const response = await fetch('http://localhost:5000/crud/createCliente', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,9 +37,7 @@ function Customer() {
         // Reiniciar los campos del formulario
         setNombre('');
         setApellido('');
-        setCedula('');
-        setDireccionEnvio('');
-        setHistorialDeCompras('');
+        setTelefono('');
       } else {
         alert('Error al registrar el cliente');
       }
@@ -53,18 +47,17 @@ function Customer() {
     }
   };
 
-  return(
+  return (
     <div>
       <Header />
-      
+
       <Container>
         <Card className="mt-3">
           <Card.Body>
-            <Card.Title>Registro de Productos</Card.Title>
+            <Card.Title>Registro de Cliente</Card.Title>
             <Form className="mt-3" onSubmit={handleSubmit}>
               <Row className="g-3">
-
-                <Col sm="6" md="6" lg="6">
+                <Col sm="6" md="6" lg="4">
                   <FloatingLabel controlId="nombre" label="Nombre">
                     <Form.Control
                       type="text"
@@ -75,50 +68,27 @@ function Customer() {
                   </FloatingLabel>
                 </Col>
 
-                <Col sm="6" md="6" lg="6">
-                  <FloatingLabel controlId="categoria" label="Categoria">
+                <Col sm="6" md="6" lg="4">
+                  <FloatingLabel controlId="apellido" label="Apellido">
                     <Form.Control
                       type="text"
-                      placeholder="Ingrese la Categoria"
+                      placeholder="Ingrese el apellido"
                       value={apellido}
                       onChange={(e) => setApellido(e.target.value)}
                     />
                   </FloatingLabel>
                 </Col>
 
-                <Col sm="12" md="6" lg="6">
-                  <FloatingLabel controlId="precio" label="Precio">
-                    <Form.Control 
-                      type="text" 
-                      placeholder="Ingrese el Precio"
-                      value={cedula}
-                      onChange={(e) => setCedula(e.target.value)} 
+                <Col sm="12" md="6" lg="4">
+                  <FloatingLabel controlId="telefono" label="Teléfono">
+                    <Form.Control
+                      type="text"
+                      placeholder="Ingrese el teléfono"
+                      value={telefono}
+                      onChange={(e) => setTelefono(e.target.value)}
                     />
                   </FloatingLabel>
                 </Col>
-
-                <Col sm="12" md="6" lg="6">
-                  <FloatingLabel controlId="stock" label="Stock">
-                    <Form.Control 
-                      type="text" 
-                      placeholder="Ingrese el stock"
-                      value={direccionEnvio}
-                      onChange={(e) => setDireccionEnvio(e.target.value)} 
-                    />
-                  </FloatingLabel>
-                </Col>
-
-                <Col sm="12" md="12" lg="12">
-                  <FloatingLabel controlId="descripción" label="Descripción">
-                    <Form.Control 
-                      type="text" 
-                      placeholder="Ingrese la descripción" 
-                      value={historialdecompras}
-                      onChange={(e) => setHistorialDeCompras(e.target.value)}
-                    />
-                  </FloatingLabel>
-                </Col>
-
               </Row>
               <div className="center-button">
                 <Button variant="primary" type="submit" className="mt-3" size="lg">
@@ -129,9 +99,8 @@ function Customer() {
           </Card.Body>
         </Card>
       </Container>
-
     </div>
   );
 }
 
-export default Customer;
+export default Cliente;

@@ -3,6 +3,97 @@ const router = express. Router();
 
 module.exports = (db) => { 
 
+
+  /*   curl http://localhost:5000/crud/getClientes */
+
+
+    // Ruta para obtener todos los clientes
+router.get('/getClientes', (req, res) => {
+    // Realiza la consulta SQL para obtener todos los clientes
+    const sql = `SELECT * FROM Cliente`;
+
+    // Ejecuta la consulta
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('Error al obtener clientes:', err);
+            res.status(500).json({ error: 'Error al obtener clientes de la tabla Cliente' });
+        } else {
+            // Devuelve los resultados como respuesta
+            res.status(200).json(results);
+        }
+    });
+});
+
+// Ruta para crear un nuevo cliente
+router.post('/createCliente', (req, res) => {
+    // Recibe los datos del nuevo cliente desde el cuerpo de la solicitud (req.body)
+    const { nombre, apellido, telefono } = req.body;
+
+    // Verifica si se proporcionaron los datos necesarios
+    if (!nombre || !apellido) {
+        return res.status(400).json({ error: 'Los campos "nombre" y "apellido" son obligatorios' });
+    }
+
+    // Realiza la consulta SQL para insertar un nuevo cliente
+    const sql = `INSERT INTO Cliente (nombre, apellido, telefono) VALUES (?, ?, ?)`;
+    const values = [nombre, apellido, telefono];
+
+    // Ejecuta la consulta
+    db.query(sql, values, (err, result) => {
+        if (err) {
+            console.error('Error al insertar un cliente:', err);
+            res.status(500).json({ error: 'Error al insertar un cliente en la tabla Cliente' });
+        } else {
+            // Devuelve un mensaje como respuesta
+            res.status(201).json({ message: 'Cliente agregado exitosamente' });
+        }
+    });
+});
+
+// Ruta para actualizar un cliente
+router.put('/updateCliente/:id', (req, res) => {
+    const id_cliente = req.params.id;
+    const { nombre, apellido, telefono } = req.body;
+  
+    if (!nombre || !apellido) {
+      return res.status(400).json({ error: 'Los campos "nombre" y "apellido" son obligatorios' });
+    }
+  
+    const sql = `UPDATE Cliente SET nombre = ?, apellido = ?, telefono = ? WHERE id_cliente = ?`;
+    const values = [nombre, apellido, telefono, id_cliente];
+  
+    db.query(sql, values, (err, result) => {
+      if (err) {
+        console.error('Error al actualizar el cliente:', err);
+        res.status(500).json({ error: 'Error al actualizar el cliente en la tabla Cliente' });
+      } else {
+        res.status(200).json({ message: 'Cliente actualizado exitosamente' });
+      }
+    });
+  });
+
+  
+  // Ruta para eliminar un cliente
+router.delete('/deleteCliente/:id', (req, res) => {
+    const id_cliente = req.params.id;
+  
+    const sql = `DELETE FROM Cliente WHERE id_cliente = ?`;
+  
+    db.query(sql, id_cliente, (err, result) => {
+      if (err) {
+        console.error('Error al eliminar el cliente:', err);
+        res.status(500).json({ error: 'Error al eliminar el cliente de la tabla Cliente' });
+      } else {
+        res.status(200).json({ message: 'Cliente eliminado exitosamente' });
+      }
+    });
+  });
+  
+
+
+
+
+
   // Ruta para leer registros
 // Ruta para leer registros de la tabla Usuario de la Base de Datos
 router.get('/readUsuario', (req, res) => {

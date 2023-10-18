@@ -1,49 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Container, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
+import { Table, Button, Container, Card, Row, Col, Form, Modal, FloatingLabel } from 'react-bootstrap';
 import Header from '../components/Header';
 
-function TeacherList() {
-  const [docentes, setDocentes] = useState([]);
+function ClienteList() {
+  const [clientes, setClientes] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [selectedDocente, setSelectedDocente] = useState({});
+  const [selectedCliente, setSelectedCliente] = useState({});
   const [formData, setFormData] = useState({
-    Nombres: '',
-    Apellidos: '',
-    Fecha_Nacimiento: '',
-    Direccion: '',
-    Genero: '',
-    Telefono: '',
-    Correo: '',
-    Especialidad: '',
+    nombre: '',
+    apellido: '',
+    telefono: '',
   });
 
-  // Función para abrir el modal y pasar los datos del docente seleccionado
-  const openModal = (docente) => {
-    setSelectedDocente(docente);
-
-    // Formatea la fecha para el campo "Fecha_Nacimiento"
-    const formattedFechaNacimiento = formatDateForInput(docente.Fecha_Nacimiento);
+  // Función para abrir el modal y pasar los datos del cliente seleccionado
+  const openModal = (cliente) => {
+    setSelectedCliente(cliente);
 
     setFormData({
-      Nombres: docente.Nombres,
-      Apellidos: docente.Apellidos,
-      Fecha_Nacimiento: formattedFechaNacimiento,
-      Direccion: docente.Direccion,
-      Genero: docente.Genero,
-      Telefono: docente.Telefono,
-      Correo: docente.Correo,
-      Especialidad: docente.Especialidad,
+      nombre: cliente.nombre,
+      apellido: cliente.apellido,
+      telefono: cliente.telefono,
     });
     setShowModal(true);
   };
-
-  function formatDateForInput(dateTimeString) {
-    const date = new Date(dateTimeString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Agregar ceros iniciales
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
 
   // Función para manejar cambios en el formulario
   const handleFormChange = (e) => {
@@ -54,18 +33,17 @@ function TeacherList() {
     });
   };
 
-  const loadDocentes = () => {
-    fetch('http://localhost:5000/crud/readDocentePersona')
+  // Función para cargar los clientes desde el servidor
+  const loadClientes = () => {
+    fetch('http://localhost:5000/crud/getClientes')
       .then((response) => response.json())
-      .then((data) => setDocentes(data))
-      .catch((error) => console.error('Error al obtener los docentes y personas:', error));
+      .then((data) => setClientes(data))
+      .catch((error) => console.error('Error al obtener los clientes:', error));
   };
-
 
   // Función para enviar el formulario de actualización
   const handleUpdate = () => {
-    // Realiza la solicitud PUT al servidor para actualizar el registro
-    fetch(`http://localhost:5000/crud/updateDocente/${selectedDocente.ID_Persona}`, {
+    fetch(`http://localhost:5000/crud/updateCliente/${selectedCliente.id_cliente}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -74,38 +52,32 @@ function TeacherList() {
     })
       .then((response) => {
         if (response.ok) {
-          // La actualización fue exitosa, puedes cerrar el modal y refrescar la lista de docentes
           setShowModal(false);
-          loadDocentes(); // Cargar la lista de docentes actualizada
+          loadClientes();
         }
       })
-      .catch((error) => console.error('Error al actualizar el registro:', error));
+      .catch((error) => console.error('Error al actualizar el cliente:', error));
   };
 
-  // Función para eliminar un docente
-  const handleDelete = (idPersona) => {
-    const confirmation = window.confirm('¿Seguro que deseas eliminar este docente?');
+  // Función para eliminar un cliente
+  const handleDelete = (id_cliente) => {
+    const confirmation = window.confirm('¿Seguro que deseas eliminar este cliente?');
     if (confirmation) {
-      // Realiza la solicitud DELETE al servidor para eliminar el docente
-      fetch(`http://localhost:5000/crud/deleteDocentePersona/${idPersona}`, {
+      fetch(`http://localhost:5000/crud/deleteCliente/${id_cliente}`, {
         method: 'DELETE',
       })
         .then((response) => {
           if (response.ok) {
-            // La eliminación fue exitosa, refresca la lista de docentes
-            loadDocentes();
+            loadClientes();
           }
         })
-        .catch((error) => console.error('Error al eliminar el docente:', error));
+        .catch((error) => console.error('Error al eliminar el cliente:', error));
     }
   };
 
-  // Realiza una solicitud GET al servidor para obtener los docentes
+  // Realiza una solicitud GET al servidor para obtener los clientes
   useEffect(() => {
-    fetch('http://localhost:5000/crud/readDocentePersona')
-      .then((response) => response.json())
-      .then((data) => setDocentes(data))
-      .catch((error) => console.error('Error al obtener los docentes y personas:', error));
+    loadClientes();
   }, []);
 
   return (
@@ -114,37 +86,27 @@ function TeacherList() {
 
       <Card className="m-3">
         <Card.Body>
-          <Card.Title className="mb-3">Listado de Docente</Card.Title>
+          <Card.Title className="mb-3">Listado de Clientes</Card.Title>
           <Table striped bordered hover>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Fecha de Nacimiento</th>
-                <th>Dirección</th>
-                <th>Género</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
                 <th>Teléfono</th>
-                <th>Correo</th>
-                <th>Especialidad</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {docentes.map((docente) => (
-                <tr key={docente.ID_Docente}>
-                  <td>{docente.ID_Docente}</td>
-                  <td>{docente.Nombres}</td>
-                  <td>{docente.Apellidos}</td>
-                  <td>{formatDateForInput(docente.Fecha_Nacimiento)}</td>
-                  <td>{docente.Direccion}</td>
-                  <td>{docente.Genero}</td>
-                  <td>{docente.Telefono}</td>
-                  <td>{docente.Correo}</td>
-                  <td>{docente.Especialidad}</td>
+              {clientes.map((cliente) => (
+                <tr key={cliente.id_cliente}>
+                  <td>{cliente.id_cliente}</td>
+                  <td>{cliente.nombre}</td>
+                  <td>{cliente.apellido}</td>
+                  <td>{cliente.telefono}</td>
                   <td>
-                    <Button variant="primary" onClick={() => openModal(docente)}>Actualizar</Button>
-                    <Button variant="danger" onClick={() => handleDelete(docente.ID_Persona)}>Eliminar</Button>
+                    <Button variant="primary" onClick={() => openModal(cliente)}>Actualizar</Button>
+                    <Button variant="danger" onClick={() => handleDelete(cliente.id_cliente)}>Eliminar</Button>
                   </td>
                 </tr>
               ))}
@@ -155,118 +117,49 @@ function TeacherList() {
 
       <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>Actualizar Docente</Modal.Title>
+          <Modal.Title>Actualizar Cliente</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Card className="mt-3">
             <Card.Body>
-              <Card.Title>Registro de Docente</Card.Title>
+              <Card.Title>Registro de Cliente</Card.Title>
               <Form className="mt-3">
                 <Row className="g-3">
-
                   <Col sm="6" md="6" lg="4">
-                    <FloatingLabel controlId="nombres" label="Nombres">
+                    <FloatingLabel controlId="nombre" label="Nombre">
                       <Form.Control
                         type="text"
-                        placeholder="Ingrese los nombres"
-                        name="Nombres"
-                        value={formData.Nombres}
+                        placeholder="Ingrese el nombre"
+                        name="nombre"
+                        value={formData.nombre}
                         onChange={handleFormChange}
                       />
                     </FloatingLabel>
                   </Col>
 
                   <Col sm="6" md="6" lg="4">
-                    <FloatingLabel controlId="apellidos" label="Apellidos">
+                    <FloatingLabel controlId="apellido" label="Apellido">
                       <Form.Control
                         type="text"
-                        placeholder="Ingrese los apellidos"
-                        name="Apellidos"
-                        value={formData.Apellidos}
+                        placeholder="Ingrese el apellido"
+                        name="apellido"
+                        value={formData.apellido}
                         onChange={handleFormChange}
-                      />
-                    </FloatingLabel>
-                  </Col>
-
-                  <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="fechaNacimiendo" label="Fecha de nacimiento">
-                      <Form.Control 
-                        type="date" 
-                        placeholder="Seleccione la fecha de nacimiento"
-                        name="Fecha_Nacimiento"
-                        value={formData.Fecha_Nacimiento}
-                        onChange={handleFormChange} 
-                      />
-                    </FloatingLabel>
-                  </Col>
-
-                  <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="genero" label="Género">
-                      <Form.Select 
-                        aria-label="Genero"
-                        name="Genero"
-                        value={formData.Genero}
-                        onChange={handleFormChange}
-                      >
-                        <option>Seleccione el género</option>
-                        <option value="M">Mujer</option>
-                        <option value="H">Hombre</option>
-                      </Form.Select>
-                    </FloatingLabel>
-                  </Col>
-
-                  <Col sm="12" md="6" lg="8">
-                    <FloatingLabel controlId="direccion" label="Dirección">
-                      <Form.Control 
-                        type="text" 
-                        placeholder="Ingrese la dirección"
-                        name="Direccion"
-                        value={formData.Direccion}
-                        onChange={handleFormChange} 
                       />
                     </FloatingLabel>
                   </Col>
 
                   <Col sm="12" md="6" lg="4">
                     <FloatingLabel controlId="telefono" label="Teléfono">
-                      <Form.Control 
-                        type="number" 
+                      <Form.Control
+                        type="text"
                         placeholder="Ingrese el teléfono"
-                        name="Telefono"
-                        value={formData.Telefono}
-                        onChange={handleFormChange} 
-                      />
-                    </FloatingLabel>
-                  </Col>
-
-                  <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="correo" label="Correo">
-                      <Form.Control 
-                        type="email" 
-                        placeholder="Ingrese el correo"
-                        name="Correo"
-                        value={formData.Correo}
-                        onChange={handleFormChange} 
-                      />
-                    </FloatingLabel>
-                  </Col>  
-
-                  <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="Especialidad" label="Especialidad">
-                      <Form.Select 
-                        aria-label="Especialidad"
-                        value={formData.Especialidad}
+                        name="telefono"
+                        value={formData.telefono}
                         onChange={handleFormChange}
-                        name="Especialidad"
-                      >
-                        <option>Seleccione la especialidad</option>
-                        <option value="Matemáticas">Matemáticas</option>
-                        <option value="Historia">Historia</option>
-                        <option value="Geografía">Geografía</option>
-                      </Form.Select>
+                      />
                     </FloatingLabel>
                   </Col>
-
                 </Row>
               </Form>
             </Card.Body>
@@ -281,9 +174,8 @@ function TeacherList() {
           </Button>
         </Modal.Footer>
       </Modal>
-
     </div>
   );
 }
 
-export default TeacherList;
+export default ClienteList;
