@@ -1,34 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Row, Col, Container, FloatingLabel, Card, Button, Dropdown } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bootstrap';
 import Header from '../components/Header';
 import '../styles/App.css';
 
 function Producto() {
-  const [categorias, setCategorias] = useState([]);
-  const [idCategoria, setIdCategoria] = useState('');
+  const [idCategoria, setIdCategoria] = useState(''); // Agrega el estado para el id de categoría
   const [descripcion, setDescripcion] = useState('');
   const [nombreProducto, setNombreProducto] = useState('');
   const [precio, setPrecio] = useState('');
   const [stock, setStock] = useState('');
 
-  // Función para cargar la lista de categorías desde el servidor
-  const loadCategorias = () => {
-    fetch('http://localhost:5000/crud/getCategorias')
-      .then((response) => response.json())
-      .then((data) => setCategorias(data))
-      .catch((error) => console.error('Error al obtener las categorías:', error));
-  };
-
-  useEffect(() => {
-    loadCategorias();
-  }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
     const formData = {
-      id_categoria: idCategoria,
+      id_categoria: idCategoria, // Cambia para usar el id de categoría
       descripcion,
       nombreProducto,
       precio,
@@ -46,7 +32,7 @@ function Producto() {
 
       if (response.ok) {
         alert('Registro de producto exitoso');
-        setIdCategoria('');
+        setIdCategoria(''); // Reinicia los campos del formulario
         setDescripcion('');
         setNombreProducto('');
         setPrecio('');
@@ -71,19 +57,13 @@ function Producto() {
             <Form className="mt-3" onSubmit={handleSubmit}>
               <Row className="g-3">
                 <Col sm="6" md="6" lg="4">
-                  <FloatingLabel controlId="idCategoria" label="Categoría">
-                    <Dropdown>
-                      <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        {idCategoria ? categorias.find((c) => c.id_categoria === idCategoria).nombre : 'Seleccionar Categoría'}
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        {categorias.map((categoria) => (
-                          <Dropdown.Item key={categoria.id_categoria} onClick={() => setIdCategoria(categoria.id_categoria)}>
-                            {categoria.nombre}
-                          </Dropdown.Item>
-                        ))}
-                      </Dropdown.Menu>
-                    </Dropdown>
+                  <FloatingLabel controlId="idCategoria" label="ID de Categoría">
+                    <Form.Control
+                      type="number"
+                      placeholder="Ingrese el ID de categoría"
+                      value={idCategoria}
+                      onChange={(e) => setIdCategoria(e.target.value)}
+                    />
                   </FloatingLabel>
                 </Col>
 
@@ -130,7 +110,6 @@ function Producto() {
                     />
                   </FloatingLabel>
                 </Col>
-                
               </Row>
               <div className="center-button">
                 <Button variant="primary" type="submit" className="mt-3" size="lg">
@@ -141,7 +120,6 @@ function Producto() {
           </Card.Body>
         </Card>
       </Container>
-
     </div>
   );
 }

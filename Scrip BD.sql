@@ -48,7 +48,6 @@ CREATE TABLE Venta(
     fecha DATE NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES Usuario (id_Usuario),
     FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente),
-    FOREIGN KEY (id_producto) REFERENCES Producto (id_producto),
     PRIMARY KEY (id_venta)
 );
 

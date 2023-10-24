@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Container, Card, Row, Col, Form, Modal, FloatingLabel } from 'react-bootstrap';
 import Header from '../components/Header';
+import { FaTrashCan, FaPencil } from 'react-icons/fa6';
 
 function ClienteList() {
   const [clientes, setClientes] = useState([]);
@@ -12,6 +13,27 @@ function ClienteList() {
     telefono: '',
   });
 
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredClientes = clientes.filter((cliente) => {
+    // Convierte los valores de los campos a minúsculas para realizar una búsqueda insensible a mayúsculas y minúsculas
+    const nombre = cliente.nombre.toLowerCase();
+    const apellido = cliente.apellido.toLowerCase();
+    const telefono = cliente.telefono.toLowerCase();
+    const search = searchQuery.toLowerCase();
+  
+    // Verifica si la cadena de búsqueda se encuentra en algún campo
+    return (
+      nombre.includes(search) ||
+      apellido.includes(search) ||
+      telefono.includes(search)
+    );
+  });
+  
   // Función para abrir el modal y pasar los datos del cliente seleccionado
   const openModal = (cliente) => {
     setSelectedCliente(cliente);
@@ -23,6 +45,8 @@ function ClienteList() {
     });
     setShowModal(true);
   };
+
+
 
   // Función para manejar cambios en el formulario
   const handleFormChange = (e) => {
@@ -87,6 +111,20 @@ function ClienteList() {
       <Card className="m-3">
         <Card.Body>
           <Card.Title className="mb-3">Listado de Clientes</Card.Title>
+
+          <Row className="mb-3">
+            <Col sm="6" md="6" lg="4">
+            <FloatingLabel controlId="search" label="Buscar">
+              <Form.Control
+                type="text"
+                placeholder="Buscar"
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+            </FloatingLabel>
+          </Col>
+        </Row>
+
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -98,19 +136,20 @@ function ClienteList() {
               </tr>
             </thead>
             <tbody>
-              {clientes.map((cliente) => (
+              {filteredClientes.map((cliente) => (
                 <tr key={cliente.id_cliente}>
-                  <td>{cliente.id_cliente}</td>
-                  <td>{cliente.nombre}</td>
-                  <td>{cliente.apellido}</td>
-                  <td>{cliente.telefono}</td>
-                  <td>
-                    <Button variant="primary" onClick={() => openModal(cliente)}>Actualizar</Button>
-                    <Button variant="danger" onClick={() => handleDelete(cliente.id_cliente)}>Eliminar</Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+                <td>{cliente.id_cliente}</td>
+                <td>{cliente.nombre}</td>
+                <td>{cliente.apellido}</td>
+                <td>{cliente.telefono}</td>
+                <td>
+                  <Button variant="primary" onClick={() => openModal(cliente)}>Actualizar</Button>
+                  <Button variant="danger" onClick={() => handleDelete(cliente.id_cliente)}>Eliminar</Button>
+            </td>
+    </tr>
+  ))}
+</tbody>
+
           </Table>
         </Card.Body>
       </Card>
@@ -179,3 +218,4 @@ function ClienteList() {
 }
 
 export default ClienteList;
+
