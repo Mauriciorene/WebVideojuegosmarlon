@@ -67,11 +67,11 @@ function Producto() {
       <Container>
         <Card className="mt-3">
           <Card.Body>
-            <Card.Title>Registro de Producto</Card.Title>
+            <Card.Title>Registro de Categoria</Card.Title>
             <Form className="mt-3" onSubmit={handleSubmit}>
               <Row className="g-3">
                 <Col sm="6" md="6" lg="4">
-                  <FloatingLabel controlId="idCategoria" label="Categoría">
+                  <FloatingLabel controlId="idCategoria">
                     <Dropdown>
                       <Dropdown.Toggle variant="success" id="dropdown-basic">
                         {idCategoria ? categorias.find((c) => c.id_categoria === idCategoria).nombre : 'Seleccionar Categoría'}

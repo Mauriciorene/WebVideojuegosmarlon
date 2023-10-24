@@ -87,7 +87,7 @@ function Venta() {
             <Form className="mt-3" onSubmit={handleSubmit}>
               <Row className="g-3">
                 <Col sm="6" md="6" lg="4">
-                  <FloatingLabel controlId="idUsuario" label="Usuario">
+                  <FloatingLabel controlId="idUsuario">
                     <Dropdown>
                       <Dropdown.Toggle variant="success" id="dropdown-usuario">
                         {idUsuario ? usuarios.find((u) => u.id_usuario === idUsuario).nombre : 'Seleccionar Usuario'}
@@ -104,7 +104,7 @@ function Venta() {
                 </Col>
 
                 <Col sm="6" md="6" lg="4">
-                  <FloatingLabel controlId="idCliente" label="Cliente">
+                  <FloatingLabel controlId="idCliente">
                     <Dropdown>
                       <Dropdown.Toggle variant="success" id="dropdown-cliente">
                         {idCliente ? clientes.find((c) => c.id_cliente === idCliente).nombre : 'Seleccionar Cliente'}
@@ -121,7 +121,7 @@ function Venta() {
                 </Col>
 
                 <Col sm="6" md="6" lg="4">
-                  <FloatingLabel controlId="idProducto" label="Producto">
+                  <FloatingLabel controlId="idProducto">
                     <Dropdown>
                       <Dropdown.Toggle variant="success" id="dropdown-producto">
                         {idProducto ? productos.find((p) => p.id_producto === idProducto).nombreProducto : 'Seleccionar Producto'}
@@ -138,7 +138,7 @@ function Venta() {
                 </Col>
 
                 <Col sm="6" md="6" lg="4">
-                  <FloatingLabel controlId="fecha" label="Fecha">
+                  <FloatingLabel controlId="fecha">
                     <Form.Control
                       type="date"
                       value={fecha}
