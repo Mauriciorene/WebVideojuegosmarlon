@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Container, Card, Row, Col, Form, Modal, FloatingLabel } from 'react-bootstrap';
+import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel } from 'react-bootstrap';
 import Header from '../components/Header';
+import { FaTrashCan, FaPencil } from 'react-icons/fa6';
 
 function CategoriaList() {
   const [categorias, setCategorias] = useState([]);
@@ -8,14 +9,22 @@ function CategoriaList() {
   const [selectedCategoria, setSelectedCategoria] = useState({});
   const [formData, setFormData] = useState({
     nombre: '',
+    descripcion: '',
   });
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   const openModal = (categoria) => {
     setSelectedCategoria(categoria);
 
     setFormData({
       nombre: categoria.nombre,
+      descripcion: categoria.descripcion,
     });
+
     setShowModal(true);
   };
 
@@ -70,6 +79,14 @@ function CategoriaList() {
     loadCategorias();
   }, []);
 
+  const filteredCategorias = categorias.filter((categoria) => {
+    const nombre = categoria.nombre.toLowerCase();
+    const descripcion = categoria.descripcion.toLowerCase();
+    const search = searchQuery.toLowerCase();
+
+    return nombre.includes(search) || descripcion.includes(search);
+  });
+
   return (
     <div>
       <Header />
@@ -77,22 +94,42 @@ function CategoriaList() {
       <Card className="m-3">
         <Card.Body>
           <Card.Title className="mb-3">Listado de Categorías</Card.Title>
+
+          <Row className="mb-3">
+            <Col sm="6" md="6" lg="4">
+              <FloatingLabel controlId="search" label="Buscar">
+                <Form.Control
+                  type="text"
+                  placeholder="Buscar"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                />
+              </FloatingLabel>
+            </Col>
+          </Row>
+
           <Table striped bordered hover>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Nombre de la Categoría</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {categorias.map((categoria) => (
+              {filteredCategorias.map((categoria) => (
                 <tr key={categoria.id_categoria}>
                   <td>{categoria.id_categoria}</td>
                   <td>{categoria.nombre}</td>
+                  <td>{categoria.descripcion}</td>
                   <td>
-                    <Button variant="primary" onClick={() => openModal(categoria)}>Actualizar</Button>
-                    <Button variant="danger" onClick={() => handleDelete(categoria.id_categoria)}>Eliminar</Button>
+                    <Button variant="primary" onClick={() => openModal(categoria)}>
+                      <FaPencil />
+                    </Button>
+                    <Button variant="danger" onClick={() => handleDelete(categoria.id_categoria)}>
+                      <FaTrashCan />
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -112,12 +149,23 @@ function CategoriaList() {
               <Form className="mt-3">
                 <Row className="g-3">
                   <Col sm="6" md="6" lg="4">
-                    <FloatingLabel controlId="nombre" label="Nombre de la Categoría">
+                    <FloatingLabel controlId="nombre" label="Nombre">
                       <Form.Control
                         type="text"
-                        placeholder="Ingrese el nombre de la categoría"
+                        placeholder="Ingrese el nombre"
                         name="nombre"
                         value={formData.nombre}
+                        onChange={handleFormChange}
+                      />
+                    </FloatingLabel>
+                  </Col>
+                  <Col sm="12" md="6" lg="8">
+                    <FloatingLabel controlId="descripcion" label="Descripción">
+                      <Form.Control
+                        type="text"
+                        placeholder="Ingrese la descripción"
+                        name="descripcion"
+                        value={formData.descripcion}
                         onChange={handleFormChange}
                       />
                     </FloatingLabel>
@@ -141,3 +189,4 @@ function CategoriaList() {
 }
 
 export default CategoriaList;
+

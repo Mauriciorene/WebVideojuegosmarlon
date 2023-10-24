@@ -5,6 +5,12 @@ import About from './pages/About';
 import Customer from './pages/Customer';
 import Teacher from './pages/Teacher';
 import TeacherList from './pages/TeacherList';
+import Producto from './pages/Producto';
+import ProductoList from './pages/ProductoList';
+import Categoria from './pages/Categoria';
+import CategoriaList from './pages/CategoriaList';
+import Venta from './pages/Venta';
+import VentaList from './pages/VentaList';
 
 function App() {
   return (
@@ -15,6 +21,12 @@ function App() {
         <Route path="/customer" element={<Customer />} />
         <Route path="/teacher" element={<Teacher />} />
         <Route path="/teacherList" element={<TeacherList />} />
+        <Route path="/producto" element={<Producto />} />
+        <Route path="/productoList" element={<ProductoList />} />
+        <Route path="/Categoria" element={<Categoria />} />
+        <Route path="/CategoriaList" element={<CategoriaList />} />
+        <Route path="/Venta" element={<Venta />} />
+        <Route path="/VentaList" element={<VentaList />} />
       </Routes>
     </Router>
   );

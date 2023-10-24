@@ -1,29 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Container, Card, Row, Col, Form, Modal, FloatingLabel } from 'react-bootstrap';
 import Header from '../components/Header';
+import { FaTrashCan, FaPencil } from 'react-icons/fa6';
 
 function ProductoList() {
   const [productos, setProductos] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedProducto, setSelectedProducto] = useState({});
   const [formData, setFormData] = useState({
-    id_categoria: '',
-    descripcion: '',
-    nombreProducto: '',
+    nombre: '',
     precio: '',
-    stock: '',
+    descripcion: '',
   });
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   const openModal = (producto) => {
     setSelectedProducto(producto);
 
     setFormData({
-      id_categoria: producto.id_categoria,
-      descripcion: producto.descripcion,
-      nombreProducto: producto.nombreProducto,
+      nombre: producto.nombre,
       precio: producto.precio,
-      stock: producto.stock,
+      descripcion: producto.descripcion,
     });
+
     setShowModal(true);
   };
 
@@ -78,6 +81,14 @@ function ProductoList() {
     loadProductos();
   }, []);
 
+  const filteredProductos = productos.filter((producto) => {
+    const nombre = producto.nombre.toLowerCase();
+    const descripcion = producto.descripcion.toLowerCase();
+    const search = searchQuery.toLowerCase();
+
+    return nombre.includes(search) || descripcion.includes(search);
+  });
+
   return (
     <div>
       <Header />
@@ -85,30 +96,44 @@ function ProductoList() {
       <Card className="m-3">
         <Card.Body>
           <Card.Title className="mb-3">Listado de Productos</Card.Title>
+
+          <Row className="mb-3">
+            <Col sm="6" md="6" lg="4">
+              <FloatingLabel controlId="search" label="Buscar">
+                <Form.Control
+                  type="text"
+                  placeholder="Buscar"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                />
+              </FloatingLabel>
+            </Col>
+          </Row>
+
           <Table striped bordered hover>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>ID de Categoría</th>
-                <th>Descripción</th>
-                <th>Nombre del Producto</th>
+                <th>Nombre</th>
                 <th>Precio</th>
-                <th>Stock</th>
+                <th>Descripción</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {productos.map((producto) => (
+              {filteredProductos.map((producto) => (
                 <tr key={producto.id_producto}>
                   <td>{producto.id_producto}</td>
-                  <td>{producto.id_categoria}</td>
-                  <td>{producto.descripcion}</td>
-                  <td>{producto.nombreProducto}</td>
+                  <td>{producto.nombre}</td>
                   <td>{producto.precio}</td>
-                  <td>{producto.stock}</td>
+                  <td>{producto.descripcion}</td>
                   <td>
-                    <Button variant="primary" onClick={() => openModal(producto)}>Actualizar</Button>
-                    <Button variant="danger" onClick={() => handleDelete(producto.id_producto)}>Eliminar</Button>
+                    <Button variant="primary" onClick={() => openModal(producto)}>
+                      <FaPencil />
+                    </Button>
+                    <Button variant="danger" onClick={() => handleDelete(producto.id_producto)}>
+                      <FaTrashCan />
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -128,41 +153,16 @@ function ProductoList() {
               <Form className="mt-3">
                 <Row className="g-3">
                   <Col sm="6" md="6" lg="4">
-                    <FloatingLabel controlId="idCategoria" label="ID de Categoría">
-                      <Form.Control
-                        type="number"
-                        placeholder="Ingrese el ID de categoría"
-                        name="id_categoria"
-                        value={formData.id_categoria}
-                        onChange={handleFormChange}
-                      />
-                    </FloatingLabel>
-                  </Col>
-
-                  <Col sm="6" md="6" lg="4">
-                    <FloatingLabel controlId="descripcion" label="Descripción">
+                    <FloatingLabel controlId="nombre" label="Nombre">
                       <Form.Control
                         type="text"
-                        placeholder="Ingrese la descripción"
-                        name="descripcion"
-                        value={formData.descripcion}
+                        placeholder="Ingrese el nombre"
+                        name="nombre"
+                        value={formData.nombre}
                         onChange={handleFormChange}
                       />
                     </FloatingLabel>
                   </Col>
-
-                  <Col sm="6" md="6" lg="4">
-                    <FloatingLabel controlId="nombreProducto" label="Nombre del Producto">
-                      <Form.Control
-                        type="text"
-                        placeholder="Ingrese el nombre del producto"
-                        name="nombreProducto"
-                        value={formData.nombreProducto}
-                        onChange={handleFormChange}
-                      />
-                    </FloatingLabel>
-                  </Col>
-
                   <Col sm="6" md="6" lg="4">
                     <FloatingLabel controlId="precio" label="Precio">
                       <Form.Control
@@ -174,14 +174,13 @@ function ProductoList() {
                       />
                     </FloatingLabel>
                   </Col>
-
-                  <Col sm="6" md="6" lg="4">
-                    <FloatingLabel controlId="stock" label="Stock">
+                  <Col sm="12" md="6" lg="4">
+                    <FloatingLabel controlId="descripcion" label="Descripción">
                       <Form.Control
-                        type="number"
-                        placeholder="Ingrese el stock"
-                        name="stock"
-                        value={formData.stock}
+                        type="text"
+                        placeholder="Ingrese la descripción"
+                        name="descripcion"
+                        value={formData.descripcion}
                         onChange={handleFormChange}
                       />
                     </FloatingLabel>

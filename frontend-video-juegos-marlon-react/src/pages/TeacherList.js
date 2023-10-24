@@ -143,8 +143,8 @@ function ClienteList() {
                 <td>{cliente.apellido}</td>
                 <td>{cliente.telefono}</td>
                 <td>
-                  <Button variant="primary" onClick={() => openModal(cliente)}>Actualizar</Button>
-                  <Button variant="danger" onClick={() => handleDelete(cliente.id_cliente)}>Eliminar</Button>
+                  <Button variant="primary" onClick={() => openModal(cliente)}><FaPencil/></Button>
+                  <Button variant="danger" onClick={() => handleDelete(cliente.id_cliente)}><FaTrashCan/></Button>
             </td>
     </tr>
   ))}
