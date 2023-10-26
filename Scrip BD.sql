@@ -8,6 +8,8 @@ CREATE TABLE Usuario (
  apellido VARCHAR(20) NOT NULL,
  correo VARCHAR(50) NOT NULL,
  telefono VARCHAR(8),
+ nombreUsuario VARCHAR(20) NOT NULL,
+ contraseña VARCHAR(10) NOT NULL,
  PRIMARY KEY (id_Usuario)
  );
 

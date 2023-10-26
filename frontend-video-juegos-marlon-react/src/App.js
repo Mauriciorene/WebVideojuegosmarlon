@@ -2,9 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
-import Customer from './pages/Customer';
-import Teacher from './pages/Teacher';
-import TeacherList from './pages/TeacherList';
+import Cliente from './pages/Cliente';
+import ClienteList from './pages/ClienteList';
 import Producto from './pages/Producto';
 import ProductoList from './pages/ProductoList';
 import Categoria from './pages/Categoria';
@@ -18,9 +17,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/customer" element={<Customer />} />
-        <Route path="/teacher" element={<Teacher />} />
-        <Route path="/teacherList" element={<TeacherList />} />
+        <Route path="/cliente" element={<Cliente />} />
+        <Route path="/clienteList" element={<ClienteList />} />
         <Route path="/producto" element={<Producto />} />
         <Route path="/productoList" element={<ProductoList />} />
         <Route path="/Categoria" element={<Categoria />} />

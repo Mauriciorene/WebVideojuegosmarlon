@@ -3,7 +3,7 @@ const router = express. Router();
 
 module.exports = (db) => { 
 
-
+//Cliente----------------------------------------------------------------------------------------------------------------
   /*   curl http://localhost:5000/crud/getClientes */
 
 
@@ -55,6 +55,7 @@ router.put('/updateCliente/:id', (req, res) => {
     const id_cliente = req.params.id;
     const { nombre, apellido, telefono } = req.body;
   
+    // Verificar si los campos obligatorios (nombre y apellido) están presentes en el cuerpo de la solicitud
     if (!nombre || !apellido) {
       return res.status(400).json({ error: 'Los campos "nombre" y "apellido" son obligatorios' });
     }
@@ -71,24 +72,25 @@ router.put('/updateCliente/:id', (req, res) => {
       }
     });
   });
-
   
+
+    
   // Ruta para eliminar un cliente
 router.delete('/deleteCliente/:id', (req, res) => {
-    const id_cliente = req.params.id;
-  
-    const sql = `DELETE FROM Cliente WHERE id_cliente = ?`;
-  
-    db.query(sql, id_cliente, (err, result) => {
-      if (err) {
+    const id = req.params.id;
+    
+    const sql = `DELETE FROM cliente WHERE id_cliente = ?`;
+    
+    db.query(sql, [id], (err, result) => {
+        if (err) {
         console.error('Error al eliminar el cliente:', err);
         res.status(500).json({ error: 'Error al eliminar el cliente de la tabla Cliente' });
-      } else {
+        } else {
         res.status(200).json({ message: 'Cliente eliminado exitosamente' });
-      }
+        }
     });
-  });
-  
+    });
+    
 
 
 
@@ -113,19 +115,21 @@ router.get('/readUsuario', (req, res) => {
     });
 });
 
+
+//Usuario---------------------------------------------------------------------------------------------------------------
 // Ruta para crear un nuevo usuario
 router.post('/createUsuario', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { nombre, apellido, correo, telefono } = req.body;
+    const { nombre, apellido, correo, telefono, nombreUsuario, contraseña } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nombre || !apellido || !correo || !telefono) {
+    if (!nombre || !apellido || !correo || !telefono || !nombreUsuario || !contraseña) {
         return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO Usuario (nombre, apellido, correo, telefono) VALUES (?, ?, ?, ?)`;
-    const values = [nombre, apellido, correo, telefono];
+    const sql = `INSERT INTO Usuario (nombre, apellido, correo, telefono, nombreUsuario, contraseña) VALUES (?, ?, ?, ?, ?, ?)`;
+    const values = [nombre, apellido, correo, telefono, nombreUsuario, contraseña];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -145,21 +149,21 @@ router.put('/updateUsuario/:idUsuario', (req, res) => {
     const idUsuario = req.params.idUsuario;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { nombre, apellido, correo, telefono } = req.body;
+    const { nombre, apellido, correo, telefono, nombreUsuario, contraseña } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nombre || !apellido || !correo || !telefono) {
+    if (!nombre || !apellido || !correo || !telefono || !nombreUsuario || !contraseña) {
         return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
   // Realiza la consulta SQL para actualizar el registro por ID
     const sql = `
         UPDATE Usuario
-        SET nombre = ?, apellido = ?, correo = ?, telefono = ?
+        SET nombre = ?, apellido = ?, correo = ?, telefono = ?, nombreUsuario = ?, contraseña = ?
         WHERE id_Usuario = ?
     `;
 
-    const values = [nombre, apellido, correo, telefono, idUsuario];
+    const values = [nombre, apellido, correo, telefono, nombreUsuario, contraseña, idUsuario];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -214,6 +218,8 @@ router.delete('/deleteUsuario/:idUsuario', (req, res) => {
         });
     });
 
+
+    //Categoria----------------------------------------------------------------------------------------------------------
       // Ruta para crear un nuevo registro con ID específico en la tabla Categoria
     router.post('/create', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
@@ -313,6 +319,8 @@ router.delete('/deleteUsuario/:idUsuario', (req, res) => {
     });
 });
 
+
+//Producto----------------------------------------------------------------------------------------------------------------
   // Ruta para crear un nuevo registro con ID específico en la tabla producto
     router.post('/createproducto', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
@@ -412,6 +420,8 @@ router.get('/readVenta', (req, res) => {
     });
 });
 
+
+//Venta------------------------------------------------------------------------------------------------------------------
   // Ruta para crear un nuevo registro con ID específico en la tabla venta
 router.post('/createVenta', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
@@ -493,7 +503,7 @@ router.delete('/deleteVenta/:idVenta', (req, res) => {
 });
 
 
-
+//Detalle----------------------------------------------------------------------------------------------------------------
 // Ruta para leer registros de la tabla Detalle
 router.get('/readDetalle', (req, res) => {
     // Utiliza la instancia de la base de datos pasada como parámetro
@@ -611,6 +621,8 @@ router.get('/readBitacora', (req, res) => {
     });
 });
 
+
+//Bitácora-----------------------------------------------------------------------------------------------------------------
 // Ruta para crear un nuevo registro en la Bitácora
 router.post('/createBitacora', (req, res) => {
     

@@ -34,11 +34,11 @@ function Header() {
 
               <NavDropdown title="Clientes" id="productos">
                 <NavDropdown.Item>
-                  <Link to="/customer" className="link-unstyled">Registrar Clientes</Link>
+                  <Link to="/cliente" className="link-unstyled">Registrar Clientes</Link>
                 </NavDropdown.Item>
 
                 <NavDropdown.Item>
-                  <Link to="/teacherList" className="link-unstyled">Listar Clientes</Link>
+                  <Link to="/clienteList" className="link-unstyled">Listar Clientes</Link>
                 </NavDropdown.Item>
               </NavDropdown>
 
@@ -104,10 +104,10 @@ function Header() {
 
             <NavDropdown title="Clientes" id="clientes">
               <NavDropdown.Item>
-                <Link to="/customer" className="link-unstyled">Registrar Cliente</Link>
+                <Link to="/cliente" className="link-unstyled">Registrar Cliente</Link>
               </NavDropdown.Item>
               <NavDropdown.Item>
-                <Link to="/teacherList" className="link-unstyled">Listar Clientes</Link>
+                <Link to="/clienteList" className="link-unstyled">Listar Clientes</Link>
               </NavDropdown.Item>
             </NavDropdown>
 
