@@ -39,7 +39,7 @@ function VentaList() {
   };
 
   const loadVentas = () => {
-    fetch('http://localhost:5000/crud/getVentas')
+    fetch('http://localhost:5000/crud/getVenta')
       .then((response) => response.json())
       .then((data) => setVentas(data))
       .catch((error) => console.error('Error al obtener las ventas:', error));

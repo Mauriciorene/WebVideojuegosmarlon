@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Container, Card, Row, Col, Form, Modal, FloatingLabel } from 'react-bootstrap';
+import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
 import { FaTrashCan, FaPencil } from 'react-icons/fa6';
 
@@ -8,28 +8,50 @@ function ProductoList() {
   const [showModal, setShowModal] = useState(false);
   const [selectedProducto, setSelectedProducto] = useState({});
   const [formData, setFormData] = useState({
-    nombre: '',
-    precio: '',
+    nombreProducto: '',
     descripcion: '',
+    precio: '',
+    Stock: '',
+    id_categoria: '',
   });
-  const [searchQuery, setSearchQuery] = useState('');
 
+  //Variables de estado de categoria
+  const [categorias, setCategorias] = useState([]); 
+
+  const [searchQuery, setSearchQuery] = useState('');
+  
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
+  const filteredProductos = productos.filter((producto) => {
+    // Convierte los valores de los campos a minúsculas para realizar una búsqueda insensible a mayúsculas y minúsculas
+    const nombreproducto = producto.nombreProducto.toLowerCase();
+    const descripcion = producto.descripcion.toLowerCase();
+    const search = searchQuery.toLowerCase();
+  
+    // Verifica si la cadena de búsqueda se encuentra en algún campo
+    return (
+      nombreproducto.includes(search) ||
+      descripcion.includes(search) 
+    );
+  });
+
+  // Función para abrir el modal y pasar los datos del docente seleccionado
   const openModal = (producto) => {
     setSelectedProducto(producto);
 
     setFormData({
-      nombre: producto.nombre,
-      precio: producto.precio,
+      nombreProducto: producto.nombreProducto,
       descripcion: producto.descripcion,
+      precio: producto.precio,
+      Stock: producto.Stock,
+      id_categoria: producto.id_categoria,
     });
-
     setShowModal(true);
   };
 
+  // Función para manejar cambios en el formulario
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -38,14 +60,30 @@ function ProductoList() {
     });
   };
 
-  const loadProductos = () => {
-    fetch('http://localhost:5000/crud/getProductos')
+  const loadDocentes = () => {
+    fetch('http://localhost:5000/crud/readProducto')
       .then((response) => response.json())
       .then((data) => setProductos(data))
       .catch((error) => console.error('Error al obtener los productos:', error));
   };
 
+  useEffect(() => {
+    // Realiza una solicitud a tu ruta para obtener las categorias
+    fetch('http://localhost:5000/crud/readCategoria')
+      .then(response => response.json())
+      .then(data => {
+        // Actualiza el estado con las categorias obtenidas
+        setCategorias(data);
+      })
+      .catch(error => {
+        console.error('Error al obtener las categorias', error);
+      });
+  }, []);
+
+
+  // Función para enviar el formulario de actualización
   const handleUpdate = () => {
+    // Realiza la solicitud PUT al servidor para actualizar el registro
     fetch(`http://localhost:5000/crud/updateProducto/${selectedProducto.id_producto}`, {
       method: 'PUT',
       headers: {
@@ -55,39 +93,39 @@ function ProductoList() {
     })
       .then((response) => {
         if (response.ok) {
+          // La actualización fue exitosa, puedes cerrar el modal y refrescar la lista de productos
           setShowModal(false);
-          loadProductos();
+          loadDocentes(); // Cargar la lista de productos actualizada
         }
       })
-      .catch((error) => console.error('Error al actualizar el producto:', error));
+      .catch((error) => console.error('Error al actualizar el registro:', error));
   };
 
-  const handleDelete = (id_producto) => {
+  // Función para eliminar un producto
+  const handleDelete = (id) => {
     const confirmation = window.confirm('¿Seguro que deseas eliminar este producto?');
     if (confirmation) {
-      fetch(`http://localhost:5000/crud/deleteProducto/${id_producto}`, {
+      // Realiza la solicitud DELETE al servidor para eliminar el producto
+      fetch(`http://localhost:5000/crud/deleteProducto/${id}`, {
         method: 'DELETE',
       })
         .then((response) => {
           if (response.ok) {
-            loadProductos();
+            // La eliminación fue exitosa, refresca la lista de productos
+            loadDocentes();
           }
         })
         .catch((error) => console.error('Error al eliminar el producto:', error));
     }
   };
 
+  // Realiza una solicitud GET al servidor para obtener los productos
   useEffect(() => {
-    loadProductos();
+    fetch('http://localhost:5000/crud/readProducto')
+      .then((response) => response.json())
+      .then((data) => setProductos(data))
+      .catch((error) => console.error('Error al obtener los productos:', error));
   }, []);
-
-  const filteredProductos = productos.filter((producto) => {
-    const nombre = producto.nombre.toLowerCase();
-    const descripcion = producto.descripcion.toLowerCase();
-    const search = searchQuery.toLowerCase();
-
-    return nombre.includes(search) || descripcion.includes(search);
-  });
 
   return (
     <div>
@@ -115,25 +153,24 @@ function ProductoList() {
               <tr>
                 <th>ID</th>
                 <th>Nombre</th>
+                <th>Descripcion</th>
                 <th>Precio</th>
-                <th>Descripción</th>
-                <th>Acciones</th>
+                <th>Stock</th>
+                <th>Categoria</th>
               </tr>
             </thead>
             <tbody>
               {filteredProductos.map((producto) => (
                 <tr key={producto.id_producto}>
                   <td>{producto.id_producto}</td>
-                  <td>{producto.nombre}</td>
-                  <td>{producto.precio}</td>
+                  <td>{producto.nombreProducto}</td>
                   <td>{producto.descripcion}</td>
+                  <td>{producto.precio}</td>
+                  <td>{producto.Stock}</td>
+                  <td>{producto.id_categoria}</td>
                   <td>
-                    <Button variant="primary" onClick={() => openModal(producto)}>
-                      <FaPencil />
-                    </Button>
-                    <Button variant="danger" onClick={() => handleDelete(producto.id_producto)}>
-                      <FaTrashCan />
-                    </Button>
+                    <Button variant="success" onClick={() => openModal(producto)}> <FaPencil /></Button>
+                    <Button variant="danger" onClick={() => handleDelete(producto.id_producto)}><FaTrashCan /></Button>
                   </td>
                 </tr>
               ))}
@@ -152,39 +189,73 @@ function ProductoList() {
               <Card.Title>Registro de Producto</Card.Title>
               <Form className="mt-3">
                 <Row className="g-3">
-                  <Col sm="6" md="6" lg="4">
-                    <FloatingLabel controlId="nombre" label="Nombre">
-                      <Form.Control
-                        type="text"
-                        placeholder="Ingrese el nombre"
-                        name="nombre"
-                        value={formData.nombre}
-                        onChange={handleFormChange}
-                      />
-                    </FloatingLabel>
-                  </Col>
-                  <Col sm="6" md="6" lg="4">
-                    <FloatingLabel controlId="precio" label="Precio">
-                      <Form.Control
-                        type="number"
-                        placeholder="Ingrese el precio"
-                        name="precio"
-                        value={formData.precio}
-                        onChange={handleFormChange}
-                      />
-                    </FloatingLabel>
-                  </Col>
-                  <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="descripcion" label="Descripción">
-                      <Form.Control
-                        type="text"
-                        placeholder="Ingrese la descripción"
-                        name="descripcion"
-                        value={formData.descripcion}
-                        onChange={handleFormChange}
-                      />
-                    </FloatingLabel>
-                  </Col>
+
+                <Col sm="6" md="6" lg="8">
+                  <FloatingLabel controlId="nombreProducto" label="Nombre">
+                    <Form.Control
+                      type="text"
+                      placeholder="Ingrese el nombre de producto"
+                      name='nombreProducto'
+                      value={formData.nombreProducto}
+                      onChange={handleFormChange}
+                    />
+                  </FloatingLabel>
+                </Col>
+
+                <Col sm="12" md="6" lg="4">
+                  <FloatingLabel controlId="id_categoria" label="Categoria">
+                    <Form.Select 
+                      aria-label="Categoria"
+                      name='id_categoria'
+                      value={formData.id_categoria}
+                      onChange={handleFormChange}
+                    >
+                      <option>Seleccione la categoria</option>
+                      {categorias.map((categoria) => (
+                        <option key={categoria.id_categoria} value={categoria.id_categoria}>
+                          {categoria.nombre}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
+
+                <Col sm="6" md="6" lg="12">
+                  <FloatingLabel controlId="descripcion" label="Descripcion">
+                    <Form.Control
+                      type="text"
+                      placeholder="Escriba aqui"
+                      name='descripcion'
+                      value={formData.descripcion}
+                      onChange={handleFormChange}
+                    />
+                  </FloatingLabel>
+                </Col>               
+
+                <Col sm="12" md="6" lg="6">
+                  <FloatingLabel controlId="precio" label="Precio">
+                    <Form.Control 
+                      type="number" 
+                      placeholder="Ingrese el precio"
+                      name='precio'
+                      value={formData.precio}
+                      onChange={handleFormChange} 
+                    />
+                  </FloatingLabel>
+                </Col>
+
+                <Col sm="12" md="6" lg="6">
+                  <FloatingLabel controlId="Stock" label="Stock">
+                    <Form.Control 
+                      type="number" 
+                      placeholder="Ingrese el stock"
+                      name='Stock'
+                      value={formData.Stock}
+                      onChange={handleFormChange} 
+                    />
+                  </FloatingLabel>
+                </Col>
+
                 </Row>
               </Form>
             </Card.Body>
@@ -199,6 +270,7 @@ function ProductoList() {
           </Button>
         </Modal.Footer>
       </Modal>
+
     </div>
   );
 }

@@ -161,3 +161,20 @@ BEGIN
   INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Eliminación', current_user(), NOW(), 'Venta');
 END;
 //DELIMITER //
+
+/*Trigger unico*---------------------------------------------------------------------------------------------/
+
+/*1---------------------------------------------------------------------------------------------------------*/
+DELIMITER //
+
+-- Trigger para la tabla 'Bitacora' (Inserción)
+CREATE TRIGGER tr_bitacora_insert
+AFTER INSERT ON Bitacora
+FOR EACH ROW
+BEGIN
+  -- Registra la inserción en la bitácora de la tabla de bitácora
+  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla)
+  VALUES ('Inserción en Bitacora', current_user(), NOW(), 'Bitacora');
+END;
+//
+DELIMITER ;

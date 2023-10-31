@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Row, Col, Container, FloatingLabel, Card, Button, Dropdown } from 'react-bootstrap';
+import { Form, Row, Col, Container, Card, Button } from 'react-bootstrap';
 import Header from '../components/Header';
 import '../styles/App.css';
 
@@ -30,7 +30,7 @@ function Venta() {
 
   // Función para cargar la lista de productos desde el servidor
   const loadProductos = () => {
-    fetch('http://localhost:5000/crud/getProductos')
+    fetch('http://localhost:5000/crud/getProducto')
       .then((response) => response.json())
       .then((data) => setProductos(data))
       .catch((error) => console.error('Error al obtener los productos:', error));
@@ -42,7 +42,7 @@ function Venta() {
     loadProductos();
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleVentaSubmit = async (e) => {
     e.preventDefault();
 
     const formData = {
@@ -84,78 +84,69 @@ function Venta() {
         <Card className="mt-3">
           <Card.Body>
             <Card.Title>Registro de Venta</Card.Title>
-            <Form className="mt-3" onSubmit={handleSubmit}>
-              <Row className="g-3">
-                <Col sm="6" md="6" lg="4">
-                  <FloatingLabel controlId="idUsuario">
-                    <Dropdown>
-                      <Dropdown.Toggle variant="success" id="dropdown-usuario">
-                        {idUsuario ? usuarios.find((u) => u.id_usuario === idUsuario).nombre : 'Seleccionar Usuario'}
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        {usuarios.map((usuario) => (
-                          <Dropdown.Item key={usuario.id_usuario} onClick={() => setIdUsuario(usuario.id_usuario)}>
-                            {usuario.nombre}
-                          </Dropdown.Item>
-                        ))}
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </FloatingLabel>
+            <Form onSubmit={handleVentaSubmit}>
+              <Row className="mb-3">
+                <Col>
+                  <Form.Label>Usuario</Form.Label>
+                  <Form.Select
+                    aria-label="Usuario"
+                    value={idUsuario}
+                    onChange={(e) => setIdUsuario(e.target.value)}
+                  >
+                    <option value="">Seleccione el usuario</option>
+                    {usuarios.map((usuario) => (
+                      <option key={usuario.id_usuario} value={usuario.id_usuario}>
+                        {usuario.nombre}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Col>
+                <Col>
+                  <Form.Label>Cliente</Form.Label>
+                  <Form.Select
+                    aria-label="Cliente"
+                    value={idCliente}
+                    onChange={(e) => setIdCliente(e.target.value)}
+                  >
+                    <option value="">Seleccione el cliente</option>
+                    {clientes.map((cliente) => (
+                      <option key={cliente.id_cliente} value={cliente.id_cliente}>
+                        {cliente.nombre}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Col>
+                <Col>
+                  <Form.Label>Producto</Form.Label>
+                  <Form.Select
+                    aria-label="Producto"
+                    value={idProducto}
+                    onChange={(e) => setIdProducto(e.target.value)}
+                  >
+                    <option value="">Seleccione el producto</option>
+                    {productos.map((producto) => (
+                      <option key={producto.id_producto} value={producto.id_producto}>
+                        {producto.nombreProducto}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Col>
+                <Col>
+                  <Form.Label>Fecha</Form.Label>
+                  <Form.Control type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} />
                 </Col>
 
-                <Col sm="6" md="6" lg="4">
-                  <FloatingLabel controlId="idCliente">
-                    <Dropdown>
-                      <Dropdown.Toggle variant="success" id="dropdown-cliente">
-                        {idCliente ? clientes.find((c) => c.id_cliente === idCliente).nombre : 'Seleccionar Cliente'}
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        {clientes.map((cliente) => (
-                          <Dropdown.Item key={cliente.id_cliente} onClick={() => setIdCliente(cliente.id_cliente)}>
-                            {cliente.nombre}
-                          </Dropdown.Item>
-                        ))}
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </FloatingLabel>
-                </Col>
-
-                <Col sm="6" md="6" lg="4">
-                  <FloatingLabel controlId="idProducto">
-                    <Dropdown>
-                      <Dropdown.Toggle variant="success" id="dropdown-producto">
-                        {idProducto ? productos.find((p) => p.id_producto === idProducto).nombreProducto : 'Seleccionar Producto'}
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        {productos.map((producto) => (
-                          <Dropdown.Item key={producto.id_producto} onClick={() => setIdProducto(producto.id_producto)}>
-                            {producto.nombreProducto}
-                          </Dropdown.Item>
-                        ))}
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </FloatingLabel>
-                </Col>
-
-                <Col sm="6" md="6" lg="4">
-                  <FloatingLabel controlId="fecha">
-                    <Form.Control
-                      type="date"
-                      value={fecha}
-                      onChange={(e) => setFecha(e.target.value)}
-                    />
-                  </FloatingLabel>
-                </Col>
-              </Row>
+                </Row>
               <div className="center-button">
                 <Button variant="primary" type="submit" className="mt-3" size="lg">
-                  Registrar Venta
+                  Registrar
                 </Button>
               </div>
             </Form>
           </Card.Body>
         </Card>
       </Container>
+
     </div>
   );
 }

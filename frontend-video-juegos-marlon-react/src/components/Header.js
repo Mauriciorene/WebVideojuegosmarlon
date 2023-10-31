@@ -99,7 +99,7 @@ function Header() {
             </Nav.Link>
 
             <Nav.Link>
-              <Link to="/about" className="link-unstyled">about</Link>
+              <Link to="/about" className="link-unstyled">Informacion</Link>
             </Nav.Link>
 
             <NavDropdown title="Clientes" id="clientes">
