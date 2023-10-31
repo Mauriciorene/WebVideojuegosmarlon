@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Row, Col, Container, Card, Button } from 'react-bootstrap';
+import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bootstrap';
 import Header from '../components/Header';
 import '../styles/App.css';
 
@@ -86,54 +86,65 @@ function Venta() {
             <Card.Title>Registro de Venta</Card.Title>
             <Form onSubmit={handleVentaSubmit}>
               <Row className="mb-3">
-                <Col>
-                  <Form.Label>Usuario</Form.Label>
-                  <Form.Select
-                    aria-label="Usuario"
-                    value={idUsuario}
-                    onChange={(e) => setIdUsuario(e.target.value)}
-                  >
-                    <option value="">Seleccione el usuario</option>
-                    {usuarios.map((usuario) => (
-                      <option key={usuario.id_usuario} value={usuario.id_usuario}>
-                        {usuario.nombre}
-                      </option>
-                    ))}
-                  </Form.Select>
+
+              <Col sm="6" md="6" lg="3">
+                  <FloatingLabel controlId="id_usuario" label="Usuario">
+                    <Form.Select
+                      aria-label="Usuario"
+                      value={idUsuario}
+                      onChange={(e) => setIdUsuario(e.target.value)}
+                    >
+                      <option>Seleccione el usuario</option>
+                      {usuarios.map((usuario) => (
+                        <option key={usuario.id_usuario} value={usuario.id_usuario}>
+                          {usuario.nombre}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
                 </Col>
-                <Col>
-                  <Form.Label>Cliente</Form.Label>
-                  <Form.Select
-                    aria-label="Cliente"
-                    value={idCliente}
-                    onChange={(e) => setIdCliente(e.target.value)}
-                  >
-                    <option value="">Seleccione el cliente</option>
-                    {clientes.map((cliente) => (
-                      <option key={cliente.id_cliente} value={cliente.id_cliente}>
-                        {cliente.nombre}
-                      </option>
-                    ))}
-                  </Form.Select>
+
+
+                <Col sm="6" md="6" lg="3">
+                  <FloatingLabel controlId="id_cliente" label="Cliente">
+                    <Form.Select
+                      aria-label="Cliente"
+                      value={idCliente}
+                      onChange={(e) => setIdCliente(e.target.value)}
+                    >
+                      <option>Seleccione el cliente</option>
+                      {clientes.map((cliente) => (
+                        <option key={cliente.id_cliente} value={cliente.id_cliente}>
+                          {cliente.nombre}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
                 </Col>
-                <Col>
-                  <Form.Label>Producto</Form.Label>
-                  <Form.Select
-                    aria-label="Producto"
-                    value={idProducto}
-                    onChange={(e) => setIdProducto(e.target.value)}
-                  >
-                    <option value="">Seleccione el producto</option>
-                    {productos.map((producto) => (
-                      <option key={producto.id_producto} value={producto.id_producto}>
-                        {producto.nombreProducto}
-                      </option>
-                    ))}
-                  </Form.Select>
+
+
+                <Col sm="6" md="6" lg="3">
+                  <FloatingLabel controlId="id_producto" label="Producto">
+                    <Form.Select
+                      aria-label="Producto"
+                      value={idProducto}
+                      onChange={(e) => setIdProducto(e.target.value)}
+                    >
+                      <option>Seleccione el producto</option>
+                      {productos.map((producto) => (
+                        <option key={producto.id_producto} value={producto.id_producto}>
+                          {producto.nombreProducto}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
                 </Col>
-                <Col>
-                  <Form.Label>Fecha</Form.Label>
+
+
+                <Col sm="6" md="6" lg="3">
+                <FloatingLabel controlId="fecha" label="Fecha">
                   <Form.Control type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} />
+                  </FloatingLabel>
                 </Col>
 
                 </Row>
