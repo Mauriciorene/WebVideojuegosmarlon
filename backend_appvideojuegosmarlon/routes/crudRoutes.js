@@ -93,111 +93,35 @@ router.delete('/deleteCliente/:id', (req, res) => {
     
 
 
+//Usuario en el Login---------------------------------------------------------------------------------------------------
 
-
-
-  // Ruta para leer registros
-// Ruta para leer registros de la tabla Usuario de la Base de Datos
-router.get('/readUsuario', (req, res) => {
-    // Utiliza la instancia de la base de datos pasada como parámetro
-    // Realizar una consulta SQL para seleccionar todos los registros
-    const sql = 'SELECT * FROM Usuario';
-
-    // Ejecutar la consulta
-    db.query(sql, (err, result) => {
-        if (err) {
-            console.error('Error al leer registros de la tabla Usuario:', err);
-            res.status(500).json({ error: 'Error al leer registros de la tabla Usuario' });
-        } else {
-        // Devolver los registros en formato JSON como respuesta
-            res.status(200).json(result);
+// Ruta para verificar las credenciales y obtener el rol del usuario
+router.post('/login', (req, res) => {
+        const { nombre_Usuario, apellido, contrasena } = req.body;
+    
+        if (!nombre_Usuario || !apellido || !contrasena) {
+        return res.status(400).json({ error: 'Nombre de usuario, apellido y contraseña son obligatorios' });
         }
-    });
-});
-
-
-//Usuario---------------------------------------------------------------------------------------------------------------
-// Ruta para crear un nuevo usuario
-router.post('/createUsuario', (req, res) => {
-    // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { nombre, apellido, correo, telefono, nombreUsuario, contraseña } = req.body;
-
-    // Verifica si se proporcionaron los datos necesarios
-    if (!nombre || !apellido || !correo || !telefono || !nombreUsuario || !contraseña) {
-        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-    }
-
-    // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO Usuario (nombre, apellido, correo, telefono, nombreUsuario, contraseña) VALUES (?, ?, ?, ?, ?, ?)`;
-    const values = [nombre, apellido, correo, telefono, nombreUsuario, contraseña];
-
-    // Ejecuta la consulta
-    db.query(sql, values, (err, result) => {
+    
+        // Realizar la consulta para verificar las credenciales en la base de datos
+        const sql = `SELECT rol FROM Usuario WHERE nombre_Usuario = ? AND apellido = ? AND contrasena = ?`;
+        db.query(sql, [nombre_Usuario, apellido, contrasena], (err, result) => {
         if (err) {
-            console.error('Error al insertar un registro en la tabla Usuario:', err);
-            res.status(500).json({ error: 'Error al insertar un registro en la tabla Usuario' });
-        } else {
-        // Devuelve un mensaje como respuesta
-            res.status(201).json({ message: 'Registro agregado exitosamente' });
+            console.error('Error al verificar credenciales:', err);
+            return res.status(500).json({ error: 'Error al verificar credenciales' });
         }
-    });
-});
-
-// Ruta para actualizar un usuario existente por ID de usuario
-router.put('/updateUsuario/:idUsuario', (req, res) => {
-    // Obtén el ID del registro a actualizar desde los parámetros de la URL
-    const idUsuario = req.params.idUsuario;
-
-    // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { nombre, apellido, correo, telefono, nombreUsuario, contraseña } = req.body;
-
-    // Verifica si se proporcionaron los datos necesarios
-    if (!nombre || !apellido || !correo || !telefono || !nombreUsuario || !contraseña) {
-        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-    }
-
-  // Realiza la consulta SQL para actualizar el registro por ID
-    const sql = `
-        UPDATE Usuario
-        SET nombre = ?, apellido = ?, correo = ?, telefono = ?, nombreUsuario = ?, contraseña = ?
-        WHERE id_Usuario = ?
-    `;
-
-    const values = [nombre, apellido, correo, telefono, nombreUsuario, contraseña, idUsuario];
-
-    // Ejecuta la consulta
-    db.query(sql, values, (err, result) => {
-        if (err) {
-            console.error('Error al actualizar el usuario:', err);
-            res.status(500).json({ error: 'Error al actualizar unregistro de la tabla Usuario' });
+    
+        if (result.length === 1) {
+            const { rol } = result[0];
+            res.json({ rol }); // Devolver el rol si las credenciales son correctas
         } else {
-        // Devuelve un mensaje de éxito
-            res.status(200).json({ message: 'Registro actualizado exitosamente' });
+            res.status(401).json({ error: 'Credenciales incorrectas' });
         }
+        });
     });
-});
 
+    
 
-
-// Ruta para eliminar un usuario existente por ID de usuario
-router.delete('/deleteUsuario/:idUsuario', (req, res) => {
-    // Obtén el ID del registro a eliminar desde los parámetros de la URL
-    const idUsuario = req.params.idUsuario;
-
-    // Realiza la consulta SQL para eliminar el registro por ID
-    const sql = 'DELETE FROM Usuario WHERE id_Usuario = ?';
-
-    // Ejecuta la consulta
-    db.query(sql, [idUsuario], (err, result) => {
-        if (err) {
-            console.error('Error al eliminar un usuario:', err);
-            res.status(500).json({ error: 'Error al eliminar un registro de la trabla Usuario' });
-        } else {
-        // Devuelve un mensaje de éxito
-            res.status(200).json({ message: 'Registro eliminado exitosamente' });
-        }
-    });
-});
 
   // Ruta para leer registros
     // Ruta para leer registros

@@ -1,6 +1,17 @@
 CREATE DATABASE IF NOT EXISTS BDVideojuegosMarlon;
 USE BDVideojuegosMarlon;
 
+/* Tabla de Usuarios para el Login*/
+CREATE TABLE Usuario (
+  id_Usuario INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  nombre_Usuario VARCHAR(30) NOT NULL,
+  apellido VARCHAR(20) NOT NULL,
+  contrasena VARCHAR(16) NOT NULL,
+  rol VARCHAR(20) NOT NULL
+);
+INSERT INTO Usuario (nombre_Usuario, apellido, contrasena, rol) VALUES ('Mauricio', 'Rubio', '202322', 'admin');
+SELECT * FROM Usuario;
+
 /* Tabla de Usuarios */
 CREATE TABLE Usuario (
  id_Usuario INT NOT NULL AUTO_INCREMENT,
