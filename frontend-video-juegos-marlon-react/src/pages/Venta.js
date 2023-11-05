@@ -4,21 +4,11 @@ import Header from '../components/Header';
 import '../styles/App.css';
 
 function Venta() {
-  const [usuarios, setUsuarios] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [productos, setProductos] = useState([]);
-  const [idUsuario, setIdUsuario] = useState('');
   const [idCliente, setIdCliente] = useState('');
   const [idProducto, setIdProducto] = useState('');
   const [fecha, setFecha] = useState('');
-
-  // Función para cargar la lista de usuarios desde el servidor
-  const loadUsuarios = () => {
-    fetch('http://localhost:5000/crud/getUsuarios')
-      .then((response) => response.json())
-      .then((data) => setUsuarios(data))
-      .catch((error) => console.error('Error al obtener los usuarios:', error));
-  };
 
   // Función para cargar la lista de clientes desde el servidor
   const loadClientes = () => {
@@ -37,7 +27,6 @@ function Venta() {
   };
 
   useEffect(() => {
-    loadUsuarios();
     loadClientes();
     loadProductos();
   }, []);
@@ -46,7 +35,6 @@ function Venta() {
     e.preventDefault();
 
     const formData = {
-      id_usuario: idUsuario,
       id_cliente: idCliente,
       id_producto: idProducto,
       fecha,
@@ -63,7 +51,6 @@ function Venta() {
 
       if (response.ok) {
         alert('Registro de venta exitoso');
-        setIdUsuario('');
         setIdCliente('');
         setIdProducto('');
         setFecha('');
@@ -86,24 +73,6 @@ function Venta() {
             <Card.Title>Registro de Venta</Card.Title>
             <Form onSubmit={handleVentaSubmit}>
               <Row className="mb-3">
-
-              <Col sm="6" md="6" lg="3">
-                  <FloatingLabel controlId="id_usuario" label="Usuario">
-                    <Form.Select
-                      aria-label="Usuario"
-                      value={idUsuario}
-                      onChange={(e) => setIdUsuario(e.target.value)}
-                    >
-                      <option>Seleccione el usuario</option>
-                      {usuarios.map((usuario) => (
-                        <option key={usuario.id_usuario} value={usuario.id_usuario}>
-                          {usuario.nombre}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </FloatingLabel>
-                </Col>
-
 
                 <Col sm="6" md="6" lg="3">
                   <FloatingLabel controlId="id_cliente" label="Cliente">

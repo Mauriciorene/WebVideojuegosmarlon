@@ -1,8 +1,8 @@
 /*Crear---------------------------------------------------------------------------------------*/ 
 
 /*Crear un nuevo usuario*/
-INSERT INTO Usuario (nombre, apellido, correo, telefono)
-VALUES ('Mauricio', 'Rubio', 'rubiom831@gmail.com', '12345678');
+INSERT INTO Usuario (nombre_Usuario, apellido, contraseña, Rol)
+VALUES ('Mauricio', 'Rubio', '202322', 'administrador');
 
 /*Crear un nuevo cliente*/
 INSERT INTO Cliente (nombre, apellido, telefono)
@@ -48,7 +48,7 @@ SELECT * FROM bitacora;
 
 /*Actualizar un usuario existente*/
 UPDATE Usuario
-SET nombre = 'NuevoNombre', apellido = 'NuevoApellido'
+SET nombre = 'NuevoNombre', apellido = 'NuevoApellido', cotraseña = '200022', Rol = 'NuevoRol'
 WHERE id_Usuario = 1;
 
 /*Actualizar un cliente existente*/

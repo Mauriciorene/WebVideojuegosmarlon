@@ -19,8 +19,8 @@ function App() {
   return (
     <Router>
       <Routes>
-      <Route path="/" element={<Login rol={userRol} setRol={setUserRol} />} />
-        <Route path="/" element={<Home rol={userRol} />} />
+        <Route path="/" element={<Login rol={userRol} setRol={setUserRol} />} />
+        <Route path="/home" element={<Home rol={userRol} />} />
         <Route path="/about" element={<About rol={userRol} />} />
         <Route path="/cliente" element={<Cliente rol={userRol} />} />
         <Route path="/clienteList" element={<ClienteList rol={userRol} />} />

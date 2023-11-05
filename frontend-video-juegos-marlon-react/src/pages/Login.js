@@ -7,7 +7,7 @@ const Login = ({ setRol }) => {
 
   const [nombre_Usuario, setNombre_Usuario] = useState('');
   const [apellido, setApellido] = useState('');
-  const [contrasena, setContrasena] = useState('');
+  const [contraseña, setContrasena] = useState('');
 
   const handleSubmit = async event => {
     event.preventDefault(); 
@@ -16,7 +16,7 @@ const Login = ({ setRol }) => {
     const formData = {
       nombre_Usuario,
       apellido,
-      contrasena
+      contraseña
     };
 
     try {
@@ -30,8 +30,11 @@ const Login = ({ setRol }) => {
   
       if (response.ok) {
         const { rol } = await response.json();
-  
+        
+        console.log('Rol establecido:', rol); // Mensaje de depuración
+
         setRol(rol); // Actualiza el estado del rol solo si las credenciales son correctas
+        
         navigate('/home');
       } else {
         console.log('Credenciales incorrectas');
@@ -79,7 +82,7 @@ const Login = ({ setRol }) => {
                       <Form.Control
                         placeholder="Ingrese su contraseña"
                         type="password"
-                        value={contrasena}
+                        value={contraseña}
                         onChange={(e) => setContrasena(e.target.value)}
                       />
                     </FloatingLabel>

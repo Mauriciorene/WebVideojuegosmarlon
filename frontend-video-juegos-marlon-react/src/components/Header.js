@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 
 function Header({ rol }) {
   const [showMenu, setShowMenu] = useState(false);
+  
+  console.log('Rol en Header:', rol); // Mensaje de depuración
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -13,8 +15,8 @@ function Header({ rol }) {
   return (
 
         <div>
-          {rol === 'admin' && (
-            <div>
+          {rol === 'administrador' && (
+        <div>
         {/* Navbar principal */}
         <Navbar className="navbar-color" variant="dark" expand="md">
           <Container>

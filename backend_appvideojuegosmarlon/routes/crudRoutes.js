@@ -3,9 +3,35 @@ const router = express. Router();
 
 module.exports = (db) => { 
 
-//Cliente----------------------------------------------------------------------------------------------------------------
-  /*   curl http://localhost:5000/crud/getClientes */
+//Usuario en el Login---------------------------------------------------------------------------------------------------
 
+// Ruta para verificar las credenciales y obtener el rol del usuario
+router.post('/login', (req, res) => {
+    const { nombre_Usuario, apellido, contraseña } = req.body;
+
+    if (!nombre_Usuario || !apellido || !contraseña) {
+    return res.status(400).json({ error: 'Nombre de usuario, apellido y contraseña son obligatorios' });
+    }
+
+    // Realizar la consulta para verificar las credenciales en la base de datos
+    const sql = `SELECT rol FROM Usuario WHERE nombre_Usuario = ? AND apellido = ? AND contraseña = ?`;
+    db.query(sql, [nombre_Usuario, apellido, contraseña], (err, result) => {
+    if (err) {
+        console.error('Error al verificar credenciales:', err);
+        return res.status(500).json({ error: 'Error al verificar credenciales' });
+    }
+
+    if (result.length === 1) {
+        const { rol } = result[0];
+        res.json({ rol }); // Devolver el rol si las credenciales son correctas
+    } else {
+        res.status(401).json({ error: 'Credenciales incorrectas' });
+    }
+    });
+});
+
+  //Cliente----------------------------------------------------------------------------------------------------------------
+  //curl http://localhost:5000/crud/getClientes */
 
     // Ruta para obtener todos los clientes
 router.get('/getClientes', (req, res) => {
@@ -23,6 +49,10 @@ router.get('/getClientes', (req, res) => {
         }
     });
 });
+
+  //Sentencia 
+  //curl http://localhost:5000/crud/readClientes
+  //--------------------------------------------------------------------------------------
 
 // Ruta para crear un nuevo cliente
 router.post('/createCliente', (req, res) => {
@@ -50,6 +80,10 @@ router.post('/createCliente', (req, res) => {
     });
 });
 
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" " http://localhost:5000/crud/createClientes
+  //----------------------------------------------------------------------------------------
+
 // Ruta para actualizar un cliente
 router.put('/updateCliente/:id', (req, res) => {
         const id_cliente = req.params.id;
@@ -73,8 +107,10 @@ router.put('/updateCliente/:id', (req, res) => {
     });
 });
 
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" " http://localhost:5000/crud/updateClientes/1
+  //-------------------------------------------------------------------------------------
 
-    
   // Ruta para eliminar un cliente
 router.delete('/deleteCliente/:id', (req, res) => {
     const id = req.params.id;
@@ -90,38 +126,11 @@ router.delete('/deleteCliente/:id', (req, res) => {
         }
     });
     });
-    
 
-
-//Usuario en el Login---------------------------------------------------------------------------------------------------
-
-// Ruta para verificar las credenciales y obtener el rol del usuario
-router.post('/login', (req, res) => {
-        const { nombre_Usuario, apellido, contrasena } = req.body;
-    
-        if (!nombre_Usuario || !apellido || !contrasena) {
-        return res.status(400).json({ error: 'Nombre de usuario, apellido y contraseña son obligatorios' });
-        }
-    
-        // Realizar la consulta para verificar las credenciales en la base de datos
-        const sql = `SELECT rol FROM Usuario WHERE nombre_Usuario = ? AND apellido = ? AND contrasena = ?`;
-        db.query(sql, [nombre_Usuario, apellido, contrasena], (err, result) => {
-        if (err) {
-            console.error('Error al verificar credenciales:', err);
-            return res.status(500).json({ error: 'Error al verificar credenciales' });
-        }
-    
-        if (result.length === 1) {
-            const { rol } = result[0];
-            res.json({ rol }); // Devolver el rol si las credenciales son correctas
-        } else {
-            res.status(401).json({ error: 'Credenciales incorrectas' });
-        }
-        });
-    });
-
-    
-
+  //Categoria----------------------------------------------------------------------------------------------------------------  
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deleteCategoria/1
+  //---------------------------------------------------------------------------------------
 
   // Ruta para leer registros
     // Ruta para leer registros
@@ -142,9 +151,10 @@ router.post('/login', (req, res) => {
         });
     });
 
+  //Sentencia
+  //curl http://localhost:5000/crud/readCategoria
 
-    //Categoria----------------------------------------------------------------------------------------------------------
-      // Ruta para crear un nuevo registro con ID específico en la tabla Categoria
+    // Ruta para crear un nuevo registro con ID específico en la tabla Categoria
     router.post('/createCategoria', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
     const { nombre } = req.body;
@@ -170,7 +180,11 @@ router.post('/login', (req, res) => {
     });
     });
 
-        // Ruta para actualizar un registro existente por ID
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" " http://localhost:5000/crud/createCategoria
+  //----------------------------------------------------------------------------------------
+
+// Ruta para actualizar un registro existente por ID
     router.put('/updateCategoria/:id_categoria', (req, res) => {
         // Obtén el ID del registro a actualizar desde los parámetros de la URL
         const id_categoria = req.params.id_categoria;
@@ -204,8 +218,11 @@ router.post('/login', (req, res) => {
         });
     });
 
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" " http://localhost:5000/crud/updateCategoria/1
+  //-------------------------------------------------------------------------------------
 
-    // Ruta para eliminar un registro existente por ID en la tabla Categoria
+// Ruta para eliminar un registro existente por ID en la tabla Categoria
     router.delete('/deleteCategoria/:id_categoria', (req, res) => {
     // Obtén el ID del registro a eliminar desde los parámetros de la URL
     const id_categoria = req.params.id_categoria;
@@ -224,6 +241,11 @@ router.post('/login', (req, res) => {
     }
     });
 });
+
+  //Producto----------------------------------------------------------------------------------------------------------------  
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deleteProducto
+  //----------------------------------------------------------------------------------
 
 // Ruta para leer registros //
 //Ruta para leer la tabla producto de la Base de Datos--------------------------------
@@ -244,8 +266,7 @@ router.post('/login', (req, res) => {
     });
 });
 
-
-//Producto----------------------------------------------------------------------------------------------------------------
+//Sentencia 
 /* curl http://localhost:5000/crud/getProducto   */
 
 // Ruta para obtener todos los productos
@@ -265,6 +286,10 @@ router.get('/readProducto', (req, res) => {
     });
 });
     
+  //Sentencia 
+  //curl http://localhost:5000/crud/readProducto
+  //--------------------------------------------------------------------------------------
+
     // Ruta para crear un nuevo producto
 router.post('/createProducto', (req, res) => {
         // Recibe los datos del nuevo producto desde el cuerpo de la solicitud (req.body)
@@ -290,10 +315,16 @@ router.post('/createProducto', (req, res) => {
         }
     });
 });
-    
-    // Ruta para actualizar un producto
+
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" " http://localhost:5000/crud/createProducto
+  //----------------------------------------------------------------------------------------
+
+// Ruta para actualizar un producto
 router.put('/updateProducto/:id_producto', (req, res) => {
         const id_producto = req.params.id_producto;
+
+        // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
         const { id_categoria, descripcion, nombreProducto, precio, Stock } = req.body;
     
         // Verificar si los campos obligatorios están presentes en el cuerpo de la solicitud
@@ -301,11 +332,15 @@ router.put('/updateProducto/:id_producto', (req, res) => {
         return res.status(400).json({ error: 'Todos los campos son obligatorios' });
         }
     
-        const sql = `UPDATE Producto 
+        // Realiza la consulta SQL para actualizar el registro por ID
+        const sql = `
+        UPDATE Producto 
         SET id_categoria = ?, descripcion = ?, nombreProducto = ?, precio = ?, Stock = ? 
         WHERE id_producto = ?`;
+
         const values = [id_categoria, descripcion, nombreProducto, precio, Stock, id_producto];
     
+        // Ejecuta la consulta
         db.query(sql, values, (err, result) => {
         if (err) {
             console.error('Error al actualizar el producto:', err);
@@ -315,13 +350,21 @@ router.put('/updateProducto/:id_producto', (req, res) => {
         }
     });
 });
-    
+
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" "http://localhost:5000/crud/updateProducto/1
+  //-------------------------------------------------------------------------------------
+
     // Ruta para eliminar un producto
     router.delete('/deleteProducto/:id', (req, res) => {
+
+        // Obtén el ID del registro a eliminar desde los parámetros de la URL
         const id = req.params.id;
     
+        // Realiza la consulta SQL para eliminar el registro por ID
         const sql = `DELETE FROM Producto WHERE id_producto = ?`;
     
+        // Ejecuta la consulta
         db.query(sql, [id], (err, result) => {
         if (err) {
             console.error('Error al eliminar el producto:', err);
@@ -333,305 +376,124 @@ router.put('/updateProducto/:id_producto', (req, res) => {
 });
     
 
+  //Venta----------------------------------------------------------------------------------------------------------------  
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deleteVenta/1
+  //---------------------------------------------------------------------------------------
 
-// Ruta para leer registros de la tabla Venta
-router.get('/readVenta', (req, res) => {
-    // Utiliza la instancia de la base de datos pasada como parámetro
-    // Realizar una consulta SQL para seleccionar todos los registros
-    const sql = 'SELECT * FROM Venta';
+    // Ruta para leer registros
+    // Ruta para leer registros de la tabla Venta
+    router.get('/readVenta', (req, res) => {
+        // Utiliza la instancia de la base de datos pasada como parámetro
+        // Realizar una consulta SQL para seleccionar todos los registros
+        const sql = 'SELECT * FROM Venta';
 
-   // Ejecutar la consulta
-    db.query(sql, (err, result) => {
-        if (err) {
-            console.error('Error al leer registros de la tabla Venta:', err);
-            res.status(500).json({ error: 'Error al leer registros de la tabla Venta' });
-        } else {
-        // Devolver los registros en formato JSON como respuesta
-            res.status(200).json(result);
-        }
+    // Ejecutar la consulta
+        db.query(sql, (err, result) => {
+            if (err) {
+                console.error('Error al leer registros de la tabla Venta:', err);
+                res.status(500).json({ error: 'Error al leer registros de la tabla Venta' });
+            } else {
+            // Devolver los registros en formato JSON como respuesta
+                res.status(200).json(result);
+            }
+        });
     });
-});
 
+  //Sentencia
+  //curl http://localhost:5000/crud/readVenta
+  //---------------------------------------------------------------------------------------------------------------------
 
 //Venta------------------------------------------------------------------------------------------------------------------
   // Ruta para crear un nuevo registro con ID específico en la tabla venta
-router.post('/createVenta', (req, res) => {
-    // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { id_usuario, nombreCliente, id_producto, fecha } = req.body;
+    router.post('/createVenta', (req, res) => {
+        // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
+        const { id_cliente, id_producto, fecha } = req.body;
 
-    if (!id_usuario || !nombreCliente || !id_producto || !fecha) {
-        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-    }
-
-    // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO Venta (id_usuario, nombreCliente, id_producto, fecha) VALUES (?, ?, ?, ?)`;
-    const values = [id_usuario, nombreCliente, id_producto, fecha];
-
-    // Ejecuta la consulta
-    db.query(sql, values, (err, result) => {
-        if (err) {
-            console.error('Error al insertar un registro en la tabla Venta:', err);
-            res.status(500).json({ error: 'Error al insertar un registro en la tabla Venta' });
-        } else {
-        // Devuelve un mensaje como respuesta
-            res.status(201).json({ message: 'Registro agregado con éxito' });
+        // Verifica si se proporcionaron los datos necesarios
+        if (!id_cliente || !id_producto || !fecha) {
+            return res.status(400).json({ error: 'Todos los campos son obligatorios' });
         }
+
+        // Realiza la consulta SQL para insertar un nuevo registro con ID específico
+        const sql = `INSERT INTO Venta (id_cliente, id_producto, fecha) VALUES (?, ?, ?)`;
+        const values = [id_cliente, id_producto, fecha];
+
+        // Ejecuta la consulta
+        db.query(sql, values, (err, result) => {
+            if (err) {
+                console.error('Error al insertar un registro en la tabla Venta:', err);
+                res.status(500).json({ error: 'Error al insertar un registro en la tabla Venta' });
+            } else {
+            // Devuelve un mensaje como respuesta
+                res.status(200).json({ message: 'Registro agregado con éxito' });
+            }
+        });
     });
-});
+
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" " http://localhost:5000/crud/createVenta
+  //----------------------------------------------------------------------------------------
+
 
 // Ruta para actualizar una registro existente por ID en la tabla venta
-router.put('/updateVenta/:idVenta', (req, res) => {
-    // Obtén el ID del registro a actualizar desde los parámetros de la URL
-    const idVenta = req.params.idVenta;
+    router.put('/updateVenta/:idVenta', (req, res) => {
+        // Obtén el ID del registro a actualizar desde los parámetros de la URL
+        const idVenta = req.params.idVenta;
 
-    // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { id_usuario, nombreCliente, id_producto, fecha } = req.body;
+        // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
+        const { id_cliente, id_producto, fecha } = req.body;
 
 
-    // Verifica si se proporcionaron los datos necesarios    
-    if (!id_usuario || !nombreCliente || !id_producto || !fecha) {
-        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-    }
-
-    // Realiza la consulta SQL para actualizar el registro por ID    
-    const sql = `
-        UPDATE Venta
-        SET id_usuario = ?, nombreCliente = ?, id_producto = ?, fecha = ?
-        WHERE id_venta = ?
-    `;
-
-    const values = [id_usuario, nombreCliente, id_producto, fecha, idVenta];
-
-    // Ejecuta la consulta
-    db.query(sql, values, (err, result) => {
-        if (err) {
-            console.error('Error al actualizar la venta:', err);
-            res.status(500).json({ error: 'Error al actualizar la venta' });
-        } else {
-        // Devuelve un mensaje de éxito
-            res.status(200).json({ message: 'Registro actualizada exitosamente' });
+        // Verifica si se proporcionaron los datos necesarios    
+        if (!id_cliente || !id_producto || !fecha) {
+            return res.status(400).json({ error: 'Todos los campos son obligatorios' });
         }
+
+        // Realiza la consulta SQL para actualizar el registro por ID    
+        const sql = `
+            UPDATE Venta
+            SET id_cliente = ?, id_producto = ?, fecha = ?
+            WHERE id_venta = ?
+        `;
+
+        const values = [id_cliente, id_producto, fecha, idVenta];
+
+        // Ejecuta la consulta
+        db.query(sql, values, (err, result) => {
+            if (err) {
+                console.error('Error al actualizar la venta:', err);
+                res.status(500).json({ error: 'Error al actualizar la venta' });
+            } else {
+            // Devuelve un mensaje de éxito
+                res.status(200).json({ message: 'Registro actualizada exitosamente' });
+            }
+        });
     });
-});
+
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" " http://localhost:5000/crud/updateVenta/1
+  //-------------------------------------------------------------------------------------
 
 // Ruta para eliminar una venta existente por ID en la tabla Venta
-router.delete('/deleteVenta/:idVenta', (req, res) => {
-    // Obtén el ID del registro a eliminar desde los parámetros de la URL
-    const idVenta = req.params.idVenta;
+    router.delete('/deleteVenta/:idVenta', (req, res) => {
+        // Obtén el ID del registro a eliminar desde los parámetros de la URL
+        const idVenta = req.params.idVenta;
 
-    // Realiza la consulta SQL para eliminar el registro por ID
-    const sql = 'DELETE FROM Venta WHERE id_venta = ?';
+        // Realiza la consulta SQL para eliminar el registro por ID
+        const sql = 'DELETE FROM Venta WHERE id_venta = ?';
 
-    // Ejecuta la consulta
-    db.query(sql, [idVenta], (err, result) => {
-        if (err) {
-            console.error('Error al eliminar un registro de la tabla Venta:', err);
-            res.status(500).json({ error: 'Error al eliminar un registro de la tabla Venta' });
-        } else {
-        // Devuelve un mensaje de éxito
-            res.status(200).json({ message: 'Registro eliminada exitosamente' });
-        }
+        // Ejecuta la consulta
+        db.query(sql, [idVenta], (err, result) => {
+            if (err) {
+                console.error('Error al eliminar un registro de la tabla Venta:', err);
+                res.status(500).json({ error: 'Error al eliminar un registro de la tabla Venta' });
+            } else {
+            // Devuelve un mensaje de éxito
+                res.status(200).json({ message: 'Registro eliminada exitosamente' });
+            }
+        });
     });
-});
-
-
-//Detalle----------------------------------------------------------------------------------------------------------------
-// Ruta para leer registros de la tabla Detalle
-router.get('/readDetalle', (req, res) => {
-    // Utiliza la instancia de la base de datos pasada como parámetro
-    // Realizar una consulta SQL para seleccionar todos los registros
-    const sql = 'SELECT * FROM Detalle';
-
-    // Ejecutar la consulta
-    db.query(sql, (err, result) => {
-        if (err) {
-            console.error('Error al leer registros de la tabla Detalle:', err);
-            res.status(500).json({ error: 'Error al leer registros de la tabla Detalle' });
-        } else {
-        // Devolver los registros en formato JSON como respuesta
-            res.status(200).json(result);
-        }
-    });
-});
-
-// Ruta para crear un nuevo detalle
-router.post('/createDetalle', (req, res) => {
-    // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { id_venta, id_producto, cantidad, precio } = req.body;
-
-    // Verifica si se proporcionaron los datos necesarios
-    if (!id_venta || !id_producto || !cantidad || !precio) {
-        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-    }
-
-    // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO Detalle (id_venta, id_producto, cantidad, precio) VALUES (?, ?, ?, ?)`;
-    const values = [id_venta, id_producto, cantidad, precio];
-
-    // Ejecuta la consulta
-    db.query(sql, values, (err, result) => {
-        if (err) {
-            console.error('Error al insertar un detalle:', err);
-            res.status(500).json({ error: 'Error al insertar un registro en la tabla Detalle' });
-        } else {
-        // Devuelve un mensaje como respuesta
-            res.status(201).json({ message: 'Registro agregado exitosamente' });
-        }
-    });
-});
-
-// Ruta para actualizar un detalle existente por número de detalle
-router.put('/updateDetalle/:numDetalle', (req, res) => {
-    // Obtén el ID del registro a actualizar desde los parámetros de la URL
-    const numDetalle = req.params.numDetalle;
-
-    // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { id_venta, id_producto, cantidad, precio } = req.body;
-
-    // Verifica si se proporcionaron los datos necesarios
-    if (!id_venta || !id_producto || !cantidad || !precio) {
-        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-    }
-
-    // Realiza la consulta SQL para actualizar el registro por ID
-    const sql = `
-        UPDATE Detalle
-        SET id_venta = ?, id_producto = ?, cantidad = ?, precio = ?
-        WHERE num_detalle = ?
-    `;
-
-    const values = [id_venta, id_producto, cantidad, precio, numDetalle];
-
-    // Ejecuta la consulta
-    db.query(sql, values, (err, result) => {
-        if (err) {
-            console.error('Error al actualizar un registro de la tabla Detalle:', err);
-            res.status(500).json({ error: 'Error al actualizar un registro dela tabla Detalle' });
-        } else {
-        // Devuelve un mensaje de éxito
-            res.status(200).json({ message: 'Registro actualizado exitosamente' });
-        }
-    });
-});
-
-// Ruta para eliminar un detalle existente por ID en la tabla Detalle
-router.delete('/deleteDetalle/:numDetalle', (req, res) => {
-    // Obtén el ID del registro a eliminar desde los parámetros de la URL
-    const numDetalle = req.params.numDetalle;
-
-    // Realiza la consulta SQL para eliminar el registro por ID
-    const sql = 'DELETE FROM Detalle WHERE num_detalle = ?';
-
-    // Ejecuta la consulta
-    db.query(sql, [numDetalle], (err, result) => {
-        if (err) {
-            console.error('Error al eliminar un registro de la tabla Detalle:', err);
-            res.status(500).json({ error: 'Error al eliminar un un registro de la tabla Detalle' });
-        } else {
-        // Devuelve un mensaje de éxito
-            res.status(200).json({ message: 'Registro eliminado exitosamente' });
-        }
-    });
-});
-
-
-// Ruta para leer registros //
-// Ruta para leer registros de la tabla Bitácora
-router.get('/readBitacora', (req, res) => {
-    // Utiliza la instancia de la base de datos pasada como parámetro
-    // Realizar una consulta SQL para seleccionar todos los registros
-    const sql = 'SELECT * FROM Bitacora';
-
-    db.query(sql, (err, result) => {
-        if (err) {
-            console.error('Error al leer registros de la tabla Bitácora:', err);
-            res.status(500).json({ error: 'Error al leer registros de la tabla Bitácora' });
-        } else {
-        // Devolver los registros en formato JSON como respuesta
-            res.status(200).json(result);
-        }
-    });
-});
-
-
-//Bitácora-----------------------------------------------------------------------------------------------------------------
-// Ruta para crear un nuevo registro en la Bitácora
-router.post('/createBitacora', (req, res) => {
-    
-    // Verifica si se proporcionaron los datos necesarios
-    // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { evento, fecha_hora } = req.body;
-
-    // Verifica si se proporcionaron los datos necesarios
-    if (!evento || !fecha_hora) {
-        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-    }
-
-    // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO Bitacora (evento, fecha_hora) VALUES (?, ?)`;
-    const values = [evento, fecha_hora];
-
-    // Ejecuta la consulta
-    db.query(sql, values, (err, result) => {
-        if (err) {
-            console.error('Error al insertar un registro en la Bitácora:', err);
-            res.status(500).json({ error: 'Error al insertar un registro en la Bitácora' });
-        } else {
-        // Devuelve un mensaje como respuesta
-            res.status(201).json({ message: 'Registro de Bitácora agregado exitosamente' });
-        }
-    });
-});
-
-// Ruta para actualizar un registro de la Bitácora existente por ID de Bitácora
-router.put('/updateBitacora/:idBitacora', (req, res) => {
-    // Obtén el ID del registro a actualizar desde los parámetros de la URL
-    const idBitacora = req.params.idBitacora;
-
-    // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { evento, fecha_hora } = req.body;
-
-    // Verifica si se proporcionaron los datos necesarios
-    if (!evento || !fecha_hora) {
-        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-    }
-
-    // Realiza la consulta SQL para actualizar el registro por ID
-    const sql = `
-        UPDATE Bitacora
-        SET evento = ?, fecha_hora = ?
-        WHERE id_bitacora = ?
-    `;
-
-    const values = [evento, fecha_hora, idBitacora];
-
-    db.query(sql, values, (err, result) => {
-        if (err) {
-            console.error('Error al actualizar el registro de Bitácora:', err);
-            res.status(500).json({ error: 'Error al actualizar el registro de Bitácora' });
-        } else {
-            res.status(200).json({ message: 'Registro de Bitácora actualizado exitosamente' });
-        }
-    });
-});
-
-// Ruta para eliminar un registro de la Bitácora existente por ID de Bitácora
-router.delete('/deleteBitacora/:idBitacora', (req, res) => {
-    const idBitacora = req.params.idBitacora;
-
-    const sql = 'DELETE FROM Bitacora WHERE id_bitacora = ?';
-
-    db.query(sql, [idBitacora], (err, result) => {
-        if (err) {
-            console.error('Error al eliminar un registro de Bitácora:', err);
-            res.status(500).json({ error: 'Error al eliminar un registro de Bitácora' });
-        } else {
-            res.status(200).json({ message: 'Registro de Bitácora eliminado exitosamente' });
-        }
-    });
-});
-
-
 
     return router;
 };

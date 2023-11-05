@@ -1,28 +1,15 @@
 CREATE DATABASE IF NOT EXISTS BDVideojuegosMarlon;
 USE BDVideojuegosMarlon;
 
-/* Tabla de Usuarios para el Login*/
+/*Inicio de seccion Login*/
+/* Tabla de Usuario*/
 CREATE TABLE Usuario (
-  id_Usuario INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  nombre_Usuario VARCHAR(30) NOT NULL,
+  id_Usuario INT NOT NULL PRIMARY KEY AUTO_INCREMENT, /*Autoincrementable*/
+  nombre_Usuario VARCHAR(20) NOT NULL,
   apellido VARCHAR(20) NOT NULL,
-  contrasena VARCHAR(16) NOT NULL,
-  rol VARCHAR(20) NOT NULL
+  contraseña VARCHAR(8) NOT NULL,
+  Rol VARCHAR(20) NOT NULL
 );
-INSERT INTO Usuario (nombre_Usuario, apellido, contrasena, rol) VALUES ('Mauricio', 'Rubio', '202322', 'admin');
-SELECT * FROM Usuario;
-
-/* Tabla de Usuarios */
-CREATE TABLE Usuario (
- id_Usuario INT NOT NULL AUTO_INCREMENT,
- nombre VARCHAR(20) NOT NULL,
- apellido VARCHAR(20) NOT NULL,
- correo VARCHAR(50) NOT NULL,
- telefono VARCHAR(8),
- nombreUsuario VARCHAR(20) NOT NULL,
- contraseña VARCHAR(10) NOT NULL,
- PRIMARY KEY (id_Usuario)
- );
 
  /* Tabla de Clientes */
 CREATE TABLE Cliente (
@@ -55,11 +42,10 @@ CREATE TABLE Producto(
 /* Tabla de Ventas */
 CREATE TABLE Venta(
     id_venta INT NOT NULL AUTO_INCREMENT,
-    id_usuario INT NOT NULL,
     id_cliente INT NOT NULL,
     id_producto INT NOT NULL,
     fecha DATE NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES Usuario (id_Usuario),
+    FOREIGN KEY (id_cliente) REFERENCES Usuario (id_Usuario),
     FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente),
     PRIMARY KEY (id_venta)
 );
