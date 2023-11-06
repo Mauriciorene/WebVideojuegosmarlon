@@ -3,7 +3,7 @@ import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel } from 'react
 import Header from '../components/Header';
 import { FaTrashCan, FaPencil } from 'react-icons/fa6';
 
-function ClienteList() {
+function ClienteList({Rol}) {
   const [clientes, setClientes] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedCliente, setSelectedCliente] = useState({});
@@ -106,9 +106,9 @@ function ClienteList() {
 
   return (
     <div>
-      <Header />
+      <Header Rol={ Rol } />
 
-      <Card className="m-3">
+      <Card className="margen-contenedor">
         <Card.Body>
           <Card.Title className="mb-3">Listado de Clientes</Card.Title>
 

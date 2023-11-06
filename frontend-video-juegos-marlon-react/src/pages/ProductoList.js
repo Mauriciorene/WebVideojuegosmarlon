@@ -3,7 +3,7 @@ import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'reac
 import Header from '../components/Header';
 import { FaTrashCan, FaPencil } from 'react-icons/fa6';
 
-function ProductoList() {
+function ProductoList({Rol}) {
   const [productos, setProductos] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedProducto, setSelectedProducto] = useState({});
@@ -13,16 +13,47 @@ function ProductoList() {
     precio: '',
     Stock: '',
     id_categoria: '',
+    imagen: ''
   });
 
   //Variables de estado de categoria
   const [categorias, setCategorias] = useState([]); 
 
-  const [searchQuery, setSearchQuery] = useState('');
+  useEffect(() => {
+    // Realiza una solicitud a tu ruta para obtener las especialidades
+    fetch('http://localhost:5000/crud/readcategoria')
+      .then(response => response.json())
+      .then(data => {
+        // Actualiza el estado con las especialidades obtenidas
+        setCategorias(data);
+      })
+      .catch(error => {
+        console.error('Error al obtener las categorías.', error);
+      });
+  }, []);
+
+  const handleImagenChange = (event) => {
+    const file = event.target.files[0]; // Obtener el primer archivo seleccionado
   
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = reader.result; // Obtener la imagen en formato base64
+      setFormData({
+        ...formData,
+        imagen: base64String
+      });
+    }; 
+    if (file) {
+      reader.readAsDataURL(file); // Lee el contenido del archivo como base64
+    }
   };
+
+      // Crear busqueda
+      const [searchQuery, setSearchQuery] = useState('');
+  
+      const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+      };
 
   const filteredProductos = productos.filter((producto) => {
     // Convierte los valores de los campos a minúsculas para realizar una búsqueda insensible a mayúsculas y minúsculas
@@ -47,6 +78,7 @@ function ProductoList() {
       precio: producto.precio,
       Stock: producto.Stock,
       id_categoria: producto.id_categoria,
+      imagen: producto.imagen
     });
     setShowModal(true);
   };
@@ -129,9 +161,9 @@ function ProductoList() {
 
   return (
     <div>
-      <Header />
+      <Header Rol={ Rol }/>
 
-      <Card className="m-3">
+      <Card className="margen-contenedor">
         <Card.Body>
           <Card.Title className="mb-3">Listado de Productos</Card.Title>
 
@@ -148,7 +180,7 @@ function ProductoList() {
             </Col>
           </Row>
 
-          <Table striped bordered hover>
+          <Table striped bordered hover responsive>
             <thead>
               <tr>
                 <th>ID</th>
@@ -157,6 +189,7 @@ function ProductoList() {
                 <th>Precio</th>
                 <th>Stock</th>
                 <th>Categoria</th>
+                <th>Imagen</th>
               </tr>
             </thead>
             <tbody>
@@ -169,6 +202,10 @@ function ProductoList() {
                   <td>{producto.Stock}</td>
                   <td>{producto.id_categoria}</td>
                   <td>
+                  {/* Muestra la imagen en base64 */}
+                  <img src={producto.imagen} alt={producto.nombre} style={{ width: '50px' }} />
+                </td>
+                <td>
                     <Button variant="success" onClick={() => openModal(producto)}> <FaPencil /></Button>
                     <Button variant="danger" onClick={() => handleDelete(producto.id_producto)}><FaTrashCan /></Button>
                   </td>
@@ -184,6 +221,7 @@ function ProductoList() {
           <Modal.Title>Actualizar Producto</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+
           <Card className="mt-3">
             <Card.Body>
               <Card.Title>Registro de Producto</Card.Title>
@@ -255,6 +293,18 @@ function ProductoList() {
                     />
                   </FloatingLabel>
                 </Col>
+
+                <Col sm="12" md="12" lg="12">
+                    <Form.Group controlId="imagen" className="" >
+                      <Form.Control 
+                        type="file" 
+                        accept=".jpg, .png, .jpeg"
+                        size="lg"
+                        name="imagen"
+                        onChange={handleImagenChange}
+                      />
+                    </Form.Group>
+                  </Col>
 
                 </Row>
               </Form>

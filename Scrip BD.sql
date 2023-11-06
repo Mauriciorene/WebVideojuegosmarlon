@@ -6,10 +6,10 @@ USE BDVideojuegosMarlon;
 CREATE TABLE Usuario (
   id_Usuario INT NOT NULL PRIMARY KEY AUTO_INCREMENT, /*Autoincrementable*/
   nombre_Usuario VARCHAR(20) NOT NULL,
-  apellido VARCHAR(20) NOT NULL,
   contraseña VARCHAR(8) NOT NULL,
   Rol VARCHAR(20) NOT NULL
 );
+INSERT INTO Usuario (id_Usuario, nombre_Usuario, contraseña, Rol)  VALUES ('Mauricio','202322', 'administrador');
 
  /* Tabla de Clientes */
 CREATE TABLE Cliente (
@@ -62,6 +62,7 @@ CREATE TABLE Detalle(
     PRIMARY KEY (num_detalle)
 );
 
+/* Creación de la tabla bitácora en la BD BDVideojuegosMarlon */
 /* Tabla de Bitácora */
 CREATE TABLE Bitacora (
     id_bitacora INT NOT NULL AUTO_INCREMENT,

@@ -3,7 +3,7 @@ import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bo
 import Header from '../components/Header';
 import '../styles/App.css';
 
-function Venta() {
+function Venta({ Rol }) {
   const [clientes, setClientes] = useState([]);
   const [productos, setProductos] = useState([]);
   const [idCliente, setIdCliente] = useState('');
@@ -20,7 +20,7 @@ function Venta() {
 
   // Función para cargar la lista de productos desde el servidor
   const loadProductos = () => {
-    fetch('http://localhost:5000/crud/getProducto')
+    fetch('http://localhost:5000/crud/readProducto')
       .then((response) => response.json())
       .then((data) => setProductos(data))
       .catch((error) => console.error('Error al obtener los productos:', error));
@@ -65,9 +65,9 @@ function Venta() {
 
   return (
     <div>
-      <Header />
+      <Header Rol={ Rol }/>
 
-      <Container>
+      <Container className="margen-contenedor">
         <Card className="mt-3">
           <Card.Body>
             <Card.Title>Registro de Venta</Card.Title>

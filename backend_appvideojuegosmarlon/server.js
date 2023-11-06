@@ -6,7 +6,7 @@ const app = express();
 const port = 5000;
 
 // Middleware para analizar el cuerpo de la solicitud en formato JSON
-app.use(express.json());
+app.use(express.json({limit: "50mb"}));
 
 // Configuración de la conexión a la base de datos
 const db = mysql.createConnection({

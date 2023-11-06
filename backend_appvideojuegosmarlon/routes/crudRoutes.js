@@ -7,23 +7,23 @@ module.exports = (db) => {
 
 // Ruta para verificar las credenciales y obtener el rol del usuario
 router.post('/login', (req, res) => {
-    const { nombre_Usuario, apellido, contraseña } = req.body;
+    const { nombre_Usuario, contraseña } = req.body;
 
-    if (!nombre_Usuario || !apellido || !contraseña) {
-    return res.status(400).json({ error: 'Nombre de usuario, apellido y contraseña son obligatorios' });
+    if (!nombre_Usuario || !contraseña) {
+    return res.status(400).json({ error: 'Nombre de usuario y contraseña son obligatorios' });
     }
 
     // Realizar la consulta para verificar las credenciales en la base de datos
-    const sql = `SELECT rol FROM Usuario WHERE nombre_Usuario = ? AND apellido = ? AND contraseña = ?`;
-    db.query(sql, [nombre_Usuario, apellido, contraseña], (err, result) => {
+    const sql = `SELECT Rol FROM usuario WHERE nombre_Usuario = ? AND contraseña = ?`;
+    db.query(sql, [nombre_Usuario, contraseña], (err, result) => {
     if (err) {
         console.error('Error al verificar credenciales:', err);
         return res.status(500).json({ error: 'Error al verificar credenciales' });
     }
 
     if (result.length === 1) {
-        const { rol } = result[0];
-        res.json({ rol }); // Devolver el rol si las credenciales son correctas
+        const { Rol } = result[0];
+        res.json({ Rol }); // Devolver el rol si las credenciales son correctas
     } else {
         res.status(401).json({ error: 'Credenciales incorrectas' });
     }

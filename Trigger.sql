@@ -1,180 +1,142 @@
 /*Usuario--------------------------------------------------------------------------------------------*/
-DELIMITER //
--- Trigger para la tabla 'Usuario' (Inserción)
-DROP TRIGGER IF EXISTS tr_usuario_insert;
-CREATE TRIGGER tr_usuario_insert
-AFTER INSERT ON Usuario
-FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Inserción', current_user(), NOW(), 'Usuario');
-END;
-//
-DELIMITER //
-
-DELIMITER //
--- Trigger para la tabla 'Usuario' (Actualización)
-DROP TRIGGER IF EXISTS tr_usuario_update;
-CREATE TRIGGER tr_usuario_update
-AFTER UPDATE ON Usuario
-FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Actualización', current_user(), NOW(), 'Usuario');
-END;
-//DELIMITER //
 
 /*Cliente--------------------------------------------------------------------------------------------*/
-
+-- Trigger para la tabla Cliente
+-- Trigger para insertar en Cliente
 DELIMITER //
--- Trigger para la tabla 'Cliente' (Inserción)
-DROP TRIGGER IF EXISTS tr_cliente_insert;
-CREATE TRIGGER tr_cliente_insert
+CREATE TRIGGER TriggerInsertCliente
 AFTER INSERT ON Cliente
 FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Inserción', current_user(), NOW(), 'Cliente');
-END;
-//DELIMITER //
+INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+VALUES ('INSERT', current_user(), NOW(), 'Cliente');
+//
+-- Insertar datos en la tabla Cliente
+INSERT INTO Cliente (nombre, apellido, telefono)
+VALUES ('Juan', 'Perez', '12345678');
 
+-- Verificar si se activó el trigger
+SELECT * FROM Bitacora;
+
+-- Trigger para actualizar en Cliente
 DELIMITER //
--- Trigger para la tabla 'Cliente' (Actualización)
-DROP TRIGGER IF EXISTS tr_cliente_update;
-CREATE TRIGGER tr_cliente_update
-AFTER UPDATE ON Cliente
+CREATE TRIGGER TriggerUpdateCliente
+BEFORE UPDATE ON Cliente
 FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Actualización', current_user(), NOW(), 'Cliente');
-END;
-//DELIMITER //
+INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+VALUES ('UPDATE', current_user(), NOW(), 'Cliente');
+//
 
+-- Trigger para eliminar en Cliente
 DELIMITER //
--- Trigger para la tabla 'Cliente' (Eliminación)
-DROP TRIGGER IF EXISTS tr_cliente_delete;
-CREATE TRIGGER tr_cliente_delete
+CREATE TRIGGER TriggerDeleteCliente
 AFTER DELETE ON Cliente
 FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Eliminación', current_user(), NOW(), 'Cliente');
-END;
-//DELIMITER //
+INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+VALUES ('DELETE', current_user(), NOW(), 'Cliente');
+//
 
 /*Categoría------------------------------------------------------------------------------------------*/
-
+-- Triggers de la tabla Categoria
+-- Trigger para insertar en Categoria
 DELIMITER //
--- Trigger para la tabla 'Categoria' (Inserción)
-DROP TRIGGER IF EXISTS tr_categoria_insert;
-CREATE TRIGGER tr_categoria_insert
+CREATE TRIGGER TriggerInsertCategoria
 AFTER INSERT ON Categoria
 FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Inserción', current_user(), NOW(), 'Categoria');
-END;
-//DELIMITER //
+INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+VALUES ('INSERT', current_user(), NOW(), 'Categoria');
+//
+-- Insertar datos en la tabla Categoria
+INSERT INTO Categoria (nombre)
+VALUES ('Electrónicos');
 
+-- Verificar si se activó el trigger
+SELECT * FROM Bitacora;
+
+-- Trigger para actualizar en Categoria
 DELIMITER //
--- Trigger para la tabla 'Categoria' (Actualización)
-DROP TRIGGER IF EXISTS tr_categoria_update;
-CREATE TRIGGER tr_categoria_update
-AFTER UPDATE ON Categoria
+CREATE TRIGGER TriggerUpdateCategoria
+BEFORE UPDATE ON Categoria
 FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Actualización', current_user(), NOW(), 'Categoria');
-END;
-//DELIMITER //
+INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+VALUES ('UPDATE', current_user(), NOW(), 'Categoria');
+//
 
+-- Trigger para eliminar en Categoria
 DELIMITER //
--- Trigger para la tabla 'Categoria' (Eliminación)
-DROP TRIGGER IF EXISTS tr_categoria_delete;
-CREATE TRIGGER tr_categoria_delete
+CREATE TRIGGER TriggerDeleteCategoria
 AFTER DELETE ON Categoria
 FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Eliminación', current_user(), NOW(), 'Categoria');
-END;
-//DELIMITER //
+INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+VALUES ('DELETE', current_user(), NOW(), 'Categoria');
+//
 
 /*Producto-------------------------------------------------------------------------------------------*/
-
+-- Trigger para la tabla Producto
+-- Trigger para insertar en Producto
 DELIMITER //
--- Trigger para la tabla 'Producto' (Inserción)
-DROP TRIGGER IF EXISTS tr_producto_insert;
-CREATE TRIGGER tr_producto_insert
+CREATE TRIGGER TriggerInsertProducto
 AFTER INSERT ON Producto
 FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Inserción', current_user(), NOW(), 'Producto');
-END;
-//DELIMITER //
+INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+VALUES ('INSERT', current_user(), NOW(), 'Producto');
+//
+-- Insertar datos en la tabla Producto
+INSERT INTO Producto (id_categoria, descripcion, nombreProducto, precio, Stock)
+VALUES (1, 'Descripción del producto', 'Producto de Prueba', 10, 30);
 
+-- Verificar si se activó el trigger
+SELECT * FROM Bitacora;
+
+-- Trigger para actualizar en Producto
 DELIMITER //
--- Trigger para la tabla 'Producto' (Actualización)
-DROP TRIGGER IF EXISTS tr_producto_update;
-CREATE TRIGGER tr_producto_update
-AFTER UPDATE ON Producto
+CREATE TRIGGER TriggerUpdateProducto
+BEFORE UPDATE ON Producto
 FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Actualización', current_user(), NOW(), 'Producto');
-END;
-//DELIMITER //
+INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+VALUES ('UPDATE', current_user(), NOW(), 'Producto');
+//
 
+-- Trigger para eliminar en Producto
 DELIMITER //
--- Trigger para la tabla 'Producto' (Eliminación)
-DROP TRIGGER IF EXISTS tr_producto_delete;
-CREATE TRIGGER tr_producto_delete
+CREATE TRIGGER TriggerDeleteProducto
 AFTER DELETE ON Producto
 FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Eliminación', current_user(), NOW(), 'Producto');
-END;
-//DELIMITER //
+INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+VALUES ('DELETE', current_user(), NOW(), 'Producto');
+//
 
 /*Venta----------------------------------------------------------------------------------------------*/
-
+-- Trigger para la tabla Venta
+-- Trigger para insertar en Venta
 DELIMITER //
--- Trigger para la tabla 'Venta' (Inserción)
-DROP TRIGGER IF EXISTS tr_venta_insert;
-CREATE TRIGGER tr_venta_insert
+CREATE TRIGGER TriggerInsertVenta
 AFTER INSERT ON Venta
 FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Inserción', current_user(), NOW(), 'Venta');
-END;
-//DELIMITER //
+INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+VALUES ('INSERT', current_user(), NOW(), 'Venta');
+//
+-- Insertar datos en la tabla Venta (Asegúrate de tener los ID de cliente y producto existentes)
+INSERT INTO Venta (id_cliente, id_producto, fecha)
+VALUES (1, 1, NOW());
 
+-- Verificar si se activó el trigger
+SELECT * FROM Bitacora;
+
+
+-- Trigger para actualizar en Venta
 DELIMITER //
--- Trigger para la tabla 'Venta' (Actualización)
-DROP TRIGGER IF EXISTS tr_venta_update;
-CREATE TRIGGER tr_venta_update
-AFTER UPDATE ON Venta
+CREATE TRIGGER TriggerUpdateVenta
+BEFORE UPDATE ON Venta
 FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Actualización', current_user(), NOW(), 'Venta');
-END;
-//DELIMITER //
+INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+VALUES ('UPDATE', current_user(), NOW(), 'Venta');
+//
 
+-- Trigger para eliminar en Venta
 DELIMITER //
--- Trigger para la tabla 'Venta' (Eliminación)
-DROP TRIGGER IF EXISTS tr_venta_delete;
-CREATE TRIGGER tr_venta_delete
+CREATE TRIGGER TriggerDeleteVenta
 AFTER DELETE ON Venta
 FOR EACH ROW
-BEGIN
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla) VALUES ('Eliminación', current_user(), NOW(), 'Venta');
-END;
-//DELIMITER //
-
-/*Trigger unico*---------------------------------------------------------------------------------------------/
-
-/*1---------------------------------------------------------------------------------------------------------*/
-DELIMITER //
-
--- Trigger para la tabla 'Bitacora' (Inserción)
-CREATE TRIGGER tr_bitacora_insert
-AFTER INSERT ON Bitacora
-FOR EACH ROW
-BEGIN
-  -- Registra la inserción en la bitácora de la tabla de bitácora
-  INSERT INTO Bitacora (transaccion, usuario, fecha, tabla)
-  VALUES ('Inserción en Bitacora', current_user(), NOW(), 'Bitacora');
-END;
+INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+VALUES ('DELETE', current_user(), NOW(), 'Venta');
 //
-DELIMITER ;

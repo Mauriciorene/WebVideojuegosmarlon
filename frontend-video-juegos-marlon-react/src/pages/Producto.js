@@ -3,7 +3,7 @@ import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bo
 import Header from '../components/Header';
 import '../styles/App.css';
 
-function Producto() {
+function Producto({Rol}) {
 
   // Crear un estado para cada campo del formulario
   const [descripcion, setDescripcion] = useState('');
@@ -14,6 +14,20 @@ function Producto() {
   const [categorias, setCategorias] = useState([]); // Estado para almacenar las categorias
   const [id_categoria, setIDCategoria] = useState(''); // Estado para el valor seleccionado
 
+  const [imagen, setImagen] = useState('');
+
+  const handleImagenChange = (event) => {
+    const file = event.target.files[0]; // Obtener el primer archivo seleccionado
+  
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = reader.result; // Obtener la imagen en formato base64
+      setImagen(base64String); // Puedes visualizar la imagen en base64 en la consola para asegurarte de que la conversión se hizo correctamente
+    }; 
+    if (file) {
+      reader.readAsDataURL(file); // Lee el contenido del archivo como base64
+    }
+  };
 
   // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
@@ -26,6 +40,7 @@ function Producto() {
       precio,
       Stock,
       id_categoria,
+      imagen
     };
 
     try {
@@ -71,12 +86,12 @@ function Producto() {
 
   return(
     <div>
-      <Header />
+      <Header Rol={ Rol } />
       
       <Container>
-        <Card className="mt-3">
+        <Card className="margen-contenedor">
           <Card.Body>
-            <Card.Title>Registro de Producto</Card.Title>
+            <Card.Title>Registro de Productos</Card.Title>
             <Form className="mt-3" onSubmit={handleSubmit}>
               <Row className="g-3">
 
@@ -141,6 +156,16 @@ function Producto() {
                   </FloatingLabel>
                 </Col>
 
+                <Col sm="12" md="6" lg="6">
+                  <Form.Group controlId="imagen" className="" >
+                    <Form.Control 
+                      type="file" 
+                      accept=".jpg, .png, .jpeg"
+                      size="lg"
+                      onChange={handleImagenChange}
+                    />
+                  </Form.Group>
+                </Col>
 
               </Row>
               <div className="center-button">

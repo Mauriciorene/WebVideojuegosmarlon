@@ -3,7 +3,7 @@ import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'reac
 import Header from '../components/Header';
 import { FaTrashCan, FaPencil } from 'react-icons/fa6';
 
-function CategoriaList() {
+function CategoriaList({ Rol }) {
   const [categorias, setCategorias] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedCategoria, setSelectedCategoria] = useState({});
@@ -103,9 +103,9 @@ function CategoriaList() {
 
   return (
     <div>
-      <Header />
+      <Header Rol={ Rol } />
 
-      <Card className="m-3">
+      <Card className="margen-contenedor">
         <Card.Body>
           <Card.Title className="mb-3">Listado de Categoria</Card.Title>
 

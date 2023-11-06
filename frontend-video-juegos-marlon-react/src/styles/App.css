@@ -10,3 +10,9 @@
   .center-button {
     text-align: center;
   }
+
+  .margen-contenedor {
+    margin-top: 80px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }

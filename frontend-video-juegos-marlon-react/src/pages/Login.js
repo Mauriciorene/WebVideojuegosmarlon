@@ -6,7 +6,6 @@ const Login = ({ setRol }) => {
   const navigate = useNavigate();
 
   const [nombre_Usuario, setNombre_Usuario] = useState('');
-  const [apellido, setApellido] = useState('');
   const [contraseña, setContrasena] = useState('');
 
   const handleSubmit = async event => {
@@ -15,7 +14,6 @@ const Login = ({ setRol }) => {
     // Objeto con los datos del formulario
     const formData = {
       nombre_Usuario,
-      apellido,
       contraseña
     };
 
@@ -29,12 +27,9 @@ const Login = ({ setRol }) => {
       });
   
       if (response.ok) {
-        const { rol } = await response.json();
-        
-        console.log('Rol establecido:', rol); // Mensaje de depuración
+        const { Rol } = await response.json();
 
-        setRol(rol); // Actualiza el estado del rol solo si las credenciales son correctas
-        
+        setRol(Rol); // Actualiza el estado del rol solo si las credenciales son correctas 
         navigate('/home');
       } else {
         console.log('Credenciales incorrectas');
@@ -66,19 +61,8 @@ const Login = ({ setRol }) => {
                     </FloatingLabel>
                   </Col>
 
-                  <Col sm="12" md="12" lg="12" className="mb-3">
-                    <FloatingLabel controlId="apellido" label="Ingrese su apellido">
-                      <Form.Control
-                        placeholder="Ingrese su apellido"
-                        type="text"
-                        value={apellido}
-                        onChange={(e) => setApellido(e.target.value)}
-                      />
-                    </FloatingLabel>
-                  </Col>
-
                   <Col sm="12" md="12" lg="12">
-                    <FloatingLabel controlId="contrasena" label="Ingrese su contraseña">
+                    <FloatingLabel controlId="contraseña" label="Ingrese su contraseña">
                       <Form.Control
                         placeholder="Ingrese su contraseña"
                         type="password"

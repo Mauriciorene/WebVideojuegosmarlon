@@ -11,6 +11,8 @@ import CategoriaList from './pages/CategoriaList';
 import Venta from './pages/Venta';
 import VentaList from './pages/VentaList';
 import Login from './pages/Login';
+import Estadisticas from './pages/Estadisticas';
+import Galeria from './pages/Galeria';
 
 function App() {
 
@@ -19,17 +21,19 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login rol={userRol} setRol={setUserRol} />} />
-        <Route path="/home" element={<Home rol={userRol} />} />
-        <Route path="/about" element={<About rol={userRol} />} />
-        <Route path="/cliente" element={<Cliente rol={userRol} />} />
-        <Route path="/clienteList" element={<ClienteList rol={userRol} />} />
-        <Route path="/producto" element={<Producto />} rol={userRol} />
-        <Route path="/productoList" element={<ProductoList rol={userRol} />} />
-        <Route path="/Categoria" element={<Categoria />} rol={userRol} />
-        <Route path="/CategoriaList" element={<CategoriaList rol={userRol} />} />
-        <Route path="/Venta" element={<Venta />} rol={userRol} />
-        <Route path="/VentaList" element={<VentaList rol={userRol} />} />
+        <Route path="/" element={<Login Rol={userRol} setRol={setUserRol} />} />
+        <Route path="/home" element={<Home Rol={userRol} />} />
+        <Route path="/about" element={<About Rol={userRol} />} />
+        <Route path="/cliente" element={<Cliente Rol={userRol} />} />
+        <Route path="/clienteList" element={<ClienteList Rol={userRol} />} />
+        <Route path="/galeria" element={<Galeria Rol={userRol} />} />
+        <Route path="/producto" element={<Producto Rol={userRol} />}/>
+        <Route path="/productoList" element={<ProductoList Rol={userRol} />} />
+        <Route path="/Categoria" element={<Categoria Rol={userRol} />}  />
+        <Route path="/CategoriaList" element={<CategoriaList Rol={userRol} />} />
+        <Route path="/Venta" element={<Venta Rol={userRol} />} />
+        <Route path="/VentaList" element={<VentaList Rol={userRol} />} />
+        <Route path="/estadisticas" element={<Estadisticas Rol={userRol} />} />
       </Routes>
     </Router>
   );

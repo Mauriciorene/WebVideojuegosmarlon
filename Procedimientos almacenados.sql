@@ -1,294 +1,159 @@
 /*Procedimientos para la tabla "Usuario"*/
--- Procedimiento Almacenado para Insertar un Nuevo Usuario
-DELIMITER //
-CREATE PROCEDURE InsertarUsuario(
-    IN p_nombre VARCHAR(20),
-    IN p_apellido VARCHAR(20),
-    IN p_correo VARCHAR(50),
-    IN p_telefono VARCHAR(8),
-    IN p_nombreUsuario VARCHAR(20),
-    IN p_contraseña VARCHAR(10)
-)
+/*Procedimiento almacenado para insertar un nuevo Usuario*/
+DELIMITER $
+CREATE PROCEDURE InsertarUsuario (IN nombre VARCHAR(20), IN apellido VARCHAR(20), IN contraseña VARCHAR(8), IN Rol VARCHAR(20))
 BEGIN
-    INSERT INTO Usuario (nombre, apellido, correo, telefono, nombreUsuario, contraseña)
-    VALUES (p_nombre, p_apellido, p_correo, p_telefono, p_nombreUsuario, p_contraseña);
-END;
-//DELIMITER ;
+  INSERT INTO Usuario (nombre_Usuario, apellido, contraseña, Rol) 
+  VALUES (nombre, apellido, contraseña, Rol);
+END $
 
-
--- Procedimiento Almacenado para Actualizar un Usuario
-DELIMITER //
-CREATE PROCEDURE ActualizarUsuario(
-    IN p_idUsuario INT,
-    IN p_nombre VARCHAR(20),
-    IN p_apellido VARCHAR(20),
-    IN p_correo VARCHAR(50),
-    IN p_telefono VARCHAR(8),
-    IN p_nombreUsuario VARCHAR(20),
-    IN p_contraseña VARCHAR(10)
-)
+/*Procedimiento almacenado para actualizar un registro de Usuario*/
+CREATE PROCEDURE ActualizarUsuario (IN id_Usuario INT, IN nombre VARCHAR(20), IN apellido VARCHAR(20), IN contraseña VARCHAR(8), IN Rol VARCHAR(20))
 BEGIN
-    UPDATE Usuario
-    SET nombre = p_nombre, apellido = p_apellido, correo = p_correo, telefono = p_telefono, nombreUsuario = p_nombreUsuario, contraseña = p_contraseña
-    WHERE id_Usuario = p_idUsuario;
-END;
-//DELIMITER ;
+  UPDATE Usuario
+  SET nombre_Usuario = nombre, apellido = apellido, contraseña = contraseña, Rol = Rol
+  WHERE id_Usuario = id_Usuario;
+END $
 
--- Procedimiento Almacenado para Eliminar un Usuario
-DELIMITER //
-CREATE PROCEDURE EliminarUsuario(IN p_idUsuario INT)
+/*Procedimiento almacenado para eliminar un registro de Usuario*/
+CREATE PROCEDURE EliminarUsuario (IN id_Usuario INT)
 BEGIN
-    DELETE FROM Usuario WHERE id_Usuario = p_idUsuario;
-END;
-//DELIMITER ;
+  DELETE FROM Usuario
+  WHERE id_Usuario = id_Usuario;
+END $
 
-
-/*Procedimientos para la tabla "Cliente"*/
-
--- Procedimiento Almacenado para Insertar un Nuevo Cliente
-DELIMITER //
-CREATE PROCEDURE InsertarCliente(
-    IN p_nombre VARCHAR(20),
-    IN p_apellido VARCHAR(20),
-    IN p_telefono VARCHAR(8)
-)
+/*Procedimiento almacenado para Mostrar un registro de Usuario*/
+CREATE PROCEDURE MostrarUsuarios()
 BEGIN
-    INSERT INTO Cliente (nombre, apellido, telefono)
-    VALUES (p_nombre, p_apellido, p_telefono);
-END;
-//DELIMITER ;
+  SELECT id_Usuario, nombre_Usuario, apellido, contraseña, Rol
+  FROM Usuario;
+END $
 
--- Procedimiento Almacenado para Actualizar un Cliente
-DELIMITER //
-CREATE PROCEDURE ActualizarCliente(
-    IN p_idCliente INT,
-    IN p_nombre VARCHAR(20),
-    IN p_apellido VARCHAR(20),
-    IN p_telefono VARCHAR(8)
-)
+/*Procedimientos almacenado para la tabla Cliente-----------------------------------------------------------------------------------------*/
+
+/*Procedimiento almacenado para insertar un Cliente*/
+DELIMITER $
+CREATE PROCEDURE InsertarCliente (IN nombre VARCHAR(20), IN apellido VARCHAR(20), IN telefono VARCHAR(8))
 BEGIN
-    UPDATE Cliente
-    SET nombre = p_nombre, apellido = p_apellido, telefono = p_telefono
-    WHERE id_cliente = p_idCliente;
-END;
-//DELIMITER ;
+  INSERT INTO Cliente (nombre, apellido, telefono) 
+  VALUES (nombre, apellido, telefono);
+END $
 
--- Procedimiento Almacenado para Eliminar un Cliente
-DELIMITER //
-CREATE PROCEDURE EliminarCliente(IN p_idCliente INT)
+/*Procedimiento almacenado para actualizar un registro de Cliente*/
+CREATE PROCEDURE ActualizarCliente (IN id_cliente INT, IN nombre VARCHAR(20), IN apellido VARCHAR(20), IN telefono VARCHAR(8))
 BEGIN
-    DELETE FROM Cliente WHERE id_cliente = p_idCliente;
-END;
-//DELIMITER ;
+  UPDATE Cliente
+  SET nombre = nombre, apellido = apellido, telefono = telefono
+  WHERE id_cliente = id_cliente;
+END $
 
+/*Procedimiento almacenado para eliminar un registro de Cliente*/
+CREATE PROCEDURE EliminarCliente (IN id_cliente INT)
+BEGIN
+  DELETE FROM Cliente
+  WHERE id_cliente = id_cliente;
+END $
+
+/*Procedimiento almacenado para Mostrar un registro de Cliente*/
+CREATE PROCEDURE MostrarClientes()
+BEGIN
+  SELECT id_cliente, nombre, apellido, telefono
+  FROM Cliente;
+END $
  
-/*Procedimientos para la tabla "Categoria"*/
+/*Procedimientos almacenado para la tabla Categoria--------------------------------------------------------------------------*/
 
--- Procedimiento Almacenado para Insertar una Nueva Categoría
-DELIMITER //
-CREATE PROCEDURE InsertarCategoria(
-    IN p_nombre VARCHAR(30)
-)
+/*Procedimiento almacenado para insertar un registro de Categoria*/
+DELIMITER $
+CREATE PROCEDURE InsertarCategoria (IN nombre VARCHAR(30))
 BEGIN
-    INSERT INTO Categoria (nombre)
-    VALUES (p_nombre);
-END;
-//DELIMITER ;
+  INSERT INTO Categoria (nombre) 
+  VALUES (nombre);
+END $
 
--- Procedimiento Almacenado para Actualizar una Categoría
-DELIMITER //
-CREATE PROCEDURE ActualizarCategoria(
-    IN p_idCategoria INT,
-    IN p_nombre VARCHAR(30)
-)
+/*Procedimiento almacenado para actualizar un registro de Categoria*/
+CREATE PROCEDURE ActualizarCategoria (IN id_categoria INT, IN nombre VARCHAR(30))
 BEGIN
-    UPDATE Categoria
-    SET nombre = p_nombre
-    WHERE id_categoria = p_idCategoria;
-END;
-//DELIMITER ;
+  UPDATE Categoria
+  SET nombre = nombre
+  WHERE id_categoria = id_categoria;
+END $
 
--- Procedimiento Almacenado para Eliminar una Categoría
-DELIMITER //
-CREATE PROCEDURE EliminarCategoria(IN p_idCategoria INT)
+/*Procedimiento almacenado para Eliminar un registro de Categoria*/
+CREATE PROCEDURE EliminarCategoria (IN id_categoria INT)
 BEGIN
-    DELETE FROM Categoria WHERE id_categoria = p_idCategoria;
-END;
-//DELIMITER ;
+  DELETE FROM Categoria
+  WHERE id_categoria = id_categoria;
+END $
 
-
-/*Procedimientos para la tabla "Producto"*/
-
--- Procedimiento Almacenado para Insertar un Nuevo Producto
-DELIMITER //
-CREATE PROCEDURE InsertarProducto(
-    IN p_idCategoria INT,
-    IN p_descripcion VARCHAR(100),
-    IN p_nombreProducto VARCHAR(30),
-    IN p_precio FLOAT,
-    IN p_Stock INT
-)
+/*Procedimiento almacenado para Mostrar un registro de Categoria*/
+CREATE PROCEDURE MostrarCategorias()
 BEGIN
-    INSERT INTO Producto (id_categoria, descripcion, nombreProducto, precio, Stock)
-    VALUES (p_idCategoria, p_descripcion, p_nombreProducto, p_precio, p_Stock);
-END;
-//DELIMITER ;
+  SELECT id_categoria, nombre
+  FROM Categoria;
+END $
 
--- Procedimiento Almacenado para Actualizar un Producto
-DELIMITER //
-CREATE PROCEDURE ActualizarProducto(
-    IN p_idProducto INT,
-    IN p_idCategoria INT,
-    IN p_descripcion VARCHAR(100),
-    IN p_nombreProducto VARCHAR(30),
-    IN p_precio FLOAT,
-    IN p_Stock INT
-)
+/*Procedimientos almacenado para la tabla Producto-----------------------------------------------------------------------------------------------------------------------------------*/
+
+/*Procedimiento almacenado para insertar un registro de Producto*/
+DELIMITER $
+CREATE PROCEDURE InsertarProducto (IN id_categoria INT, IN descripcion VARCHAR(100), IN nombreProducto VARCHAR(30), IN precio FLOAT, IN Stock INT)
 BEGIN
-    UPDATE Producto
-    SET id_categoria = p_idCategoria, descripcion = p_descripcion, nombreProducto = p_nombreProducto,
-        precio = p_precio, Stock = p_Stock
-    WHERE id_producto = p_idProducto;
-END;
-//
-DELIMITER ;
+  INSERT INTO Producto (id_categoria, descripcion, nombreProducto, precio, Stock) 
+  VALUES (id_categoria, descripcion, nombreProducto, precio, Stock);
+END $
 
--- Procedimiento Almacenado para Eliminar un Producto
-DELIMITER //
-CREATE PROCEDURE EliminarProducto(IN p_idProducto INT)
+/*Procedimiento almacenado para actualizar un registro de Producto*/
+CREATE PROCEDURE ActualizarProducto (IN id_producto INT, IN id_categoria INT, IN descripcion VARCHAR(100), IN nombreProducto VARCHAR(30), IN precio FLOAT, IN Stock INT)
 BEGIN
-    DELETE FROM Producto WHERE id_producto = p_idProducto;
-END;
-//DELIMITER ;
+  UPDATE Producto
+  SET id_categoria = id_categoria, descripcion = descripcion, nombreProducto = nombreProducto, precio = precio, Stock = Stock
+  WHERE id_producto = id_producto;
+END $
 
-
-/*Procedimientos para la tabla "Venta"*/
-
--- Procedimiento Almacenado para insertar una Venta
-DELIMITER //
-CREATE PROCEDURE InsertarDetalleVenta(
-    IN p_idVenta INT,
-    IN p_idProducto INT,
-    IN p_cantidad INT,
-    IN p_precio FLOAT
-)
+/*Procedimiento almacenado para Eliminar un registro de Producto*/
+CREATE PROCEDURE EliminarProducto (IN id_producto INT)
 BEGIN
-    INSERT INTO Detalle (id_venta, id_producto, cantidad, precio)
-    VALUES (p_idVenta, p_idProducto, p_cantidad, p_precio);
+  DELETE FROM Producto
+  WHERE id_producto = id_producto;
+END $
 
-    -- Actualizar el stock en la tabla Producto
-    UPDATE Producto
-    SET Stock = Stock - p_cantidad
-    WHERE id_producto = p_idProducto;
-END;
-//DELIMITER ;
-
--- Procedimiento Almacenado para Actualizar una Venta 
-DELIMITER //
-CREATE PROCEDURE ActualizarDetalleVenta(
-    IN p_numDetalle INT,
-    IN p_idVenta INT,
-    IN p_idProducto INT,
-    IN p_cantidad INT,
-    IN p_precio FLOAT
-)
+/*Procedimiento almacenado para Mostrar un registro de Producto*/
+CREATE PROCEDURE MostrarProductos()
 BEGIN
-    -- Obtener la cantidad anterior del detalle
-    DECLARE cantidad_anterior INT;
-    SELECT cantidad INTO cantidad_anterior FROM Detalle WHERE num_detalle = p_numDetalle;
+  SELECT id_producto, id_categoria, descripcion, nombreProducto, precio, Stock
+  FROM Producto;
+END $
 
-    -- Actualizar el detalle
-    UPDATE Detalle
-    SET id_venta = p_idVenta, id_producto = p_idProducto, cantidad = p_cantidad, precio = p_precio
-    WHERE num_detalle = p_numDetalle;
 
-    -- Actualizar el stock en la tabla Producto
-    UPDATE Producto
-    SET Stock = Stock + cantidad_anterior - p_cantidad
-    WHERE id_producto = p_idProducto;
-END;
-//DELIMITER ;
+/* Procedimiento Almacenado para Actualizar una Venta ----------------------------------------------------------*/
 
--- Procedimiento Almacenado para Eliminar una Venta --
-DELIMITER //
-CREATE PROCEDURE EliminarDetalleVenta(IN p_numDetalle INT)
+/*Procedimiento almacenado para insertar un registro de Venta*/
+DELIMITER $
+CREATE PROCEDURE InsertarVenta (IN id_cliente INT, IN id_producto INT, IN fecha DATE)
 BEGIN
-    -- Obtener la cantidad del detalle que se va a eliminar
-    DECLARE cantidad_a_eliminar INT;
-    SELECT cantidad INTO cantidad_a_eliminar FROM Detalle WHERE num_detalle = p_numDetalle;
+  INSERT INTO Venta (id_cliente, id_producto, fecha) 
+  VALUES (id_cliente, id_producto, fecha);
+END $
 
-    -- Eliminar el detalle
-    DELETE FROM Detalle WHERE num_detalle = p_numDetalle;
-
-    -- Actualizar el stock en la tabla Producto
-    UPDATE Producto
-    SET Stock = Stock + cantidad_a_eliminar
-    WHERE id_producto = (SELECT id_producto FROM Detalle WHERE num_detalle = p_numDetalle);
-END;
-//DELIMITER ;
-
-
-/*Procedimientos para la tabla "Detalle"*/
-
--- Procedimiento Almacenado para Insertar un Detalle de Venta (Opcional)
-DELIMITER //
-CREATE PROCEDURE InsertarDetalleVenta(
-    IN p_idVenta INT,
-    IN p_idProducto INT,
-    IN p_cantidad INT,
-    IN p_precio FLOAT
-)
+/*Procedimiento almacenado para actualizar un registro de Venta*/
+CREATE PROCEDURE ActualizarVenta (IN id_venta INT, IN id_cliente INT, IN id_producto INT, IN fecha DATE)
 BEGIN
-    INSERT INTO Detalle (id_venta, id_producto, cantidad, precio)
-    VALUES (p_idVenta, p_idProducto, p_cantidad, p_precio);
+  UPDATE Venta
+  SET id_cliente = id_cliente, id_producto = id_producto, fecha = fecha
+  WHERE id_venta = id_venta;
+END $
 
-    -- Actualizar el stock en la tabla Producto
-    UPDATE Producto
-    SET Stock = Stock - p_cantidad
-    WHERE id_producto = p_idProducto;
-END;
-//DELIMITER ;
-
--- Procedimiento Almacenado para Actualizar un Detalle de Venta (Opcional)
-DELIMITER //
-CREATE PROCEDURE ActualizarDetalleVenta(
-    IN p_numDetalle INT,
-    IN p_idVenta INT,
-    IN p_idProducto INT,
-    IN p_cantidad INT,
-    IN p_precio FLOAT
-)
+/*Procedimiento almacenado para Eliminar un registro de Venta*/
+CREATE PROCEDURE EliminarVenta (IN id_venta INT)
 BEGIN
-    UPDATE Detalle
-    SET id_venta = p_idVenta, id_producto = p_idProducto, cantidad = p_cantidad, precio = p_precio
-    WHERE num_detalle = p_numDetalle;
-    -- También puedes actualizar el stock en la tabla Producto si es necesario
-END;
-//
-DELIMITER ;
+  DELETE FROM Venta
+  WHERE id_venta = id_venta;
+END $
 
--- Procedimiento Almacenado para Eliminar un Detalle de Venta (Opcional)
-DELIMITER //
-CREATE PROCEDURE EliminarDetalleVenta(IN p_numDetalle INT)
+/*Procedimiento almacenado para Mostrar un registro de Venta*/
+CREATE PROCEDURE MostrarVentas()
 BEGIN
-    DELETE FROM Detalle WHERE num_detalle = p_numDetalle;
-    -- También puedes actualizar el stock en la tabla Producto si es necesario
-END;
-//
-DELIMITER ;
-
-
-/*Procedimiento para la tabla "Bitacora"*/
-
-/* Procedimiento para la tabla "Bitacora" */
-DELIMITER //
-CREATE PROCEDURE RegistrarBitacora(
-    IN p_transaccion VARCHAR(10),
-    IN p_usuario VARCHAR(20),  -- Agregado: Identificación del usuario
-    IN p_tabla VARCHAR(20)
-)
-BEGIN
-    INSERT INTO Bitacora (transaccion, usuario, fecha, tabla)
-    VALUES (p_transaccion, p_usuario, NOW(), p_tabla);
-END;
-//DELIMITER ;
+  SELECT id_venta, id_cliente, id_producto, fecha
+  FROM Venta;
+END $
