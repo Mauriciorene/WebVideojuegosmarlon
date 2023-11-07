@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
+import Inicio from './pages/Inicio';
 import About from './pages/About';
 import Cliente from './pages/Cliente';
 import ClienteList from './pages/ClienteList';
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login Rol={userRol} setRol={setUserRol} />} />
         <Route path="/home" element={<Home Rol={userRol} />} />
+        <Route path="/Inicio" element={<Inicio Rol={userRol} />} />
         <Route path="/about" element={<About Rol={userRol} />} />
         <Route path="/cliente" element={<Cliente Rol={userRol} />} />
         <Route path="/clienteList" element={<ClienteList Rol={userRol} />} />

@@ -6,7 +6,7 @@ const app = express();
 const port = 5000;
 
 // Middleware para analizar el cuerpo de la solicitud en formato JSON
-app.use(express.json({limit: "50mb"}));
+app.use(express.json({limit: "50mb"})); //Aumenta el limite de las imagenes
 
 // Configuración de la conexión a la base de datos
 const db = mysql.createConnection({
@@ -30,6 +30,7 @@ app.use(cors());
 // inportar y usar rutas CRUD
 const crudRoutes = require('./routes/crudRoutes')(db); // Pasa la instancia de la base de datos a crudRoutes
 app.use('/crud', crudRoutes);
+
 
 // Iniciar el servidor
 app.listen(port, () => {

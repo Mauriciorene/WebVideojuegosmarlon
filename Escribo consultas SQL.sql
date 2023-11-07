@@ -15,7 +15,7 @@ VALUES ('Categoría Nueva');
 
 
 /*Crear un nuevo producto*/
-INSERT INTO Producto (id_categoria, descripcion, nombreProducto, precio, Stock)
+INSERT INTO Producto (id_categoria, descripcion, nombreProducto, precio, Stock, imagen)
 VALUES (1, 'Descripción del producto', 'Nombre del Producto', 19.99, 100);
 
 

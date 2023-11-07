@@ -8,7 +8,7 @@ function About() {
   return(
     <div>
       <Header />
-      <Link to="/">Ir a inicio</Link>
+      <Link to="/Inicio">Ir a inicio</Link>
                 <p>
                     "Somos una Sala de videojuegos apasionada por la cultura gamer. 
                     Ofrecemos una amplia selección de títulos para todas las plataformas, desde clásicos hasta lanzamientos recientes. 

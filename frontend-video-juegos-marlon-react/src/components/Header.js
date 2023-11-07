@@ -28,7 +28,7 @@ function Header({ Rol }) {
               <Nav className="ml-auto">
 
                 <Nav.Link>
-                  <Link to="/" className="link-unstyled">Inicio</Link>
+                  <Link to="/inicio" className="link-unstyled">Inicio</Link>
                 </Nav.Link>
 
                 <Nav.Link>
