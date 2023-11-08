@@ -164,6 +164,7 @@ function ClienteList({Rol}) {
               <Card.Title>Registro de Cliente</Card.Title>
               <Form className="mt-3">
                 <Row className="g-3">
+                  
                   <Col sm="6" md="6" lg="4">
                     <FloatingLabel controlId="nombre" label="Nombre">
                       <Form.Control

@@ -1,5 +1,3 @@
-/*Usuario--------------------------------------------------------------------------------------------*/
-
 /*Cliente--------------------------------------------------------------------------------------------*/
 -- Trigger para la tabla Cliente
 -- Trigger para insertar en Cliente
@@ -112,11 +110,15 @@ DELIMITER //
 CREATE TRIGGER TriggerInsertVenta
 AFTER INSERT ON Venta
 FOR EACH ROW
-INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
-VALUES ('INSERT', current_user(), NOW(), 'Venta');
+BEGIN
+  INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+  VALUES ('INSERT', current_user(), NOW(), 'Venta');
+END;
 //
+DELIMITER ;
+
 -- Insertar datos en la tabla Venta (Asegúrate de tener los ID de cliente y producto existentes)
-INSERT INTO Venta (id_cliente, id_producto, fecha)
+INSERT INTO Venta (id_cliente, id_producto, fecha, cantidad)
 VALUES (1, 1, NOW());
 
 -- Verificar si se activó el trigger
@@ -128,9 +130,12 @@ DELIMITER //
 CREATE TRIGGER TriggerUpdateVenta
 BEFORE UPDATE ON Venta
 FOR EACH ROW
-INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
-VALUES ('UPDATE', current_user(), NOW(), 'Venta');
+BEGIN
+  INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
+  VALUES ('UPDATE', current_user(), NOW(), 'Venta');
+END;
 //
+DELIMITER ;
 
 -- Trigger para eliminar en Venta
 DELIMITER //
@@ -139,4 +144,6 @@ AFTER DELETE ON Venta
 FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('DELETE', current_user(), NOW(), 'Venta');
+END;
 //
+DELIMITER ;

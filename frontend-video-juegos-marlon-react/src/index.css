@@ -5,6 +5,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+
+background-image: url('./Imagenes/Pley.png');
+background-size:cover;
+background-position: center;
+background-repeat: no-repeat;
+background-position-y: 10px;
+color: rgb(255, 255, 255);
 }
 
 code {

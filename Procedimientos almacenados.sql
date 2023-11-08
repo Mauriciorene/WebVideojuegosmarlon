@@ -38,28 +38,36 @@ BEGIN
   INSERT INTO Cliente (nombre, apellido, telefono) 
   VALUES (nombre, apellido, telefono);
 END $
+DELIMITER ;
 
 /*Procedimiento almacenado para actualizar un registro de Cliente*/
+DELIMITER $
 CREATE PROCEDURE ActualizarCliente (IN id_cliente INT, IN nombre VARCHAR(20), IN apellido VARCHAR(20), IN telefono VARCHAR(8))
 BEGIN
   UPDATE Cliente
   SET nombre = nombre, apellido = apellido, telefono = telefono
   WHERE id_cliente = id_cliente;
 END $
+DELIMITER ;
+
 
 /*Procedimiento almacenado para eliminar un registro de Cliente*/
+DELIMITER $
 CREATE PROCEDURE EliminarCliente (IN id_cliente INT)
 BEGIN
   DELETE FROM Cliente
   WHERE id_cliente = id_cliente;
 END $
+DELIMITER ;
 
 /*Procedimiento almacenado para Mostrar un registro de Cliente*/
+DELIMITER $
 CREATE PROCEDURE MostrarClientes()
 BEGIN
   SELECT id_cliente, nombre, apellido, telefono
   FROM Cliente;
 END $
+DELIMITER ;
  
 /*Procedimientos almacenado para la tabla Categoria--------------------------------------------------------------------------*/
 
@@ -70,90 +78,113 @@ BEGIN
   INSERT INTO Categoria (nombre) 
   VALUES (nombre);
 END $
+DELIMITER ;
 
 /*Procedimiento almacenado para actualizar un registro de Categoria*/
+DELIMITER $
 CREATE PROCEDURE ActualizarCategoria (IN id_categoria INT, IN nombre VARCHAR(30))
 BEGIN
   UPDATE Categoria
   SET nombre = nombre
   WHERE id_categoria = id_categoria;
 END $
+DELIMITER ;
 
 /*Procedimiento almacenado para Eliminar un registro de Categoria*/
+DELIMITER $
 CREATE PROCEDURE EliminarCategoria (IN id_categoria INT)
 BEGIN
   DELETE FROM Categoria
   WHERE id_categoria = id_categoria;
 END $
+DELIMITER ;
 
 /*Procedimiento almacenado para Mostrar un registro de Categoria*/
+DELIMITER $
 CREATE PROCEDURE MostrarCategorias()
 BEGIN
   SELECT id_categoria, nombre
   FROM Categoria;
 END $
+DELIMITER ;
 
 /*Procedimientos almacenado para la tabla Producto-----------------------------------------------------------------------------------------------------------------------------------*/
 
 /*Procedimiento almacenado para insertar un registro de Producto*/
+/* Procedimiento almacenado para insertar un registro de Producto sin imagen */
 DELIMITER $
 CREATE PROCEDURE InsertarProducto (IN id_categoria INT, IN descripcion VARCHAR(100), IN nombreProducto VARCHAR(30), IN precio FLOAT, IN Stock INT)
 BEGIN
   INSERT INTO Producto (id_categoria, descripcion, nombreProducto, precio, Stock) 
   VALUES (id_categoria, descripcion, nombreProducto, precio, Stock);
 END $
+DELIMITER ;
 
-/*Procedimiento almacenado para actualizar un registro de Producto*/
-CREATE PROCEDURE ActualizarProducto (IN id_producto INT, IN id_categoria INT, IN descripcion VARCHAR(100), IN nombreProducto VARCHAR(30), IN precio FLOAT, IN Stock INT)
+/* Procedimiento almacenado para actualizar un registro de Producto */
+DELIMITER $
+CREATE PROCEDURE ActualizarProducto (IN id_producto INT, IN id_categoria INT, IN descripcion VARCHAR(100), IN nombreProducto VARCHAR(30), IN precio FLOAT, IN Stock INT, IN imagen LONGTEXT)
 BEGIN
   UPDATE Producto
-  SET id_categoria = id_categoria, descripcion = descripcion, nombreProducto = nombreProducto, precio = precio, Stock = Stock
+  SET id_categoria = id_categoria, descripcion = descripcion, nombreProducto = nombreProducto, precio = precio, Stock = Stock, imagen = imagen
   WHERE id_producto = id_producto;
 END $
+DELIMITER ;
 
-/*Procedimiento almacenado para Eliminar un registro de Producto*/
+
+/* Procedimiento almacenado para Eliminar un registro de Producto */
+DELIMITER $
 CREATE PROCEDURE EliminarProducto (IN id_producto INT)
 BEGIN
   DELETE FROM Producto
   WHERE id_producto = id_producto;
 END $
+DELIMITER ;
 
-/*Procedimiento almacenado para Mostrar un registro de Producto*/
+/* Procedimiento almacenado para Mostrar un registro de Producto */
+DELIMITER $
 CREATE PROCEDURE MostrarProductos()
 BEGIN
-  SELECT id_producto, id_categoria, descripcion, nombreProducto, precio, Stock
+  SELECT id_producto, id_categoria, descripcion, nombreProducto, precio, Stock, imagen
   FROM Producto;
 END $
+DELIMITER ;
 
 
 /* Procedimiento Almacenado para Actualizar una Venta ----------------------------------------------------------*/
 
-/*Procedimiento almacenado para insertar un registro de Venta*/
+/* Procedimiento almacenado para insertar un registro de Venta */
 DELIMITER $
-CREATE PROCEDURE InsertarVenta (IN id_cliente INT, IN id_producto INT, IN fecha DATE)
+CREATE PROCEDURE InsertarVenta (IN id_cliente INT, IN id_producto INT, IN fecha DATE, IN cantidad INT)
 BEGIN
-  INSERT INTO Venta (id_cliente, id_producto, fecha) 
-  VALUES (id_cliente, id_producto, fecha);
+  INSERT INTO Venta (id_cliente, id_producto, fecha, cantidad) 
+  VALUES (id_cliente, id_producto, fecha, cantidad);
 END $
+DELIMITER ;
 
-/*Procedimiento almacenado para actualizar un registro de Venta*/
-CREATE PROCEDURE ActualizarVenta (IN id_venta INT, IN id_cliente INT, IN id_producto INT, IN fecha DATE)
+/* Procedimiento almacenado para actualizar un registro de Venta */
+DELIMITER $
+CREATE PROCEDURE ActualizarVenta (IN id_venta INT, IN id_cliente INT, IN id_producto INT, IN fecha DATE, IN cantidad INT)
 BEGIN
   UPDATE Venta
-  SET id_cliente = id_cliente, id_producto = id_producto, fecha = fecha
+  SET id_cliente = id_cliente, id_producto = id_producto, fecha = fecha, cantidad = cantidad
   WHERE id_venta = id_venta;
 END $
+DELIMITER ;
 
-/*Procedimiento almacenado para Eliminar un registro de Venta*/
+/* Procedimiento almacenado para eliminar un registro de Venta */
+DELIMITER $
 CREATE PROCEDURE EliminarVenta (IN id_venta INT)
 BEGIN
   DELETE FROM Venta
   WHERE id_venta = id_venta;
 END $
+DELIMITER ;
 
-/*Procedimiento almacenado para Mostrar un registro de Venta*/
+/* Procedimiento almacenado para mostrar registros de Venta */
+DELIMITER $
 CREATE PROCEDURE MostrarVentas()
 BEGIN
-  SELECT id_venta, id_cliente, id_producto, fecha
+  SELECT id_venta, id_cliente, id_producto, fecha, cantidad
   FROM Venta;
 END $
+DELIMITER ;

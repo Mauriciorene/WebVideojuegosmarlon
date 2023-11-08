@@ -8,7 +8,9 @@ function Venta({ Rol }) {
   const [productos, setProductos] = useState([]);
   const [idCliente, setIdCliente] = useState('');
   const [idProducto, setIdProducto] = useState('');
+  const [cantidad, setCantidad] = useState('');
   const [fecha, setFecha] = useState('');
+
 
   // Función para cargar la lista de clientes desde el servidor
   const loadClientes = () => {
@@ -38,6 +40,7 @@ function Venta({ Rol }) {
       id_cliente: idCliente,
       id_producto: idProducto,
       fecha,
+      cantidad, 
     };
 
     try {
@@ -54,6 +57,7 @@ function Venta({ Rol }) {
         setIdCliente('');
         setIdProducto('');
         setFecha('');
+        setCantidad('');
       } else {
         alert('Error al registrar la venta');
       }
@@ -63,12 +67,13 @@ function Venta({ Rol }) {
     }
   };
 
+
   return (
     <div>
       <Header Rol={ Rol }/>
 
-      <Container className="margen-contenedor">
-        <Card className="mt-3">
+      <Container>
+        <Card className="margen-contenedor">
           <Card.Body>
             <Card.Title>Registro de Venta</Card.Title>
             <Form onSubmit={handleVentaSubmit}>
@@ -106,6 +111,18 @@ function Venta({ Rol }) {
                         </option>
                       ))}
                     </Form.Select>
+                  </FloatingLabel>
+                </Col>
+
+                <Col sm="6" md="6" lg="3">
+                  <FloatingLabel controlId="cantidad" label="Cantidad">
+                    <Form.Control 
+                      type="number"
+                      min={1} 
+                      placeholder="Ingrese el precio"
+                      value={cantidad}
+                      onChange={(e) => setCantidad(e.target.value)} 
+                    />
                   </FloatingLabel>
                 </Col>
 

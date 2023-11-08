@@ -11,13 +11,10 @@ function VentaList({ Rol }) {
     producto: '',
     cantidad: '',
     cliente: '',
+    fecha: '',
   });
-  const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
+    // Función para abrir el modal y pasar los datos del producto seleccionado
   const openModal = (venta) => {
     setSelectedVenta(venta);
 
@@ -25,6 +22,7 @@ function VentaList({ Rol }) {
       producto: venta.producto,
       cantidad: venta.cantidad,
       cliente: venta.cliente,
+      fecha: venta.fecha,
     });
 
     setShowModal(true);
@@ -38,13 +36,15 @@ function VentaList({ Rol }) {
     });
   };
 
+    // Función para cargar los productos desde el servidor
   const loadVentas = () => {
-    fetch('http://localhost:5000/crud/getVenta')
+    fetch('http://localhost:5000/crud/readVenta')
       .then((response) => response.json())
       .then((data) => setVentas(data))
       .catch((error) => console.error('Error al obtener las ventas:', error));
   };
 
+    // Función para enviar el formulario de actualización
   const handleUpdate = () => {
     fetch(`http://localhost:5000/crud/updateVenta/${selectedVenta.id_venta}`, {
       method: 'PUT',
@@ -62,6 +62,7 @@ function VentaList({ Rol }) {
       .catch((error) => console.error('Error al actualizar la venta:', error));
   };
 
+    // Función para eliminar un cliente
   const handleDelete = (id_venta) => {
     const confirmation = window.confirm('¿Seguro que deseas eliminar esta venta?');
     if (confirmation) {
@@ -77,18 +78,19 @@ function VentaList({ Rol }) {
     }
   };
 
+    // Realiza una solicitud GET al servidor para obtener los clientes
   useEffect(() => {
     loadVentas();
   }, []);
 
-  const filteredVentas = ventas.filter((venta) => {
-    const producto = venta.producto.toLowerCase();
-    const cantidad = venta.cantidad.toString();
-    const cliente = venta.cliente.toLowerCase();
-    const search = searchQuery.toLowerCase();
 
-    return producto.includes(search) || cantidad.includes(search) || cliente.includes(search);
-  });
+  function formatDateForInput(dateTimeString) {
+    const date = new Date(dateTimeString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Agregar ceros iniciales
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
   return (
     <div>
@@ -98,19 +100,6 @@ function VentaList({ Rol }) {
         <Card.Body>
           <Card.Title className="mb-3">Listado de Ventas</Card.Title>
 
-          <Row className="mb-3">
-            <Col sm="6" md="6" lg="4">
-              <FloatingLabel controlId="search" label="Buscar">
-                <Form.Control
-                  type="text"
-                  placeholder="Buscar"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                />
-              </FloatingLabel>
-            </Col>
-          </Row>
-
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -118,16 +107,18 @@ function VentaList({ Rol }) {
                 <th>Producto</th>
                 <th>Cantidad</th>
                 <th>Cliente</th>
+                <th>Fecha</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {filteredVentas.map((venta) => (
+              {ventas.map((venta) => (
                 <tr key={venta.id_venta}>
                   <td>{venta.id_venta}</td>
-                  <td>{venta.producto}</td>
+                  <td>{venta.id_producto}</td>
                   <td>{venta.cantidad}</td>
-                  <td>{venta.cliente}</td>
+                  <td>{venta.id_cliente}</td>
+                  <td>{formatDateForInput(venta.fecha)}</td>
                   <td>
                     <Button variant="primary" onClick={() => openModal(venta)}>
                       <FaPencil />
@@ -153,6 +144,7 @@ function VentaList({ Rol }) {
               <Card.Title>Registro de Venta</Card.Title>
               <Form className="mt-3">
                 <Row className="g-3">
+
                   <Col sm="6" md="6" lg="4">
                     <FloatingLabel controlId="producto" label="Producto">
                       <Form.Control
@@ -164,6 +156,7 @@ function VentaList({ Rol }) {
                       />
                     </FloatingLabel>
                   </Col>
+
                   <Col sm="6" md="6" lg="4">
                     <FloatingLabel controlId="cantidad" label="Cantidad">
                       <Form.Control
@@ -175,6 +168,7 @@ function VentaList({ Rol }) {
                       />
                     </FloatingLabel>
                   </Col>
+                  
                   <Col sm="12" md="6" lg="4">
                     <FloatingLabel controlId="cliente" label="Cliente">
                       <Form.Control

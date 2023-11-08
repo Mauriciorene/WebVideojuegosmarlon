@@ -46,8 +46,8 @@ function Categoria({ Rol }) {
     <div>
       <Header Rol={ Rol }/>
       
-      <Container className="margen-contenedor">
-        <Card className="mt-3">
+      <Container>
+        <Card className="margen-contenedor">
           <Card.Body>
             <Card.Title>Registro de Categoria</Card.Title>
             <Form className="mt-3" onSubmit={handleSubmit}>

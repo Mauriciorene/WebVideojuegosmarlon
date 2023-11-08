@@ -9,14 +9,15 @@ CREATE TABLE Usuario (
   contraseña VARCHAR(8) NOT NULL,
   Rol VARCHAR(20) NOT NULL
 );
-INSERT INTO Usuario (id_Usuario, nombre_Usuario, contraseña, Rol)  VALUES ('Mauricio','202322', 'administrador');
 
  /* Tabla de Clientes */
 CREATE TABLE Cliente (
  id_cliente INT NOT NULL AUTO_INCREMENT,
+ id_Usuario INT NOT NULL,
  nombre VARCHAR(20) NOT NULL,
  apellido VARCHAR(20) NOT NULL,
  telefono VARCHAR(8),
+ FOREIGN KEY (id_usuario) REFERENCES Usuario (id_Usuario),
  PRIMARY KEY (id_cliente)
  );
 
@@ -46,7 +47,7 @@ CREATE TABLE Venta(
     id_cliente INT NOT NULL,
     id_producto INT NOT NULL,
     fecha DATE NOT NULL,
-    FOREIGN KEY (id_cliente) REFERENCES Usuario (id_Usuario),
+    cantidad INT NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente),
     PRIMARY KEY (id_venta)
 );
@@ -73,3 +74,8 @@ CREATE TABLE Bitacora (
     tabla VARCHAR(20) NOT NULL,
     PRIMARY KEY (id_bitacora)
 );
+
+
+
+
+

@@ -31,6 +31,14 @@ app.use(cors());
 const crudRoutes = require('./routes/crudRoutes')(db); // Pasa la instancia de la base de datos a crudRoutes
 app.use('/crud', crudRoutes);
 
+// Manejador de errores
+app.use((err, req, res, next) => {
+    if (err instanceof SyntaxError && 'body' in err) {
+    res.status(400).send({ error: 'Error en el análisis de JSON' });
+    } else {
+    next();
+    }
+});
 
 // Iniciar el servidor
 app.listen(port, () => {

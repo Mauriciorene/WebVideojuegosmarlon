@@ -72,10 +72,10 @@ function Galeria({Rol}) {  // Define un componente funcional Galeria que recibe 
                     {producto.descripcion}
                     </Card.Text>
                     <div>
-                    <Badge bg="primary">Almacen: {producto.cantidad}</Badge>
+                    <Badge bg="primary">Stock: {producto.Stock}</Badge>
                     <Badge bg="success">Precio: {producto.precio}</Badge>
                     <Badge bg="warning" text="dark">
-                        Alcohol: {producto.porcentaje_alcohol}%
+                        Categoria: {producto.id_categoria}
                     </Badge>
                     </div>
                 </Card.Body>

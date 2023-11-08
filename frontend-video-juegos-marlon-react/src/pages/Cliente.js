@@ -3,12 +3,16 @@ import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bo
 import Header from '../components/Header';
 import '../styles/App.css';
 
-function Cliente({Rol}) {
+function Cliente({userRol}) {
 
   // Crear un estado para cada campo del formulario
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [telefono, setTelefono] = useState('');
+  const [nombre_Usuario, setNombre_Usuario] = useState('');
+  const [contraseña, setContraseña] = useState('');
+
+  const Rol = 'cliente';
 
   // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
@@ -19,6 +23,9 @@ function Cliente({Rol}) {
       nombre,
       apellido,
       telefono,
+      nombre_Usuario,
+      contraseña,
+      Rol
     };
 
     try {
@@ -38,6 +45,8 @@ function Cliente({Rol}) {
         setNombre('');
         setApellido('');
         setTelefono('');
+        setNombre_Usuario('');
+        setContraseña('');
       } else {
         alert('Error al registrar el cliente');
       }
@@ -49,10 +58,10 @@ function Cliente({Rol}) {
 
   return (
     <div>
-      <Header Rol={ Rol } />
+      <Header Rol={ userRol } />
 
-      <Container className="margen-contenedor">
-        <Card className="mt-3">
+      <Container>
+        <Card className="margen-contenedor">
           <Card.Body>
             <Card.Title>Registro de Cliente</Card.Title>
             <Form className="mt-3" onSubmit={handleSubmit}>
@@ -86,6 +95,26 @@ function Cliente({Rol}) {
                       placeholder="Ingrese el teléfono"
                       value={telefono}
                       onChange={(e) => setTelefono(e.target.value)}
+                    />
+                  </FloatingLabel>
+                </Col>
+                <Col sm="12" md="6" lg="4">
+                  <FloatingLabel controlId="nombre_Usuario" label="Nombre Usuario">
+                    <Form.Control
+                      type="text"
+                      placeholder="Ingrese el Nombre Usuario"
+                      value={nombre_Usuario}
+                      onChange={(e) => setNombre_Usuario(e.target.value)}
+                    />
+                  </FloatingLabel>
+                </Col>
+                <Col sm="12" md="6" lg="4">
+                  <FloatingLabel controlId="contraseña" label="Contraseña">
+                    <Form.Control
+                      type="password"
+                      placeholder="Ingrese el contraseña"
+                      value={contraseña}
+                      onChange={(e) => setContraseña(e.target.value)}
                     />
                   </FloatingLabel>
                 </Col>

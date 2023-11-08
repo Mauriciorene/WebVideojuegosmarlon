@@ -138,6 +138,7 @@ function Producto({Rol}) {
                   <FloatingLabel controlId="precio" label="Precio">
                     <Form.Control 
                       type="number" 
+                      min={1} 
                       placeholder="Ingrese el precio"
                       value={precio}
                       onChange={(e) => setPrecio(e.target.value)} 
@@ -148,7 +149,8 @@ function Producto({Rol}) {
                 <Col sm="12" md="6" lg="6">
                   <FloatingLabel controlId="Stock" label="Stock">
                     <Form.Control 
-                      type="number" 
+                      type="number"
+                      min={1} 
                       placeholder="Ingrese el stock"
                       value={Stock}
                       onChange={(e) => setStock(e.target.value)} 

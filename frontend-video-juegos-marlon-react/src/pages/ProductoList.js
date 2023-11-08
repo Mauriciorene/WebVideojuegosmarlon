@@ -16,7 +16,7 @@ function ProductoList({Rol}) {
     imagen: ''
   });
 
-  //Variables de estado de categoria
+  //Variables de estado de productos
   const [categorias, setCategorias] = useState([]); 
 
   useEffect(() => {
