@@ -14,6 +14,61 @@ function Cliente({userRol}) {
 
   const Rol = 'cliente';
 
+  //Validacion y limite de lingitud de caracteres para el Cliente------------------------------------------
+  const handleNombreChange = (e) => {
+    // Validar que solo se ingresen letras y espacios
+    const regex = /^[A-Za-z\s]+$/;
+
+        // Validar longitud máxima
+      if (regex.test(e.target.value) || e.target.value === '') {
+      setNombre(e.target.value.slice(0, 20)); // Limitar la longitud a 20 caracteres
+    }
+  };
+
+    //Validacion y limite de lingitud de caracteres para el Apellido------------------------------------------
+  const handleApellidoChange = (e) => {
+    // Validar que solo se ingresen letras y espacios
+    const regex = /^[A-Za-z\s]+$/;
+  
+    // Validar longitud máxima
+    if (regex.test(e.target.value) || e.target.value === '') {
+      setApellido(e.target.value.slice(0, 20)); // Limitar la longitud a 20 caracteres
+    }
+  };
+
+    //Validacion y limite de lingitud de caracteres para el Telefono------------------------------------------
+  const handleTelefonoChange = (e) => {
+    // Validar que solo se ingresen números
+    const regex = /^[0-9]*$/;
+  
+    // Validar longitud máxima
+    if (regex.test(e.target.value) || e.target.value === '') {
+      setTelefono(e.target.value.slice(0, 8)); // Limitar la longitud a 8 caracteres
+    }
+  };
+  
+    //Validacion y limite de lingitud de caracteres para el Nombre_usuario------------------------------------------
+  const handleNombreUsuarioChange = (e) => {
+    // Validar que solo se ingresen letras y espacios
+    const regex = /^[A-Za-z\s]+$/;
+  
+    // Validar longitud máxima
+    if (regex.test(e.target.value) || e.target.value === '') {
+      setNombre_Usuario(e.target.value.slice(0, 20)); // Limitar la longitud a 20 caracteres
+    }
+  };
+
+    //Validacion y limite de lingitud de caracteres para la Contraseña------------------------------------------
+  const handleContraseñaChange = (e) => {
+    // Validar que solo se ingresen números
+    const regex = /^[0-9]*$/;
+  
+    // Validar longitud máxima
+    if (regex.test(e.target.value) || e.target.value === '') {
+      setContraseña(e.target.value.slice(0, 8)); // Limitar la longitud a 8 caracteres
+    }
+  };
+
   // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,13 +121,14 @@ function Cliente({userRol}) {
             <Card.Title>Registro de Cliente</Card.Title>
             <Form className="mt-3" onSubmit={handleSubmit}>
               <Row className="g-3">
+
                 <Col sm="6" md="6" lg="4">
                   <FloatingLabel controlId="nombre" label="Nombre">
                     <Form.Control
                       type="text"
                       placeholder="Ingrese el nombre"
                       value={nombre}
-                      onChange={(e) => setNombre(e.target.value)}
+                      onChange={handleNombreChange}
                     />
                   </FloatingLabel>
                 </Col>
@@ -83,7 +139,7 @@ function Cliente({userRol}) {
                       type="text"
                       placeholder="Ingrese el apellido"
                       value={apellido}
-                      onChange={(e) => setApellido(e.target.value)}
+                      onChange={handleApellidoChange}
                     />
                   </FloatingLabel>
                 </Col>
@@ -94,30 +150,33 @@ function Cliente({userRol}) {
                       type="text"
                       placeholder="Ingrese el teléfono"
                       value={telefono}
-                      onChange={(e) => setTelefono(e.target.value)}
+                      onChange={handleTelefonoChange}
                     />
                   </FloatingLabel>
                 </Col>
+
                 <Col sm="12" md="6" lg="4">
                   <FloatingLabel controlId="nombre_Usuario" label="Nombre Usuario">
                     <Form.Control
                       type="text"
                       placeholder="Ingrese el Nombre Usuario"
                       value={nombre_Usuario}
-                      onChange={(e) => setNombre_Usuario(e.target.value)}
+                      onChange={handleNombreUsuarioChange}
                     />
                   </FloatingLabel>
                 </Col>
+
                 <Col sm="12" md="6" lg="4">
                   <FloatingLabel controlId="contraseña" label="Contraseña">
                     <Form.Control
-                      type="password"
+                      type="text"
                       placeholder="Ingrese el contraseña"
                       value={contraseña}
-                      onChange={(e) => setContraseña(e.target.value)}
+                      onChange={handleContraseñaChange}
                     />
                   </FloatingLabel>
                 </Col>
+
               </Row>
               <div className="center-button">
                 <Button variant="primary" type="submit" className="mt-3" size="lg">

@@ -5,6 +5,50 @@ import '../styles/App.css';
 
 function Producto({Rol}) {
 
+    //Validacion y limite de lingitud de caracteres para el Producto------------------------------------------
+    const handleNombreChange = (e) => {
+      // Validar que solo se ingresen letras y espacios
+      const regex = /^[A-Za-z\s]+$/;
+  
+          // Validar longitud máxima
+        if (regex.test(e.target.value) || e.target.value === '') {
+        setNombreProducto(e.target.value.slice(0, 30)); // Limitar la longitud a 20 caracteres
+      }
+    };
+
+        //Validacion y limite de lingitud de caracteres para el Producto------------------------------------------
+        const handleDescripcionChange = (e) => {
+          // Validar que solo se ingresen letras y espacios 
+          const regex = /^[A-Za-z\s]+$/;
+          
+          // Validar longitud máxima
+          if (regex.test(e.target.value) || e.target.value === '') {
+            setDescripcion(e.target.value.slice(0, 100)); // Limitar la longitud a 100 caracteres
+          }
+        };
+
+        //Validacion y limite de lingitud de caracteres para el Precio------------------------------------------
+        const handlePrecioChange = (e) => {
+          // Validar que solo se ingresen números y no hay límite de longitud
+          const regex = /^[0-9]+$/;
+          
+          // Validar que solo se ingresen números
+          if (regex.test(e.target.value) || e.target.value === '') {
+            setPrecio(e.target.value);
+          }
+        };
+
+        //Validacion y limite de lingitud de caracteres para el Stock------------------------------------------
+        const handleStockChange = (e) => {
+          // Validar que solo se ingresen números y no hay límite de longitud
+          const regex = /^[0-9]+$/;
+          
+          // Validar que solo se ingresen números
+          if (regex.test(e.target.value) || e.target.value === '') {
+            setStock(e.target.value);
+          }
+        };
+
   // Crear un estado para cada campo del formulario
   const [descripcion, setDescripcion] = useState('');
   const [nombreProducto, setNombreProducto] = useState('');
@@ -101,7 +145,7 @@ function Producto({Rol}) {
                       type="text"
                       placeholder="Ingrese el nombre de producto"
                       value={nombreProducto}
-                      onChange={(e) => setNombreProducto(e.target.value)}
+                      onChange={handleNombreChange}
                     />
                   </FloatingLabel>
                 </Col>
@@ -129,7 +173,7 @@ function Producto({Rol}) {
                       type="text"
                       placeholder="Escriba aqui"
                       value={descripcion}
-                      onChange={(e) => setDescripcion(e.target.value)}
+                      onChange={handleDescripcionChange}
                     />
                   </FloatingLabel>
                 </Col>               
@@ -137,11 +181,11 @@ function Producto({Rol}) {
                 <Col sm="12" md="6" lg="6">
                   <FloatingLabel controlId="precio" label="Precio">
                     <Form.Control 
-                      type="number" 
+                      type="text" 
                       min={1} 
                       placeholder="Ingrese el precio"
                       value={precio}
-                      onChange={(e) => setPrecio(e.target.value)} 
+                      onChange={handlePrecioChange} 
                     />
                   </FloatingLabel>
                 </Col>
@@ -149,11 +193,11 @@ function Producto({Rol}) {
                 <Col sm="12" md="6" lg="6">
                   <FloatingLabel controlId="Stock" label="Stock">
                     <Form.Control 
-                      type="number"
+                      type="text"
                       min={1} 
                       placeholder="Ingrese el stock"
                       value={Stock}
-                      onChange={(e) => setStock(e.target.value)} 
+                      onChange={handleStockChange} 
                     />
                   </FloatingLabel>
                 </Col>

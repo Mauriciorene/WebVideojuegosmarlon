@@ -5,6 +5,17 @@ import '../styles/App.css';
 
 function Categoria({ Rol }) {
 
+    //Validacion y limite de lingitud de caracteres para la categoria------------------------------------------
+    const handleNombreChange = (e) => {
+      // Validar que solo se ingresen letras y espacios
+      const regex = /^[A-Za-z\s]+$/;
+  
+          // Validar longitud máxima
+        if (regex.test(e.target.value) || e.target.value === '') {
+        setNombre(e.target.value.slice(0, 30)); // Limitar la longitud a 20 caracteres
+      }
+    };
+
   // Crear un estado para cada campo del formulario
   const [nombre, setNombre] = useState('');
 
@@ -59,7 +70,7 @@ function Categoria({ Rol }) {
                       type="text"
                       placeholder="Ingrese el nombre"
                       value={nombre}
-                      onChange={(e) => setNombre(e.target.value)}
+                      onChange={handleNombreChange}
                     />
                   </FloatingLabel>
                 </Col>

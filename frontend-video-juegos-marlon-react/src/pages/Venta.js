@@ -4,6 +4,18 @@ import Header from '../components/Header';
 import '../styles/App.css';
 
 function Venta({ Rol }) {
+
+          //Validacion y limite de lingitud de caracteres para el Stock------------------------------------------
+          const handleCantidadChange = (e) => {
+            // Validar que solo se ingresen números y no hay límite de longitud
+            const regex = /^[0-9]+$/;
+            
+            // Validar que solo se ingresen números
+            if (regex.test(e.target.value) || e.target.value === '') {
+              setCantidad(e.target.value.slice(0, 4));
+            }
+          };
+
   const [clientes, setClientes] = useState([]);
   const [productos, setProductos] = useState([]);
   const [idCliente, setIdCliente] = useState('');
@@ -117,11 +129,11 @@ function Venta({ Rol }) {
                 <Col sm="6" md="6" lg="3">
                   <FloatingLabel controlId="cantidad" label="Cantidad">
                     <Form.Control 
-                      type="number"
+                      type="text"
                       min={1} 
                       placeholder="Ingrese el precio"
                       value={cantidad}
-                      onChange={(e) => setCantidad(e.target.value)} 
+                      onChange={handleCantidadChange} 
                     />
                   </FloatingLabel>
                 </Col>
