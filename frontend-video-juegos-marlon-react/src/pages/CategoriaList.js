@@ -127,6 +127,7 @@ function CategoriaList({ Rol }) {
               <tr>
                 <th>ID</th>
                 <th>Nombre</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -135,7 +136,7 @@ function CategoriaList({ Rol }) {
                   <td>{categoria.id_categoria}</td>
                   <td>{categoria.nombre}</td>
                   <td>
-                    <Button variant="success" onClick={() => openModal(categoria)}> <FaPencil /></Button>
+                    <Button variant="success" onClick={() => openModal(categoria)} style={{ marginRight: '15px' }}> <FaPencil /></Button>
                     <Button variant="danger" onClick={() => handleDelete(categoria.id_categoria)}><FaTrashCan /></Button>
                   </td>
                 </tr>

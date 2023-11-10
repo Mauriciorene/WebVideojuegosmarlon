@@ -120,12 +120,8 @@ function VentaList({ Rol }) {
                   <td>{venta.id_cliente}</td>
                   <td>{formatDateForInput(venta.fecha)}</td>
                   <td>
-                    <Button variant="primary" onClick={() => openModal(venta)}>
-                      <FaPencil />
-                    </Button>
-                    <Button variant="danger" onClick={() => handleDelete(venta.id_venta)}>
-                      <FaTrashCan />
-                    </Button>
+                    <Button variant="primary" onClick={() => openModal(venta)} style={{ marginRight: '15px' }}><FaPencil /></Button>
+                    <Button variant="danger" onClick={() => handleDelete(venta.id_venta)}><FaTrashCan /></Button>
                   </td>
                 </tr>
               ))}
