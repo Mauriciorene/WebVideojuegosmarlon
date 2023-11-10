@@ -1,11 +1,20 @@
 // About.js
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import '../styles/App.css';
 
 function About({ Rol }) {
+
+  useEffect(() => {
+    // Cambia el color del texto del párrafo a blanco
+    const parrafo = document.querySelector('p');
+    if (parrafo) {
+      parrafo.style.color = 'white';
+    }
+  }, []); // El segundo parámetro [] asegura que el efecto se ejecute solo una vez al montar el componente
+
 
   return(
     <div>

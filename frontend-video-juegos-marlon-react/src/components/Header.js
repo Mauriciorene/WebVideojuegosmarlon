@@ -32,7 +32,7 @@ function Header({ Rol }) {
                 </Nav.Link>
 
                 <Nav.Link>
-                  <Link to="/about" className="link-unstyled">Informacion</Link>
+                  <Link to="/about" className="link-unstyled">Información</Link>
                 </Nav.Link>
 
                 <NavDropdown title="Clientes" id="clientes">
@@ -56,16 +56,16 @@ function Header({ Rol }) {
                 </NavDropdown>
 
                 <Nav.Link>
-                    <Link to="/galeria" className="link-unstyled">Galeria</Link>
+                    <Link to="/galeria" className="link-unstyled">Galería</Link>
                 </Nav.Link>
 
-                <NavDropdown title="Categoria" id="categoria">
+                <NavDropdown title="Categoría" id="categoría">
                   <NavDropdown.Item>
-                    <Link to="/categoria" className="link-unstyled">Registrar Categoria</Link>
+                    <Link to="/categoria" className="link-unstyled">Registrar Categoría</Link>
                   </NavDropdown.Item>
 
                   <NavDropdown.Item>
-                    <Link to="/categoriaList" className="link-unstyled">Listar Categorias</Link>
+                    <Link to="/categoriaList" className="link-unstyled">Listar Categorías</Link>
                   </NavDropdown.Item>
                 </NavDropdown>
 
@@ -111,7 +111,7 @@ function Header({ Rol }) {
               </Nav.Link>
 
               <Nav.Link>
-                <Link to="/about" className="link-unstyled">Informacion</Link>
+                <Link to="/about" className="link-unstyled">Información</Link>
               </Nav.Link>
 
               <NavDropdown title="Clientes" id="clientes">
@@ -133,15 +133,15 @@ function Header({ Rol }) {
               </NavDropdown>
 
               <Nav.Link>
-                    <Link to="/galeria" className="link-unstyled">Galeria</Link>
+                    <Link to="/galeria" className="link-unstyled">Galería</Link>
               </Nav.Link>
 
-              <NavDropdown title="Categoria" id="categoria">
+              <NavDropdown title="Categoría" id="categoría">
                 <NavDropdown.Item>
-                  <Link to="/categoria" className="link-unstyled">Registrar Categoria</Link>
+                  <Link to="/categoria" className="link-unstyled">Registrar Categoría</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item>
-                  <Link to="/categoriaList" className="link-unstyled">Listar Categoria</Link>
+                  <Link to="/categoriaList" className="link-unstyled">Listar Categorías</Link>
                 </NavDropdown.Item>
               </NavDropdown>
 
@@ -171,7 +171,7 @@ function Header({ Rol }) {
         {/* Navbar principal */}
         <Navbar className="navbar-color" variant="dark" expand="md" fixed='top'>
           <Container>
-            <Navbar.Brand href="#home">Videojuegos Marlon</Navbar.Brand>
+            <Navbar.Brand href="#home">Videojuegos Marlón</Navbar.Brand>
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
               style={{ display: 'none' }}
@@ -185,11 +185,11 @@ function Header({ Rol }) {
                 </Nav.Link>
 
                 <Nav.Link>
-                  <Link to="/about" className="link-unstyled">Informacion</Link>
+                  <Link to="/about" className="link-unstyled">Información</Link>
                 </Nav.Link>
 
                 <Nav.Link>
-                    <Link to="/galeria" className="link-unstyled">Galeria</Link>
+                    <Link to="/galeria" className="link-unstyled">Galería</Link>
                 </Nav.Link>
 
               </Nav>
@@ -220,11 +220,11 @@ function Header({ Rol }) {
               </Nav.Link>
 
               <Nav.Link>
-                <Link to="/about" className="link-unstyled">Informacion</Link>
+                <Link to="/about" className="link-unstyled">Información</Link>
               </Nav.Link>
 
               <Nav.Link>
-                    <Link to="/galeria" className="link-unstyled">Galeria</Link>
+                    <Link to="/galeria" className="link-unstyled">Galería</Link>
               </Nav.Link>
 
             </Nav>

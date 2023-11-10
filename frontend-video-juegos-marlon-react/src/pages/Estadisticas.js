@@ -90,7 +90,7 @@ function Estadisticas({Rol}) { // Declaración del componente Estadisticas con e
         <Col sm="6" md="6" lg="4">
           <Card>
             <Card.Body>
-              <Card.Title>Estado del almacen</Card.Title>
+              <Card.Title>Estado del almacén</Card.Title>
               <canvas id="myChart"  height="300"></canvas>
             </Card.Body>
 
