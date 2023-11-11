@@ -7,9 +7,28 @@ const Login = ({ setRol }) => {
 
   const [nombre_Usuario, setNombre_Usuario] = useState('');
   const [contraseña, setContrasena] = useState('');
+  const [error, setError] = useState('');
 
+  // Función para manejar el envío del formulario
   const handleSubmit = async event => {
-    event.preventDefault(); 
+    event.preventDefault();
+
+    //validación de campos vacíos y notificar al usuario sobre los campos incompletos
+    
+    if (!nombre_Usuario && !contraseña) {
+      setError('Por favor, complete ambos campos.');
+      return;
+    }
+
+    if (!nombre_Usuario) {
+      setError('Por favor, ingrese su usuario.');
+      return;
+    }
+
+    if (!contraseña) {
+      setError('Por favor, ingrese su contraseña.');
+      return;
+    }
 
     // Objeto con los datos del formulario
     const formData = {
@@ -18,6 +37,7 @@ const Login = ({ setRol }) => {
     };
 
     try {
+      // Realiza la solicitud POST al servidor para autenticar al usuario
       const response = await fetch('http://localhost:5000/crud/login', {
         method: 'POST',
         headers: {
@@ -40,6 +60,33 @@ const Login = ({ setRol }) => {
     }
   };
 
+//Validacion y limite de lingitud de caracteres para el usuario------------------------------------------
+
+//Validacion y limite de longitud de caracteres para el usuario------------------------------------------
+const handleNombre_UsuarioChange = (e) => {
+  // Validar que solo se ingresen letras y espacios
+  const regex = /^[A-Za-z\s]+$/;
+
+  // Validar longitud máxima
+  if (regex.test(e.target.value) || e.target.value === '') {
+    setNombre_Usuario(e.target.value.slice(0, 20)); // Limitar la longitud a 20 caracteres
+  }
+};
+
+//Validacion y limite de lingitud de caracteres para la Contraseña------------------------------------------
+
+// Función para validar y limitar la longitud de la contraseña
+const handleContrasenaChange = (e) => {
+  // Validar que solo se ingresen números
+  const regex = /^[0-9]+$/;
+
+  // Validar longitud máxima
+  if (regex.test(e.target.value) || e.target.value === '') {
+    setContrasena(e.target.value.slice(0, 8)); // Limitar la longitud a 8 caracteres
+  }
+};
+  
+
   return (
     <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
       <Row className="justify-content-md-center">
@@ -56,7 +103,7 @@ const Login = ({ setRol }) => {
                         placeholder="Ingrese su usuario"
                         type="text"
                         value={nombre_Usuario}
-                        onChange={(e) => setNombre_Usuario(e.target.value)}
+                        onChange={handleNombre_UsuarioChange}
                       />
                     </FloatingLabel>
                   </Col>
@@ -67,12 +114,15 @@ const Login = ({ setRol }) => {
                         placeholder="Ingrese su contraseña"
                         type="password"
                         value={contraseña}
-                        onChange={(e) => setContrasena(e.target.value)}
+                        onChange={handleContrasenaChange}
                       />
                     </FloatingLabel>
                   </Col>
                 </Row>
 
+                {error && <div className="text-danger">{error}</div>}
+
+                {/* Botón de inicio de sesión */}
                 <div className="center-button">
                   <Button variant="primary" type="submit" block className="mt-3">
                     Iniciar Sesión

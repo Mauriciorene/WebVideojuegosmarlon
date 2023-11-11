@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Offcanvas, Button, NavDropdown, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+
 function Header({ Rol }) {
   const [showMenu, setShowMenu] = useState(false);
 
@@ -18,7 +19,16 @@ function Header({ Rol }) {
         {/* Navbar principal */}
         <Navbar className="navbar-color" variant="dark" expand="md" fixed='top'>
           <Container>
-            <Navbar.Brand href="#home">Videojuegos Marlon</Navbar.Brand>
+
+          <Navbar.Brand href="#home" className="ml-auto">
+          <img
+            src={process.env.PUBLIC_URL + '/Logo.png'}
+            alt="Videojuegos Marlón"
+            style={{ marginLeft: '-20px', maxHeight: '50px', maxWidth: '150px' }}
+            />
+              <span style={{ marginLeft: '10px', marginRight: '10px', fontSize: '1.5rem', color: 'white' }}>Videojuegos Marlón</span>
+            </Navbar.Brand>
+
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
               style={{ display: 'none' }}
@@ -171,7 +181,16 @@ function Header({ Rol }) {
         {/* Navbar principal */}
         <Navbar className="navbar-color" variant="dark" expand="md" fixed='top'>
           <Container>
-            <Navbar.Brand href="#home">Videojuegos Marlón</Navbar.Brand>
+
+          <Navbar.Brand href="#home" className="ml-auto">
+          <img
+            src={process.env.PUBLIC_URL + '/Logo.png'}
+            alt="Videojuegos Marlón"
+            style={{ marginLeft: '-20px', maxHeight: '50px', maxWidth: '150px' }}
+            />
+              <span style={{ marginLeft: '10px', marginRight: '10px', fontSize: '1.5rem', color: 'white' }}>Videojuegos Marlón</span>
+            </Navbar.Brand>
+
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
               style={{ display: 'none' }}
