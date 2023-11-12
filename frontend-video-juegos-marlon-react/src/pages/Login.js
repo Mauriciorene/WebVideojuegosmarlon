@@ -13,7 +13,7 @@ const Login = ({ setRol }) => {
   const handleSubmit = async event => {
     event.preventDefault();
 
-    //validación de campos vacíos y notificar al usuario sobre los campos incompletos
+    // // Validación de campos vacíos y notificar al usuario sobre los campos incompletos
     
     if (!nombre_Usuario && !contraseña) {
       setError('Por favor, complete ambos campos.');
@@ -106,6 +106,7 @@ const handleContrasenaChange = (e) => {
                         onChange={handleNombre_UsuarioChange}
                       />
                     </FloatingLabel>
+                    {error && error.includes('usuario') && <div className="text-danger">{error}</div>}
                   </Col>
 
                   <Col sm="12" md="12" lg="12">
@@ -117,10 +118,9 @@ const handleContrasenaChange = (e) => {
                         onChange={handleContrasenaChange}
                       />
                     </FloatingLabel>
+                    {error && error.includes('contraseña') && <div className="text-danger">{error}</div>}
                   </Col>
                 </Row>
-
-                {error && <div className="text-danger">{error}</div>}
 
                 {/* Botón de inicio de sesión */}
                 <div className="center-button">
