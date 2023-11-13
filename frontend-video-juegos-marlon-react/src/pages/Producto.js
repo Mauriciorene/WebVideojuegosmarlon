@@ -54,11 +54,10 @@ function Producto({Rol}) {
   const [nombreProducto, setNombreProducto] = useState('');
   const [precio, setPrecio] = useState('');
   const [Stock, setStock] = useState('');
-  
   const [categorias, setCategorias] = useState([]); // Estado para almacenar las categorias
   const [id_categoria, setIDCategoria] = useState(''); // Estado para el valor seleccionado
-
   const [imagen, setImagen] = useState('');
+  const [error, setError] = useState('');
 
   const handleImagenChange = (event) => {
     const file = event.target.files[0]; // Obtener el primer archivo seleccionado
@@ -76,6 +75,43 @@ function Producto({Rol}) {
   // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validación de campos vacíos y notificar al usuario sobre los campos incompletos
+    if (!descripcion || !nombreProducto || !precio || !Stock || !id_categoria || !imagen) {
+      alert('Por favor, complete todos los campos.');
+      return;
+    }
+
+        // Validación individual de campos
+        if (!nombreProducto) {
+          alert('Por favor, ingrese el nombre del producto.');
+          return;
+        }
+    
+        if (!id_categoria || id_categoria === 'Seleccione la categoria') {
+          alert('Por favor, seleccione una categoría.');
+          return;
+        }
+    
+        if (!descripcion) {
+          alert('Por favor, ingrese la descripción.');
+          return;
+        }
+    
+        if (!precio) {
+          alert('Por favor, ingrese el precio.');
+          return;
+        }
+    
+        if (!Stock) {
+          alert('Por favor, ingrese el stock.');
+          return;
+        }
+    
+        if (!imagen) {
+          alert('Por favor, seleccione una imagen.');
+          return;
+        }
 
     // Crear un objeto con los datos del formulario
     const formData = {
@@ -148,6 +184,7 @@ function Producto({Rol}) {
                       onChange={handleNombreChange}
                     />
                   </FloatingLabel>
+                  {error && error.includes('nombre') && <div className="text-danger">{error}</div>}
                 </Col>
 
                 <Col sm="12" md="6" lg="4">
@@ -165,6 +202,7 @@ function Producto({Rol}) {
                       ))}
                     </Form.Select>
                   </FloatingLabel>
+                  {error && error.includes('categoria') && <div className="text-danger">{error}</div>}
                 </Col>
 
                 <Col sm="6" md="6" lg="12">
@@ -176,6 +214,7 @@ function Producto({Rol}) {
                       onChange={handleDescripcionChange}
                     />
                   </FloatingLabel>
+                  {error && error.includes('descripcion') && <div className="text-danger">{error}</div>}
                 </Col>               
 
                 <Col sm="12" md="6" lg="6">
@@ -188,6 +227,7 @@ function Producto({Rol}) {
                       onChange={handlePrecioChange} 
                     />
                   </FloatingLabel>
+                  {error && error.includes('precio') && <div className="text-danger">{error}</div>}
                 </Col>
 
                 <Col sm="12" md="6" lg="6">
@@ -200,6 +240,7 @@ function Producto({Rol}) {
                       onChange={handleStockChange} 
                     />
                   </FloatingLabel>
+                  {error && error.includes('stock') && <div className="text-danger">{error}</div>}
                 </Col>
 
                 <Col sm="12" md="6" lg="6">
@@ -211,6 +252,7 @@ function Producto({Rol}) {
                       onChange={handleImagenChange}
                     />
                   </Form.Group>
+                  {error && error.includes('imagen') && <div className="text-danger">{error}</div>}
                 </Col>
 
               </Row>

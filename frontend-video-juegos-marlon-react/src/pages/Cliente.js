@@ -82,10 +82,10 @@ function Cliente({ userRol }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación de campos vacíos y notificar al usuario sobre los campos incompletos
+   // Validación de campos vacíos y notificar al usuario sobre los campos incompletos
     if (!nombre_Usuario || !nombre || !contraseña || !apellido || !telefono) {
-      setError('Por favor, complete todos los campos.');
-      return;
+    alert('Por favor, complete todos los campos.');
+    return;
     }
 
     if (!nombre) {
