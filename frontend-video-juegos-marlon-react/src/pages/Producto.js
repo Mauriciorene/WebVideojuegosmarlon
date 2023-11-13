@@ -5,16 +5,26 @@ import '../styles/App.css';
 
 function Producto({Rol}) {
 
-    //Validacion y limite de lingitud de caracteres para el Producto------------------------------------------
-    const handleNombreChange = (e) => {
-      // Validar que solo se ingresen letras y espacios
-      const regex = /^[A-Za-z\s]+$/;
-  
-          // Validar longitud máxima
-        if (regex.test(e.target.value) || e.target.value === '') {
-        setNombreProducto(e.target.value.slice(0, 30)); // Limitar la longitud a 20 caracteres
-      }
-    };
+    // Crear un estado para cada campo del formulario
+    const [descripcion, setDescripcion] = useState('');
+    const [nombreProducto, setNombreProducto] = useState('');
+    const [precio, setPrecio] = useState('');
+    const [Stock, setStock] = useState('');
+    const [categorias, setCategorias] = useState([]); // Estado para almacenar las categorias
+    const [id_categoria, setIDCategoria] = useState(''); // Estado para el valor seleccionado
+    const [imagen, setImagen] = useState('');
+    const [error, setError] = useState('');
+
+        //Validacion y limite de lingitud de caracteres para el Producto------------------------------------------
+        const handleNombreProductoChange = (e) => {
+          // Validar que solo se ingresen letras y espacios
+          const regex = /^[A-Za-z\s]+$/;
+      
+              // Validar longitud máxima
+            if (regex.test(e.target.value) || e.target.value === '') {
+            setNombreProducto(e.target.value.slice(0, 30)); // Limitar la longitud a 20 caracteres
+          }
+        };
 
         //Validacion y limite de lingitud de caracteres para el Producto------------------------------------------
         const handleDescripcionChange = (e) => {
@@ -49,16 +59,6 @@ function Producto({Rol}) {
           }
         };
 
-  // Crear un estado para cada campo del formulario
-  const [descripcion, setDescripcion] = useState('');
-  const [nombreProducto, setNombreProducto] = useState('');
-  const [precio, setPrecio] = useState('');
-  const [Stock, setStock] = useState('');
-  const [categorias, setCategorias] = useState([]); // Estado para almacenar las categorias
-  const [id_categoria, setIDCategoria] = useState(''); // Estado para el valor seleccionado
-  const [imagen, setImagen] = useState('');
-  const [error, setError] = useState('');
-
   const handleImagenChange = (event) => {
     const file = event.target.files[0]; // Obtener el primer archivo seleccionado
   
@@ -77,24 +77,25 @@ function Producto({Rol}) {
     e.preventDefault();
 
 // Validación de campos vacíos y notificar al usuario sobre los campos incompletos
-if (!descripcion || !nombreProducto || !precio || !Stock || !id_categoria || !imagen) {
+  if (!id_categoria || !descripcion || !nombreProducto || !precio || !Stock || !imagen) {
   setError('Por favor, complete todos los campos.');
   return;
 }
 
         // Validación individual de campos
-        if (!nombreProducto) {
-          setError('Por favor, ingrese el nombre del producto.');
-          return;
-        }
-    
+
         if (!id_categoria || id_categoria === 'Seleccione la categoria') {
           setError('Por favor, seleccione una categoría.');
           return;
         }
-    
+
         if (!descripcion) {
           setError('Por favor, ingrese la descripción.');
+          return;
+        }
+
+        if (!nombreProducto) {
+          setError('Por favor, ingrese el nombre del producto.');
           return;
         }
     
@@ -181,7 +182,7 @@ if (!descripcion || !nombreProducto || !precio || !Stock || !id_categoria || !im
                       type="text"
                       placeholder="Ingrese el nombre de producto"
                       value={nombreProducto}
-                      onChange={handleNombreChange}
+                      onChange={handleNombreProductoChange}
                     />
                   </FloatingLabel>
                   {error && error.includes('nombreProducto') && <div className="text-danger">{error}</div>}

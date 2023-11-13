@@ -4,6 +4,9 @@ import { Button, Row, Col, Card, Container } from 'react-bootstrap';  // Importa
 import jsPDF from 'jspdf';  // Importación de jsPDF para la generación de documentos PDF
 import Chart from 'chart.js/auto';  // Importación de Chart.js para gráficos
 import '../styles/App.css'; // Importación de estilos CSS desde '../styles/App.css'
+import Footer from '../components/Footer';
+// Importa la biblioteca html2canvas, que proporciona funciones para capturar y convertir el contenido HTML, incluidos elementos del DOM, en imágenes de lienzo (canvas).
+import html2canvas from 'html2canvas';
 
 function Estadisticas({Rol}) { // Declaración del componente Estadisticas con el argumento 'rol' 
 
@@ -57,7 +60,7 @@ function Estadisticas({Rol}) { // Declaración del componente Estadisticas con e
       .then((response) => response.json())  // Convierte la respuesta a formato JSON
       .then((productos) => {
         const doc = new jsPDF();  // Crea un nuevo documento PDF con jsPDF
-        let y = 20; // Posición inicial en el eje Y dentro del documento PDF
+        let y = 15; // Posición inicial en el eje Y dentro del documento PDF
 
         doc.setTextColor(76, 176, 20);
         doc.text("Reporte de Estado de Almacén", 20, 10);  // Agrega un título al documento PDF
@@ -70,7 +73,7 @@ function Estadisticas({Rol}) { // Declaración del componente Estadisticas con e
           y += 30; // Incrementa la posición Y para el siguiente producto
           if (y >= 280) {  // Si alcanza el final de la página, crea una nueva página
             doc.addPage();
-            y = 15; // Reinicia la posición Y en la nueva página
+            y = 20; // Reinicia la posición Y en la nueva página
           }
         });
 
@@ -78,6 +81,27 @@ function Estadisticas({Rol}) { // Declaración del componente Estadisticas con e
       })
       .catch((error) => console.error('Error al obtener los productos:', error));  // Manejo de errores en caso de fallar la solicitud
   };
+
+  // Definición de la función generarReporteAlmacenImg como una función asíncrona
+const generarReporteAlmacenImg = async () => {
+  try {
+    // Utiliza html2canvas para capturar el contenido del elemento con el ID 'myChart' y obtener un objeto canvas
+    const canvas = await html2canvas(document.getElementById('myChart'));
+    // Crea un nuevo objeto jsPDF para trabajar con documentos PDF
+    const pdf = new jsPDF();
+    // Convierte el objeto canvas a una URL de datos en formato PNG
+    const imgData = canvas.toDataURL('image/png');
+    // Añade un texto al documento PDF
+    pdf.text("Reporte de Estado de Almacén", 20, 10);
+    // Añade la imagen capturada del gráfico al documento PDF, con ajustes de coordenadas y tamaño
+    pdf.addImage(imgData, 'PNG', 10, 20, 100, 100);
+    // Guarda el documento PDF con un nombre específico
+    pdf.save("reporte_almacen_con_grafico.pdf");
+  } catch (error) {
+    // Captura y maneja cualquier error que pueda ocurrir durante la ejecución del bloque try
+    console.error('Error al generar el reporte con imagen:', error);
+  }
+};
 
   return(
     <div>
@@ -103,9 +127,23 @@ function Estadisticas({Rol}) { // Declaración del componente Estadisticas con e
           </Card>
         </Col>
 
+        <Col sm="6" md="6" lg="4">
+            <Card>
+              <Card.Body>
+                <Card.Title>Estado del almacen</Card.Title>
+              </Card.Body>
+
+              <Card.Body>
+                <Button onClick={generarReporteAlmacenImg}>
+                  Generar reporte con imagen
+                </Button>
+              </Card.Body>
+
+              </Card>
+          </Col>
+
         </Row>
       </Container>
-
 
     </div>
   );
