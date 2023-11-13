@@ -76,40 +76,40 @@ function Producto({Rol}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación de campos vacíos y notificar al usuario sobre los campos incompletos
-    if (!descripcion || !nombreProducto || !precio || !Stock || !id_categoria || !imagen) {
-      alert('Por favor, complete todos los campos.');
-      return;
-    }
+// Validación de campos vacíos y notificar al usuario sobre los campos incompletos
+if (!descripcion || !nombreProducto || !precio || !Stock || !id_categoria || !imagen) {
+  setError('Por favor, complete todos los campos.');
+  return;
+}
 
         // Validación individual de campos
         if (!nombreProducto) {
-          alert('Por favor, ingrese el nombre del producto.');
+          setError('Por favor, ingrese el nombre del producto.');
           return;
         }
     
         if (!id_categoria || id_categoria === 'Seleccione la categoria') {
-          alert('Por favor, seleccione una categoría.');
+          setError('Por favor, seleccione una categoría.');
           return;
         }
     
         if (!descripcion) {
-          alert('Por favor, ingrese la descripción.');
+          setError('Por favor, ingrese la descripción.');
           return;
         }
     
         if (!precio) {
-          alert('Por favor, ingrese el precio.');
+          setError('Por favor, ingrese el precio.');
           return;
         }
     
         if (!Stock) {
-          alert('Por favor, ingrese el stock.');
+          setError('Por favor, ingrese el stock.');
           return;
         }
     
         if (!imagen) {
-          alert('Por favor, seleccione una imagen.');
+          setError('Por favor, seleccione una imagen.');
           return;
         }
 
@@ -184,7 +184,7 @@ function Producto({Rol}) {
                       onChange={handleNombreChange}
                     />
                   </FloatingLabel>
-                  {error && error.includes('nombre') && <div className="text-danger">{error}</div>}
+                  {error && error.includes('nombreProducto') && <div className="text-danger">{error}</div>}
                 </Col>
 
                 <Col sm="12" md="6" lg="4">
@@ -202,7 +202,7 @@ function Producto({Rol}) {
                       ))}
                     </Form.Select>
                   </FloatingLabel>
-                  {error && error.includes('categoria') && <div className="text-danger">{error}</div>}
+                  {error && error.includes('Categoria') && <div className="text-danger">{error}</div>}
                 </Col>
 
                 <Col sm="6" md="6" lg="12">
@@ -240,7 +240,7 @@ function Producto({Rol}) {
                       onChange={handleStockChange} 
                     />
                   </FloatingLabel>
-                  {error && error.includes('stock') && <div className="text-danger">{error}</div>}
+                  {error && error.includes('Stock') && <div className="text-danger">{error}</div>}
                 </Col>
 
                 <Col sm="12" md="6" lg="6">

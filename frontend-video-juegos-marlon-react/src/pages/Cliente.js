@@ -16,7 +16,8 @@ function Cliente({ userRol }) {
 
   // Validar y limitar longitud de caracteres para el Cliente
   const handleNombreChange = (e) => {
-    const regex = /^[A-Za-z\s]+$/;
+  const regex = /^[A-Za-z\s]+$/;
+
     if (regex.test(e.target.value) || e.target.value === '') {
       setNombre(e.target.value.slice(0, 20)); // Limitar la longitud a 20 caracteres
       setError(''); // Limpiar el mensaje de error si el campo no está vacío
@@ -27,6 +28,7 @@ function Cliente({ userRol }) {
 
   const handleApellidoChange = (e) => {
     const regex = /^[A-Za-z\s]+$/;
+    
     if (regex.test(e.target.value) || e.target.value === '') {
       setApellido(e.target.value.slice(0, 20)); // Limitar la longitud a 20 caracteres
       setError(''); // Limpiar el mensaje de error si el campo no está vacío
@@ -84,7 +86,7 @@ function Cliente({ userRol }) {
 
    // Validación de campos vacíos y notificar al usuario sobre los campos incompletos
     if (!nombre_Usuario || !nombre || !contraseña || !apellido || !telefono) {
-    alert('Por favor, complete todos los campos.');
+    setError('Por favor, complete todos los campos.');
     return;
     }
 

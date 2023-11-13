@@ -18,11 +18,18 @@ function Categoria({ Rol }) {
 
   // Crear un estado para cada campo del formulario
   const [nombre, setNombre] = useState('');
+  const [error, setError] = useState('');
 
 
   // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
+        
+        // Validación individual de campos
+        if (!nombre) {
+          setError('Por favor, ingrese el nombre de la categoria.');
+          return;
+        }
 
     // Crear un objeto con los datos del formulario
     const formData = {
@@ -73,6 +80,7 @@ function Categoria({ Rol }) {
                       onChange={handleNombreChange}
                     />
                   </FloatingLabel>
+                  {error && error.includes('nombre') && <div className="text-danger">{error}</div>}
                 </Col>
 
               </Row>
