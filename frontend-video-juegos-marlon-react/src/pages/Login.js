@@ -8,17 +8,21 @@ const Login = ({ setRol }) => {
   const [nombre_Usuario, setNombre_Usuario] = useState('');
   const [contraseña, setContrasena] = useState('');
   const [error, setError] = useState('');
+  const [showEmptyFieldsError, setShowEmptyFieldsError] = useState(false);
 
   // Función para manejar el envío del formulario
   const handleSubmit = async event => {
     event.preventDefault();
 
-    // // Validación de campos vacíos y notificar al usuario sobre los campos incompletos
+    // Validación de campos vacíos y notificar al usuario sobre los campos incompletos
     
     if (!nombre_Usuario && !contraseña) {
+      setShowEmptyFieldsError(true);
       setError('Por favor, complete ambos campos.');
       return;
     }
+
+    setShowEmptyFieldsError(false);
 
     if (!nombre_Usuario) {
       setError('Por favor, ingrese su usuario.');
@@ -62,7 +66,6 @@ const Login = ({ setRol }) => {
 
 //Validacion y limite de lingitud de caracteres para el usuario------------------------------------------
 
-//Validacion y limite de longitud de caracteres para el usuario------------------------------------------
 const handleNombre_UsuarioChange = (e) => {
   // Validar que solo se ingresen letras y espacios
   const regex = /^[A-Za-z\s]+$/;
@@ -121,6 +124,9 @@ const handleContrasenaChange = (e) => {
                     {error && error.includes('contraseña') && <div className="text-danger">{error}</div>}
                   </Col>
                 </Row>
+
+              {/* Mostrar mensaje de campos vacíos */}
+              {showEmptyFieldsError && <div className="text-danger">{error}</div>}
 
                 {/* Botón de inicio de sesión */}
                 <div className="center-button">

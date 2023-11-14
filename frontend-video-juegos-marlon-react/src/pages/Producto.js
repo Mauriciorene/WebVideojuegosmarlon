@@ -13,12 +13,12 @@ function Producto({Rol}) {
     const [categorias, setCategorias] = useState([]); // Estado para almacenar las categorias
     const [id_categoria, setIDCategoria] = useState(''); // Estado para el valor seleccionado
     const [imagen, setImagen] = useState('');
-    const [error, setError] = useState('');
+    const [errors, setErrors] = useState({});
 
         //Validacion y limite de lingitud de caracteres para el Producto------------------------------------------
         const handleNombreProductoChange = (e) => {
           // Validar que solo se ingresen letras y espacios
-          const regex = /^[A-Za-z\s]+$/;
+          const regex = /^[A-Za-z0-9\s]+$/;
       
               // Validar longitud máxima
             if (regex.test(e.target.value) || e.target.value === '') {
@@ -59,7 +59,8 @@ function Producto({Rol}) {
           }
         };
 
-  const handleImagenChange = (event) => {
+    // Validar la imagen
+    const handleImagenChange = (event) => {
     const file = event.target.files[0]; // Obtener el primer archivo seleccionado
   
     const reader = new FileReader();
@@ -77,42 +78,40 @@ function Producto({Rol}) {
     e.preventDefault();
 
 // Validación de campos vacíos y notificar al usuario sobre los campos incompletos
-  if (!id_categoria || !descripcion || !nombreProducto || !precio || !Stock || !imagen) {
-  setError('Por favor, complete todos los campos.');
-  return;
-}
+const validateForm = () => {
+  const errors = {};
 
-        // Validación individual de campos
+  if (!id_categoria || id_categoria === 'Seleccione la categoria') {
+    errors.id_categoria = 'Por favor, seleccione una categoría.';
+  }
 
-        if (!id_categoria || id_categoria === 'Seleccione la categoria') {
-          setError('Por favor, seleccione una categoría.');
-          return;
-        }
+  if (!descripcion) {
+    errors.descripcion = 'Por favor, ingrese la descripción.';
+  }
 
-        if (!descripcion) {
-          setError('Por favor, ingrese la descripción.');
-          return;
-        }
+  if (!nombreProducto) {
+    errors.nombreProducto = 'Por favor, ingrese el nombre del producto.';
+  }
 
-        if (!nombreProducto) {
-          setError('Por favor, ingrese el nombre del producto.');
-          return;
-        }
-    
-        if (!precio) {
-          setError('Por favor, ingrese el precio.');
-          return;
-        }
-    
-        if (!Stock) {
-          setError('Por favor, ingrese el stock.');
-          return;
-        }
-    
-        if (!imagen) {
-          setError('Por favor, seleccione una imagen.');
-          return;
-        }
+  if (!precio) {
+    errors.precio = 'Por favor, ingrese el precio.';
+  }
+
+  if (!Stock) {
+    errors.Stock = 'Por favor, ingrese el stock.';
+  }
+
+  if (!imagen) {
+    errors.imagen = 'Por favor, seleccione una imagen.';
+  }
+
+  setErrors(errors);
+  return Object.keys(errors).length === 0;
+};
+
+  if (!validateForm()) {
+    return;
+  }
 
     // Crear un objeto con los datos del formulario
     const formData = {
@@ -165,6 +164,14 @@ function Producto({Rol}) {
       });
   }, []);
 
+  const clearError = (fieldName) => {
+    setErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
+      delete newErrors[fieldName];
+      return newErrors;
+    });
+  };
+
   return(
     <div>
       <Header Rol={ Rol } />
@@ -185,7 +192,7 @@ function Producto({Rol}) {
                       onChange={handleNombreProductoChange}
                     />
                   </FloatingLabel>
-                  {error && error.includes('nombreProducto') && <div className="text-danger">{error}</div>}
+                  {errors.nombreProducto && <div className="text-danger">{errors.nombreProducto}</div>}
                 </Col>
 
                 <Col sm="12" md="6" lg="4">
@@ -203,7 +210,7 @@ function Producto({Rol}) {
                       ))}
                     </Form.Select>
                   </FloatingLabel>
-                  {error && error.includes('Categoria') && <div className="text-danger">{error}</div>}
+                  {errors.id_categoria && <div className="text-danger">{errors.id_categoria}</div>}
                 </Col>
 
                 <Col sm="6" md="6" lg="12">
@@ -215,7 +222,7 @@ function Producto({Rol}) {
                       onChange={handleDescripcionChange}
                     />
                   </FloatingLabel>
-                  {error && error.includes('descripcion') && <div className="text-danger">{error}</div>}
+                  {errors.descripcion && <div className="text-danger">{errors.descripcion}</div>}
                 </Col>               
 
                 <Col sm="12" md="6" lg="6">
@@ -228,7 +235,7 @@ function Producto({Rol}) {
                       onChange={handlePrecioChange} 
                     />
                   </FloatingLabel>
-                  {error && error.includes('precio') && <div className="text-danger">{error}</div>}
+                  {errors.precio && <div className="text-danger">{errors.precio}</div>}
                 </Col>
 
                 <Col sm="12" md="6" lg="6">
@@ -241,7 +248,7 @@ function Producto({Rol}) {
                       onChange={handleStockChange} 
                     />
                   </FloatingLabel>
-                  {error && error.includes('Stock') && <div className="text-danger">{error}</div>}
+                  {errors.Stock && <div className="text-danger">{errors.Stock}</div>}
                 </Col>
 
                 <Col sm="12" md="6" lg="6">
@@ -253,7 +260,7 @@ function Producto({Rol}) {
                       onChange={handleImagenChange}
                     />
                   </Form.Group>
-                  {error && error.includes('imagen') && <div className="text-danger">{error}</div>}
+                  {errors.imagen && <div className="text-danger">{errors.imagen}</div>}
                 </Col>
 
               </Row>
