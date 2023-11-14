@@ -111,7 +111,22 @@ const generarReporteAlmacenImg = async () => {
 
       <Row className="g-3">
 
-        <Col sm="6" md="6" lg="4">
+      <Col sm={{ span: 6, offset: 3 }} md={{ span: 6, offset: 3 }} lg={{ span: 4, offset: 4 }}>
+            <Card>
+              <Card.Body>
+                <Card.Title>Estado del almacén</Card.Title>
+              </Card.Body>
+
+              <Card.Body>
+                <Button onClick={generarReporteAlmacenImg}>
+                  Generar reporte con imagen
+                </Button>
+              </Card.Body>
+
+              </Card>
+          </Col>
+
+        <Col sm={{ span: 6, offset: 3 }} md={{ span: 6, offset: 3 }} lg={{ span: 4, offset: 4 }}>
           <Card>
             <Card.Body>
               <Card.Title>Estado del almacén</Card.Title>
@@ -126,21 +141,6 @@ const generarReporteAlmacenImg = async () => {
 
           </Card>
         </Col>
-
-        <Col sm="6" md="6" lg="4">
-            <Card>
-              <Card.Body>
-                <Card.Title>Estado del almacen</Card.Title>
-              </Card.Body>
-
-              <Card.Body>
-                <Button onClick={generarReporteAlmacenImg}>
-                  Generar reporte con imagen
-                </Button>
-              </Card.Body>
-
-              </Card>
-          </Col>
 
         </Row>
       </Container>
