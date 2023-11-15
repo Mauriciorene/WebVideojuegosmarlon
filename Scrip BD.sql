@@ -47,21 +47,19 @@ CREATE TABLE Venta(
     id_cliente INT NOT NULL,
     id_producto INT NOT NULL,
     fecha DATE NOT NULL,
-    cantidad INT NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente),
     PRIMARY KEY (id_venta)
 );
 
 /* Tabla de Detalles de Venta */
 CREATE TABLE Detalle(
-    num_detalle INT NOT NULL AUTO_INCREMENT,
+    id_detalle INT NOT NULL AUTO_INCREMENT,
     id_venta INT NOT NULL,
     id_producto INT NOT NULL,
     cantidad INT NOT NULL,
-    precio FLOAT NOT NULL,
     FOREIGN KEY (id_venta) REFERENCES Venta (id_venta),
     FOREIGN KEY (id_producto) REFERENCES Producto (id_producto),
-    PRIMARY KEY (num_detalle)
+    PRIMARY KEY (id_detalle)
 );
 
 /* Creación de la tabla bitácora en la BD BDVideojuegosMarlon */
@@ -74,8 +72,3 @@ CREATE TABLE Bitacora (
     tabla VARCHAR(20) NOT NULL,
     PRIMARY KEY (id_bitacora)
 );
-
-
-
-
-
