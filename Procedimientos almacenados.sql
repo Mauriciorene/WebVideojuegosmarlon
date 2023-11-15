@@ -1,5 +1,5 @@
 /*Procedimientos para la tabla "Usuario"*/
-/*Procedimiento almacenado para insertar un nuevo Usuario*/
+/*Procedimiento almacenado para insertar un nuevo Usuario-------------------------------------*/
 DELIMITER $
 CREATE PROCEDURE InsertarUsuario (IN nombre VARCHAR(20), IN apellido VARCHAR(20), IN contraseña VARCHAR(8), IN Rol VARCHAR(20))
 BEGIN
@@ -7,7 +7,7 @@ BEGIN
   VALUES (nombre, apellido, contraseña, Rol);
 END $
 
-/*Procedimiento almacenado para actualizar un registro de Usuario*/
+/*Procedimiento almacenado para actualizar un registro de Usuario-----------------------------*/
 CREATE PROCEDURE ActualizarUsuario (IN id_Usuario INT, IN nombre VARCHAR(20), IN apellido VARCHAR(20), IN contraseña VARCHAR(8), IN Rol VARCHAR(20))
 BEGIN
   UPDATE Usuario
@@ -15,22 +15,21 @@ BEGIN
   WHERE id_Usuario = id_Usuario;
 END $
 
-/*Procedimiento almacenado para eliminar un registro de Usuario*/
+/*Procedimiento almacenado para eliminar un registro de Usuario-------------------------------*/
 CREATE PROCEDURE EliminarUsuario (IN id_Usuario INT)
 BEGIN
   DELETE FROM Usuario
   WHERE id_Usuario = id_Usuario;
 END $
 
-/*Procedimiento almacenado para Mostrar un registro de Usuario*/
+/*Procedimiento almacenado para Mostrar un registro de Usuario-------------------------------*/
 CREATE PROCEDURE MostrarUsuarios()
 BEGIN
   SELECT id_Usuario, nombre_Usuario, apellido, contraseña, Rol
   FROM Usuario;
 END $
 
-/*Procedimientos almacenado para la tabla Cliente-----------------------------------------------------------------------------------------*/
-
+/*Procedimientos almacenado para la tabla Cliente--------------------------------------------*/
 /*Procedimiento almacenado para insertar un Cliente*/
 DELIMITER $
 CREATE PROCEDURE InsertarCliente (IN nombre VARCHAR(20), IN apellido VARCHAR(20), IN telefono VARCHAR(8))
@@ -40,7 +39,7 @@ BEGIN
 END $
 DELIMITER ;
 
-/*Procedimiento almacenado para actualizar un registro de Cliente*/
+/*Procedimiento almacenado para actualizar un registro de Cliente----------------------------*/
 DELIMITER $
 CREATE PROCEDURE ActualizarCliente (IN id_cliente INT, IN nombre VARCHAR(20), IN apellido VARCHAR(20), IN telefono VARCHAR(8))
 BEGIN
@@ -51,7 +50,7 @@ END $
 DELIMITER ;
 
 
-/*Procedimiento almacenado para eliminar un registro de Cliente*/
+/*Procedimiento almacenado para eliminar un registro de Cliente------------------------------*/
 DELIMITER $
 CREATE PROCEDURE EliminarCliente (IN id_cliente INT)
 BEGIN
@@ -69,7 +68,7 @@ BEGIN
 END $
 DELIMITER ;
  
-/*Procedimientos almacenado para la tabla Categoria--------------------------------------------------------------------------*/
+/*Procedimientos almacenado para la tabla Categoria------------------------------------------*/
 
 /*Procedimiento almacenado para insertar un registro de Categoria*/
 DELIMITER $
@@ -80,7 +79,7 @@ BEGIN
 END $
 DELIMITER ;
 
-/*Procedimiento almacenado para actualizar un registro de Categoria*/
+/*Procedimiento almacenado para actualizar un registro de Categoria--------------------------*/
 DELIMITER $
 CREATE PROCEDURE ActualizarCategoria (IN id_categoria INT, IN nombre VARCHAR(30))
 BEGIN
@@ -90,7 +89,7 @@ BEGIN
 END $
 DELIMITER ;
 
-/*Procedimiento almacenado para Eliminar un registro de Categoria*/
+/*Procedimiento almacenado para Eliminar un registro de Categoria----------------------------*/
 DELIMITER $
 CREATE PROCEDURE EliminarCategoria (IN id_categoria INT)
 BEGIN
@@ -99,7 +98,7 @@ BEGIN
 END $
 DELIMITER ;
 
-/*Procedimiento almacenado para Mostrar un registro de Categoria*/
+/*Procedimiento almacenado para Mostrar un registro de Categoria-----------------------------*/
 DELIMITER $
 CREATE PROCEDURE MostrarCategorias()
 BEGIN
@@ -108,7 +107,7 @@ BEGIN
 END $
 DELIMITER ;
 
-/*Procedimientos almacenado para la tabla Producto-----------------------------------------------------------------------------------------------------------------------------------*/
+/*Procedimientos almacenado para la tabla Producto------------------------------------------*/
 
 /*Procedimiento almacenado para insertar un registro de Producto*/
 /* Procedimiento almacenado para insertar un registro de Producto sin imagen */
@@ -120,7 +119,7 @@ BEGIN
 END $
 DELIMITER ;
 
-/* Procedimiento almacenado para actualizar un registro de Producto */
+/* Procedimiento almacenado para actualizar un registro de Producto ------------------------*/
 DELIMITER $
 CREATE PROCEDURE ActualizarProducto (IN id_producto INT, IN id_categoria INT, IN descripcion VARCHAR(100), IN nombreProducto VARCHAR(30), IN precio FLOAT, IN Stock INT, IN imagen LONGTEXT)
 BEGIN
@@ -131,7 +130,7 @@ END $
 DELIMITER ;
 
 
-/* Procedimiento almacenado para Eliminar un registro de Producto */
+/* Procedimiento almacenado para Eliminar un registro de Producto --------------------------*/
 DELIMITER $
 CREATE PROCEDURE EliminarProducto (IN id_producto INT)
 BEGIN
@@ -140,7 +139,7 @@ BEGIN
 END $
 DELIMITER ;
 
-/* Procedimiento almacenado para Mostrar un registro de Producto */
+/* Procedimiento almacenado para Mostrar un registro de Producto ---------------------------*/
 DELIMITER $
 CREATE PROCEDURE MostrarProductos()
 BEGIN
@@ -150,7 +149,7 @@ END $
 DELIMITER ;
 
 
-/* Procedimiento Almacenado para Actualizar una Venta ----------------------------------------------------------*/
+/* Procedimiento Almacenado para Actualizar una Venta -------------------------------------*/
 
 /* Procedimiento almacenado para insertar un registro de Venta */
 DELIMITER $
@@ -161,7 +160,7 @@ BEGIN
 END $
 DELIMITER ;
 
-/* Procedimiento almacenado para actualizar un registro de Venta */
+/* Procedimiento almacenado para actualizar un registro de Venta --------------------------*/
 DELIMITER $
 CREATE PROCEDURE ActualizarVenta (IN id_venta INT, IN id_cliente INT, IN id_producto INT, IN fecha DATE, IN cantidad INT)
 BEGIN
@@ -171,7 +170,7 @@ BEGIN
 END $
 DELIMITER ;
 
-/* Procedimiento almacenado para eliminar un registro de Venta */
+/* Procedimiento almacenado para eliminar un registro de Venta ----------------------------*/
 DELIMITER $
 CREATE PROCEDURE EliminarVenta (IN id_venta INT)
 BEGIN
@@ -180,7 +179,7 @@ BEGIN
 END $
 DELIMITER ;
 
-/* Procedimiento almacenado para mostrar registros de Venta */
+/* Procedimiento almacenado para mostrar registros de Venta -------------------------------*/
 DELIMITER $
 CREATE PROCEDURE MostrarVentas()
 BEGIN

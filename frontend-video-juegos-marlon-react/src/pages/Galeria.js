@@ -17,22 +17,22 @@ function Galeria({Rol}) {  // Define un componente funcional Galeria que recibe 
     useEffect(() => {
         // Obtén la lista de productos
         fetch('http://localhost:5000/crud/readproducto')
-          .then((response) => response.json())
-          .then((data) => setProductos(data))
-          .catch((error) => console.error('Error al obtener los productos:', error));
+            .then((response) => response.json())
+            .then((data) => setProductos(data))
+            .catch((error) => console.error('Error al obtener los productos:', error));
     
         // Obtén la lista de categorías
         fetch('http://localhost:5000/crud/readcategoria')
-          .then((response) => response.json())
-          .then((data) => setCategorias(data))
-          .catch((error) => console.error('Error al obtener las categorías:', error));
-      }, []);
+            .then((response) => response.json())
+            .then((data) => setCategorias(data))
+            .catch((error) => console.error('Error al obtener las categorías:', error));
+        }, []);
     
-      const getCategoryNameById = (categoryId) => {
+        const getCategoryNameById = (categoryId) => {
         // Encuentra el nombre de la categoría por ID
         const category = categorias.find((cat) => cat.id_categoria === categoryId);
         return category ? category.nombre : ''; // Devuelve el nombre si se encuentra, de lo contrario, devuelve una cadena vacía
-      };
+        };
 
     const filteredProductos = productos.filter((producto) => {  // Filtra los productos según la cadena de búsqueda
         // Convierte a minúsculas los valores de los campos para realizar una búsqueda insensible a mayúsculas y minúsculas

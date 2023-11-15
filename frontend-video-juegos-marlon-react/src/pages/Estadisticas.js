@@ -107,11 +107,11 @@ const generarReporteAlmacenImg = async () => {
     <div>
       <Header Rol={ Rol } />
 
-      <Container className="margen-contenedor">
+      <Container className="margen-contenedor text-center">
 
       <Row className="g-3">
 
-      <Col sm={{ span: 6, offset: 3 }} md={{ span: 6, offset: 3 }} lg={{ span: 4, offset: 4 }}>
+      <Col sm={{ span: 6, offset: 3 }} md={{ span: 6, offset: 3 }} lg={{ span: 4, offset: 5 }}>
             <Card>
               <Card.Body>
                 <Card.Title>Estado del almacén</Card.Title>
@@ -126,7 +126,7 @@ const generarReporteAlmacenImg = async () => {
               </Card>
           </Col>
 
-        <Col sm={{ span: 6, offset: 3 }} md={{ span: 6, offset: 3 }} lg={{ span: 4, offset: 4 }}>
+        <Col sm={{ span: 6, offset: 3 }} md={{ span: 6, offset: 3 }} lg={{ span: 4, offset: 5 }}>
           <Card>
             <Card.Body>
               <Card.Title>Estado del almacén</Card.Title>

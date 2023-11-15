@@ -79,18 +79,12 @@ function Header({ Rol }) {
                   </NavDropdown.Item>
                 </NavDropdown>
 
-                <NavDropdown title="Ventas" id="ventas">
-                  <NavDropdown.Item>
-                    <Link to="/venta" className="link-unstyled">Registrar Ventas</Link>
-                  </NavDropdown.Item>
-
-                  <NavDropdown.Item>
-                    <Link to="/ventaList" className="link-unstyled">Listar Ventas</Link>
-                  </NavDropdown.Item>
-                </NavDropdown>
-
                 <Nav.Link>
                     <Link to="/estadisticas" className="link-unstyled">Estadísticas</Link>
+                </Nav.Link>
+
+                <Nav.Link>
+                    <Link to="/venta" className="link-unstyled">Venta</Link>
                 </Nav.Link>
 
               </Nav>
@@ -117,7 +111,7 @@ function Header({ Rol }) {
             <Nav className="flex-column">
 
               <Nav.Link>
-                <Link to="/" className="link-unstyled">Inicio</Link>
+                <Link to="/inicio" className="link-unstyled">Inicio</Link>
               </Nav.Link>
 
               <Nav.Link>
@@ -128,15 +122,17 @@ function Header({ Rol }) {
                 <NavDropdown.Item>
                   <Link to="/cliente" className="link-unstyled">Registrar Cliente</Link>
                 </NavDropdown.Item>
+
                 <NavDropdown.Item>
                   <Link to="/clienteList" className="link-unstyled">Listar Clientes</Link>
                 </NavDropdown.Item>
               </NavDropdown>
 
-              <NavDropdown title="Productos" id="productos">
+              <NavDropdown title="Producto" id="producto">
                 <NavDropdown.Item>
-                  <Link to="/productos" className="link-unstyled">Registrar Productos</Link>
+                  <Link to="/producto" className="link-unstyled">Registrar Productos</Link>
                 </NavDropdown.Item>
+                
                 <NavDropdown.Item>
                   <Link to="/productoList" className="link-unstyled">Listar Productos</Link>
                 </NavDropdown.Item>
@@ -155,18 +151,12 @@ function Header({ Rol }) {
                 </NavDropdown.Item>
               </NavDropdown>
 
-              <NavDropdown title="Ventas" id="ventas">
-                <NavDropdown.Item>
-                  <Link to="/venta" className="link-unstyled">Registrar Ventas</Link>
-                </NavDropdown.Item>
-
-                <NavDropdown.Item>
-                  <Link to="/ventaList" className="link-unstyled">Listar Ventas</Link>
-                </NavDropdown.Item>
-              </NavDropdown>
-
               <Nav.Link>
                     <Link to="/estadisticas" className="link-unstyled">Estadísticas</Link>
+              </Nav.Link>
+
+              <Nav.Link>
+                    <Link to="/venta" className="link-unstyled">Venta</Link>
               </Nav.Link>
 
             </Nav>
@@ -235,7 +225,7 @@ function Header({ Rol }) {
             <Nav className="flex-column">
 
               <Nav.Link>
-                <Link to="/" className="link-unstyled">Inicio</Link>
+                <Link to="/inicio" className="link-unstyled">Inicio</Link>
               </Nav.Link>
 
               <Nav.Link>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
 import { FaTrashCan, FaPencil } from 'react-icons/fa6';
+import '../styles/App.css';
 
 function CategoriaList({ Rol }) {
   const [categorias, setCategorias] = useState([]);
@@ -11,6 +12,7 @@ function CategoriaList({ Rol }) {
     nombre: '',
   });
 
+  // Crear busqueda
   const [searchQuery, setSearchQuery] = useState('');
   
   const handleSearchChange = (e) => {
