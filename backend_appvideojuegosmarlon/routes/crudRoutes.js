@@ -399,31 +399,36 @@ router.put('/updateProducto/:id_producto', (req, res) => {
   //---------------------------------------------------------------------------------------------------------------------
 
 //Venta------------------------------------------------------------------------------------------------------------------
-  // Ruta para crear un nuevo registro con ID específico en la tabla venta
-    router.post('/createVenta', (req, res) => {
-        // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-        const { id_cliente, id_producto, cantidad, fecha } = req.body;
-
-        // Verifica si se proporcionaron los datos necesarios
-        if (!id_cliente || !id_producto || !cantidad || !fecha) {
-            return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+// Ruta para registrar una venta con su detalle
+router.post('/createventa', (req, res) => {
+    // Extraer datos de la solicitud
+    const { id_cliente, fecha, detallesVenta } = req.body;
+  
+    // Realizar la inserción de la venta en la tabla venta
+    const sqlPedido = 'INSERT INTO venta (id_cliente, fecha) VALUES (?, ?)';
+    db.query(sqlPedido, [id_cliente, fecha], (err, result) => {
+      if (err) {
+        console.error('Error al insertar pedido:', err);
+        return res.status(500).json({ error: 'Error al insertar venta' });
+      }
+  
+      const id_venta = result.insertId; // Obtener el ID de la venta insertada
+  
+      // Iterar sobre el detalle de la venta y realizar inserciones en detalle
+      const sqlDetalle = 'INSERT INTO detalle (id_venta, id_producto, cantidad) VALUES ?';
+      const values = detallesVenta.map((item) => [id_venta, item.id_producto, item.cantidad]);
+      db.query(sqlDetalle, [values], (err, result) => {
+        if (err) {
+          console.error('Error al insertar detalle del pedido:', err);
+          return res.status(500).json({ error: 'Error al insertar detalle de la venta.' });
         }
-
-        // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-        const sql = `INSERT INTO Venta (id_cliente, id_producto, cantidad, fecha) VALUES (?, ?, ?, ?)`;
-        const values = [id_cliente, id_producto, cantidad, fecha];
-
-        // Ejecuta la consulta
-        db.query(sql, values, (err, result) => {
-            if (err) {
-                console.error('Error al insertar un registro en la tabla Venta:', err);
-                res.status(500).json({ error: 'Error al insertar un registro en la tabla Venta' });
-            } else {
-            // Devuelve un mensaje como respuesta
-                res.status(200).json({ message: 'Registro agregado con éxito' });
-            }
-        });
+  
+        // Devolver respuesta exitosa
+        res.status(201).json({ message: 'Pedido y detalle del pedido agregados con éxito' });
+      });
     });
+  });
+  
 
   //Sentencia
   //curl -X POST -H "Content-Type: application/json" " http://localhost:5000/crud/createVenta

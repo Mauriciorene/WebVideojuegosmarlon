@@ -7,14 +7,12 @@ import '../styles/App.css';
 function Venta({ rol }) {
 
   const [formData, setFormData] = useState({
-    Id_Cliente: '',
-    Id_Producto: ''
+    id_cliente: '',
+    id_producto: ''
   });
 
-  const [Fecha_Pedido, setFecha_Pedido] = useState('');
-  const [Cantidad, setCantidad] = useState('');
-  const [Direccion, setDireccion] = useState('');
-  const [Estado_Pedido, setEstado_Pedido] = useState('');
+  const [fecha, setFecha] = useState('');
+  const [cantidad, setCantidad] = useState('');
 
 
   const [clientes, setClientes] = useState([]);
@@ -36,12 +34,12 @@ function Venta({ rol }) {
   };
 
   const AgregarDetalleProducto = () => {
-    if (selectedProducto && Cantidad) {
+    if (selectedProducto && cantidad) {
       const nuevoDetalle = {
-        Id_Producto: selectedProducto.Id_Producto,
-        Nombre_Producto: selectedProducto.Nombre_Producto,
-        Precio: selectedProducto.Precio,
-        Cantidad: Cantidad
+        id_producto: selectedProducto.id_producto,
+        nombreProducto: selectedProducto.nombreProducto,
+        precio: selectedProducto.precio,
+        cantidad: cantidad
       };
       setDetallesVenta([...detallesVenta, nuevoDetalle]);
       setCantidad('');
@@ -59,21 +57,21 @@ function Venta({ rol }) {
 
   const filteredClientes = clientes.filter((cliente) => {
     // Convierte los valores de los campos a minúsculas para realizar una búsqueda insensible a mayúsculas y minúsculas
-    const Id_Cliente = cliente.Id_Cliente;
-    const Nombre = cliente.Nombre.toLowerCase(); 
+    const id_cliente = cliente.Id_Cliente;
+    const nombre = cliente.nombre.toLowerCase(); 
     const search = searchQuery.toLowerCase();
     
     // Verifica si la cadena de búsqueda se encuentra en algún campo
     return (
-      Id_Cliente == (search) ||
-      Nombre.includes(search)
+      id_cliente == (search) ||
+      nombre.includes(search)
     );
   });
   
 
   //Manejo de carga y selección de Clientes --------------------------------------
   const loadClientes = () => {
-    fetch('http://localhost:5000/crud/readCliente')
+    fetch('http://localhost:5000/crud/getClientes')
       .then((response) => response.json())
       .then((data) => setClientes(data))
       .catch((error) => console.error('Error al obtener los clientes:', error));
@@ -95,14 +93,14 @@ function Venta({ rol }) {
     setSelectedCliente(cliente);
     setFormData({
       ...formData,
-      Id_Cliente: cliente.Id_Cliente,
+      id_cliente: cliente.id_cliente,
     });
     closeClienteModal();
   };
 
   //Manejo de carga y selección de Productos --------------------------------------
   const loadProductos = () => {
-    fetch('http://localhost:5000/crud/readProducto')
+    fetch('http://localhost:5000/crud/readproducto')
       .then((response) => response.json())
       .then((data) => setProductos(data))
       .catch((error) => console.error('Error al obtener los productos:', error));
@@ -123,7 +121,7 @@ function Venta({ rol }) {
     setSelectedProducto(producto);
     setFormData({
       ...formData,
-      Id_Producto: producto.Id_Producto,
+      id_producto: producto.id_producto,
     });
     closeProductoModal();
   };
@@ -136,16 +134,14 @@ function Venta({ rol }) {
 
 
   const registrarVenta = () => {
-    if (Fecha_Pedido && selectedCliente && detallesVenta.length > 0) {
+    if (fecha && selectedCliente && detallesVenta.length > 0) {
       const data = {
-        Fecha_Pedido: Fecha_Pedido,
-        Direccion: Direccion,
-        Estado_Pedido: Estado_Pedido,
-        Id_Cliente: selectedCliente.Id_Cliente,
-        detallesPedido: detallesVenta,
+        fecha: fecha,
+        id_cliente: selectedCliente.id_cliente,
+        detallesVenta: detallesVenta,
       };
 
-      fetch('http://localhost:5000/crud/createPedido', {
+      fetch('http://localhost:5000/crud/createventa', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -157,10 +153,10 @@ function Venta({ rol }) {
             // Aquí puedes mostrar un mensaje de éxito o reiniciar los estados
             console.log('Venta registrada con éxito');
             alert('¡Venta registrada con éxito!');
-            setFecha_Pedido('');
-            setDireccion('');
+            setFecha('');
             setDetallesVenta([]);
             setSelectedCliente('');
+            setCantidad('');
             // Limpia otros estados según sea necesario
           } else {
             // Aquí maneja el caso de error en la petición
@@ -188,18 +184,18 @@ function Venta({ rol }) {
             <Form className="mt-3" >
               <Row className="g-3">
 
-                <Col sm="12" md="4" lg="4">
-                  <FloatingLabel controlId="Fecha_Pedido" label="Fecha">
+                <Col sm="12" md="6" lg="3">
+                  <FloatingLabel controlId="fecha" label="Fecha">
                     <Form.Control 
                       type="date" 
                       placeholder="Seleccione la fecha venta"
-                      value={Fecha_Pedido}
-                      onChange={(e) => setFecha_Pedido(e.target.value)} 
+                      value={fecha}
+                      onChange={(e) => setFecha(e.target.value)} 
                     />
                   </FloatingLabel>
                 </Col>
 
-                <Col sm="12" md="6" lg="4">
+                <Col sm="12" md="6" lg="3">
                   <FloatingLabel controlId="cliente" label="Cliente">
                     <Form.Control
                       type="text"
@@ -216,7 +212,7 @@ function Venta({ rol }) {
                   </FloatingLabel>
                 </Col>
 
-                <Col sm="12" md="6" lg="4">
+                <Col sm="12" md="6" lg="3">
                   <FloatingLabel controlId="producto" label="Producto">
                     <Form.Control
                       type="text"
@@ -233,19 +229,19 @@ function Venta({ rol }) {
                   </FloatingLabel>
                 </Col>
 
-                <Col sm="10" md="4" lg="3" className="">
+                <Col xs="10" sm="10" md="4" lg="2" className="">
                   <FloatingLabel controlId="cantidad" label="Cantidad">
                     <Form.Control 
                       type="number" 
                       placeholder="Cantidad de Producto"
-                      value={Cantidad}
+                      value={cantidad}
                       onChange={(e) => setCantidad
                         (e.target.value)} 
                     />
                   </FloatingLabel>
                 </Col>
 
-                <Col sm="2" md="2" lg="1" className="d-flex align-items-center">
+                <Col xs="2" sm="2" md="2" lg="1" className="d-flex align-items-center">
                   <Button onClick={AgregarDetalleProducto} variant="outline-success" size="lg">
                     <FaPlus />
                   </Button>
@@ -268,16 +264,16 @@ function Venta({ rol }) {
                         </thead>
                         <tbody>
                         {detallesVenta.map((detalle) => (
-                          <tr key={detalle.Id_Producto}>
-                            <td>{detalle.Id_Producto}</td>
-                            <td>{detalle.Nombre_Producto}</td>
-                            <td>{detalle.Precio}</td>
-                            <td>{detalle.Cantidad}</td>
-                            <td>{detalle.Cantidad * detalle.Precio}</td>
+                          <tr key={detalle.id_producto}>
+                            <td>{detalle.id_producto}</td>
+                            <td>{detalle.nombreProducto}</td>
+                            <td>{detalle.precio}</td>
+                            <td>{detalle.cantidad}</td>
+                            <td>{detalle.cantidad * detalle.precio}</td>
                             <td className="align-button">
                               <Button 
                                 size="sm"
-                                onClick={() => EliminarDetalle(detalle.idProducto)}
+                                onClick={() => EliminarDetalle(detalle.id_producto)}
                                 variant="danger">
                                   
                                 <FaTrashAlt />
@@ -328,8 +324,8 @@ function Venta({ rol }) {
             </thead>
             <tbody>
               {filteredClientes.map((cliente) => (
-                <tr key={cliente.Id_Cliente} onClick={() => selectCliente(cliente)}>
-                  <td>{cliente.Nombre}</td>
+                <tr key={cliente.id_cliente} onClick={() => selectCliente(cliente)}>
+                  <td>{cliente.nombre}</td>
                 </tr>
               ))}
             </tbody>
@@ -344,8 +340,8 @@ function Venta({ rol }) {
         </Modal.Header>
         <Modal.Body>
           {productos.map((producto) => (
-            <div className="Seleccion" key={producto.Id_Producto} onClick={() => selectProducto(producto)}>
-              {producto.Nombre_Producto}
+            <div className="Seleccion" key={producto.id_producto} onClick={() => selectProducto(producto)}>
+              {producto.nombreProducto}
             </div>
           ))}
         </Modal.Body>
