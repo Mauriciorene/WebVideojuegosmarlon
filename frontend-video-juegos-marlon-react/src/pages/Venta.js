@@ -271,7 +271,7 @@ function Venta({ Rol }) {
                 <Col xs="10" sm="10" md="4" lg="2" className="">
                   <FloatingLabel controlId="cantidad" label="Cantidad">
                     <Form.Control 
-                      type="text" 
+                      type="number" 
                       placeholder="Cantidad de Producto"
                       value={cantidad}
                       onChange={(e) => setCantidad 

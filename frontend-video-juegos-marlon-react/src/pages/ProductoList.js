@@ -201,7 +201,9 @@ function ProductoList({Rol}) {
                   <td>{producto.descripcion}</td>
                   <td>{producto.precio}</td>
                   <td>{producto.Stock}</td>
-                  <td>{producto.id_categoria}</td>
+                  <td>{/* Mostrar el nombre de la categoría en lugar del ID */}
+                  {categorias.find((categoria) => categoria.id_categoria === producto.id_categoria)?.nombre}
+                  </td>
                   <td>
                   {/* Muestra la imagen en base64 */}
                   <img src={producto.imagen} alt={producto.nombre} style={{ width: '50px' }} />

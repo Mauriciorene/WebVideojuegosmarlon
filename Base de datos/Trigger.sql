@@ -120,7 +120,6 @@ DELIMITER ;
 -- Verificar si se activó el trigger
 SELECT * FROM Bitacora;
 
-
 -- Trigger para actualizar en Venta
 DELIMITER //
 CREATE TRIGGER TriggerUpdateVenta
@@ -132,7 +131,6 @@ BEGIN
 END;
 //
 DELIMITER ;
-
 
 -- Trigger para eliminar en Venta
 DELIMITER //
@@ -146,7 +144,8 @@ END;
 //
 DELIMITER ;
 
--- Trigger para actualizar un detalle
+
+-- Trigger para insertar en Detalle
 DELIMITER //
 CREATE TRIGGER TriggerInsertDetalle
 AFTER INSERT ON Detalle
@@ -158,7 +157,7 @@ END;
 //
 DELIMITER ;
 
--- Trigger para actualizar un detalle
+-- Trigger para actualizar en Detalle
 DELIMITER //
 CREATE TRIGGER TriggerUpdateDetalle
 BEFORE UPDATE ON Detalle
@@ -170,7 +169,7 @@ END;
 //
 DELIMITER ;
 
--- Trigger para eliminar un detalle
+-- Trigger para eliminar en Detalle
 DELIMITER //
 CREATE TRIGGER TriggerDeleteDetalle
 AFTER DELETE ON Detalle
@@ -181,4 +180,3 @@ BEGIN
 END;
 //
 DELIMITER ;
-
