@@ -4,8 +4,9 @@ import { FaSearch, FaPlus, FaTrashAlt } from 'react-icons/fa';
 import Header from '../components/Header';
 import '../styles/App.css';
 
-function Venta({ rol }) {
+function Venta({ Rol }) {
 
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     id_cliente: '',
     id_producto: ''
@@ -13,20 +14,13 @@ function Venta({ rol }) {
 
   const [fecha, setFecha] = useState('');
   const [cantidad, setCantidad] = useState('');
-
-
   const [clientes, setClientes] = useState([]);
   const [productos, setProductos] = useState([]);
-
   const [detallesVenta, setDetallesVenta] = useState([]);
-
   const [showClienteModal, setShowClienteModal] = useState(false);
   const [showProductoModal, setShowProductoModal] = useState(false);
-
   const [selectedCliente, setSelectedCliente] = useState(null);
   const [selectedProducto, setSelectedProducto] = useState(null);
-
-
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearchChange = (e) => {
@@ -43,7 +37,7 @@ function Venta({ rol }) {
       };
       setDetallesVenta([...detallesVenta, nuevoDetalle]);
       setCantidad('');
-      setSelectedProducto('');
+      setSelectedProducto('null');
     } else {
       alert('Asegúrese de selecionar un producto o ingresar una cantidad.');
     }
@@ -106,14 +100,26 @@ function Venta({ rol }) {
       .catch((error) => console.error('Error al obtener los productos:', error));
   };
 
-  //Control de apertura de modal de Empleados
+  //Control de apertura de modal de producto
   const openProductoModal = () => {
     setShowProductoModal(true);
   };
 
-  //Control de clierre de modal de Empleados
+  //Control de clierre de modal de producto
   const closeProductoModal = () => {
     setShowProductoModal(false);
+  };
+
+  const registrarVenta = () => {
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length === 0) {
+      console.log('Venta registrada con éxito');
+      alert('¡Venta registrada con éxito!');
+      setErrors({});
+    } else {
+      alert('Por favor, complete todos los campos obligatorios.');
+    }
   };
 
   //Actualización de valor de variable de estado de Empleado selecionado
@@ -132,6 +138,9 @@ function Venta({ rol }) {
     loadProductos();
   }, []);
 
+    // Validación
+  const validateForm = () => {
+    const newErrors = {};
 
   const registrarVenta = () => {
     if (fecha && selectedCliente && detallesVenta.length > 0) {
@@ -172,10 +181,37 @@ function Venta({ rol }) {
     }
   };
 
+  
+
+  // Validación de campos vacíos y notificar al usuario sobre los campos incompletos
+
+  if (!fecha) {
+    newErrors.fecha = 'Por favor, seleccione la fecha de venta.';
+  }
+
+  if (!selectedCliente) {
+    newErrors.cliente = 'Por favor, seleccione un cliente.';
+  }
+
+  if (!selectedProducto) {
+    newErrors.producto = 'Por favor, seleccione un producto.';
+  }
+
+  if (!cantidad.trim()) {
+    newErrors.cantidad = 'Por favor, ingrese la cantidad de producto.';
+  } else if (!/^\d{1,6}$/.test(cantidad)) {
+    newErrors.cantidad = 'La cantidad debe ser un número con un máximo de 6 dígitos.';
+  }
+
+  setErrors(newErrors);
+  return newErrors;
+};
+
+
 
   return(
     <div>
-      <Header rol={ rol } />
+      <Header Rol={ Rol } />
 
       <Container className="margen-contenedor">
         <Card className="global-margin-top">
@@ -193,6 +229,7 @@ function Venta({ rol }) {
                       onChange={(e) => setFecha(e.target.value)} 
                     />
                   </FloatingLabel>
+                  {errors.fecha && <div className="text-danger">{errors.fecha}</div>}
                 </Col>
 
                 <Col sm="12" md="6" lg="3">
@@ -210,6 +247,7 @@ function Venta({ rol }) {
                       </Button>
                     </div>
                   </FloatingLabel>
+                  {errors.cliente && <div className="text-danger">{errors.cliente}</div>}
                 </Col>
 
                 <Col sm="12" md="6" lg="3">
@@ -227,18 +265,20 @@ function Venta({ rol }) {
                       </Button>
                     </div>
                   </FloatingLabel>
+                  {errors.producto && <div className="text-danger">{errors.producto}</div>}
                 </Col>
 
                 <Col xs="10" sm="10" md="4" lg="2" className="">
                   <FloatingLabel controlId="cantidad" label="Cantidad">
                     <Form.Control 
-                      type="number" 
+                      type="text" 
                       placeholder="Cantidad de Producto"
                       value={cantidad}
-                      onChange={(e) => setCantidad
-                        (e.target.value)} 
+                      onChange={(e) => setCantidad 
+                        (e.target.value)}
                     />
                   </FloatingLabel>
+                  {errors.cantidad && <div className="text-danger">{errors.cantidad}</div>}
                 </Col>
 
                 <Col xs="2" sm="2" md="2" lg="1" className="d-flex align-items-center">

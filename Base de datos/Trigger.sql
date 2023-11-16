@@ -8,9 +8,7 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'Cliente');
 //
--- Insertar datos en la tabla Cliente
-INSERT INTO Cliente (nombre, apellido, telefono)
-VALUES ('Juan', 'Perez', '12345678');
+DELIMITER ;
 
 -- Verificar si se activó el trigger
 SELECT * FROM Bitacora;
@@ -23,6 +21,7 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('UPDATE', current_user(), NOW(), 'Cliente');
 //
+DELIMITER ;
 
 -- Trigger para eliminar en Cliente
 DELIMITER //
@@ -32,6 +31,7 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('DELETE', current_user(), NOW(), 'Cliente');
 //
+DELIMITER ;
 
 /*Categoría------------------------------------------------------------------------------------------*/
 -- Triggers de la tabla Categoria
@@ -43,9 +43,7 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'Categoria');
 //
--- Insertar datos en la tabla Categoria
-INSERT INTO Categoria (nombre)
-VALUES ('Electrónicos');
+DELIMITER ;
 
 -- Verificar si se activó el trigger
 SELECT * FROM Bitacora;
@@ -58,6 +56,7 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('UPDATE', current_user(), NOW(), 'Categoria');
 //
+DELIMITER ;
 
 -- Trigger para eliminar en Categoria
 DELIMITER //
@@ -67,6 +66,7 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('DELETE', current_user(), NOW(), 'Categoria');
 //
+DELIMITER ;
 
 /*Producto-------------------------------------------------------------------------------------------*/
 -- Trigger para la tabla Producto
@@ -78,9 +78,7 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'Producto');
 //
--- Insertar datos en la tabla Producto
-INSERT INTO Producto (id_categoria, descripcion, nombreProducto, precio, Stock)
-VALUES (1, 'Descripción del producto', 'Producto de Prueba', 10, 30);
+DELIMITER ;
 
 -- Verificar si se activó el trigger
 SELECT * FROM Bitacora;
@@ -93,6 +91,7 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('UPDATE', current_user(), NOW(), 'Producto');
 //
+DELIMITER ;
 
 -- Trigger para eliminar en Producto
 DELIMITER //
@@ -102,6 +101,7 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('DELETE', current_user(), NOW(), 'Producto');
 //
+DELIMITER ;
 
 /*Venta----------------------------------------------------------------------------------------------*/
 -- Trigger para la tabla Venta
@@ -111,15 +111,11 @@ CREATE TRIGGER TriggerInsertVenta
 AFTER INSERT ON Venta
 FOR EACH ROW
 BEGIN
-  INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
-  VALUES ('INSERT', current_user(), NOW(), 'Venta');
+    INSERT INTO Bitacora (transaccion, usuario, fecha, tabla)
+    VALUES ('INSERT', current_user(), NOW(), 'Venta');
 END;
 //
 DELIMITER ;
-
--- Insertar datos en la tabla Venta (Asegúrate de tener los ID de cliente y producto existentes)
-INSERT INTO Venta (id_cliente, id_producto, fecha, cantidad)
-VALUES (1, 1, NOW());
 
 -- Verificar si se activó el trigger
 SELECT * FROM Bitacora;
@@ -131,19 +127,58 @@ CREATE TRIGGER TriggerUpdateVenta
 BEFORE UPDATE ON Venta
 FOR EACH ROW
 BEGIN
-  INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
-  VALUES ('UPDATE', current_user(), NOW(), 'Venta');
+    INSERT INTO Bitacora (transaccion, usuario, fecha, tabla)
+    VALUES ('UPDATE', current_user(), NOW(), 'Venta');
 END;
 //
 DELIMITER ;
+
 
 -- Trigger para eliminar en Venta
 DELIMITER //
 CREATE TRIGGER TriggerDeleteVenta
 AFTER DELETE ON Venta
 FOR EACH ROW
-INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
-VALUES ('DELETE', current_user(), NOW(), 'Venta');
+BEGIN
+    INSERT INTO Bitacora (transaccion, usuario, fecha, tabla)
+    VALUES ('DELETE', current_user(), NOW(), 'Venta');
 END;
 //
 DELIMITER ;
+
+-- Trigger para actualizar un detalle
+DELIMITER //
+CREATE TRIGGER TriggerInsertDetalle
+AFTER INSERT ON Detalle
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (transaccion, usuario, fecha, tabla)
+    VALUES ('INSERT', current_user(), NOW(), 'Detalle');
+END;
+//
+DELIMITER ;
+
+-- Trigger para actualizar un detalle
+DELIMITER //
+CREATE TRIGGER TriggerUpdateDetalle
+BEFORE UPDATE ON Detalle
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (transaccion, usuario, fecha, tabla)
+    VALUES ('UPDATE', current_user(), NOW(), 'Detalle');
+END;
+//
+DELIMITER ;
+
+-- Trigger para eliminar un detalle
+DELIMITER //
+CREATE TRIGGER TriggerDeleteDetalle
+AFTER DELETE ON Detalle
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (transaccion, usuario, fecha, tabla)
+    VALUES ('DELETE', current_user(), NOW(), 'Detalle');
+END;
+//
+DELIMITER ;
+

@@ -12,7 +12,7 @@ app.use(express.json({limit: "50mb"})); //Aumenta el limite de las imagenes
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'gitdev2051',
+    password: 'Mysql2023',
     database: 'bdvideojuegosmarlon'
 });
 

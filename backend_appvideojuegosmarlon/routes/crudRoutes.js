@@ -400,35 +400,41 @@ router.put('/updateProducto/:id_producto', (req, res) => {
 
 //Venta------------------------------------------------------------------------------------------------------------------
 // Ruta para registrar una venta con su detalle
-router.post('/createventa', (req, res) => {
-    // Extraer datos de la solicitud
-    const { id_cliente, fecha, detallesVenta } = req.body;
-  
-    // Realizar la inserción de la venta en la tabla venta
-    const sqlPedido = 'INSERT INTO venta (id_cliente, fecha) VALUES (?, ?)';
-    db.query(sqlPedido, [id_cliente, fecha], (err, result) => {
-      if (err) {
-        console.error('Error al insertar pedido:', err);
-        return res.status(500).json({ error: 'Error al insertar venta' });
-      }
-  
-      const id_venta = result.insertId; // Obtener el ID de la venta insertada
-  
-      // Iterar sobre el detalle de la venta y realizar inserciones en detalle
-      const sqlDetalle = 'INSERT INTO detalle (id_venta, id_producto, cantidad) VALUES ?';
-      const values = detallesVenta.map((item) => [id_venta, item.id_producto, item.cantidad]);
-      db.query(sqlDetalle, [values], (err, result) => {
-        if (err) {
-          console.error('Error al insertar detalle del pedido:', err);
-          return res.status(500).json({ error: 'Error al insertar detalle de la venta.' });
+    router.post('/createventa', (req, res) => {
+        // Extraer datos de la solicitud
+        const { id_cliente, fecha, detallesVenta } = req.body;
+    
+        // Verifica si se proporcionaron los datos necesarios
+        if (!id_cliente || !fecha || !detallesVenta) {
+        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
         }
-  
-        // Devolver respuesta exitosa
-        res.status(201).json({ message: 'Pedido y detalle del pedido agregados con éxito' });
-      });
+
+        // Realizar la inserción de la venta en la tabla venta
+        const sqlPedido = 'INSERT INTO venta (id_cliente, fecha) VALUES (?, ?)';
+
+        db.query(sqlPedido, [id_cliente, fecha], (err, result) => {
+        if (err) {
+            console.error('Error al insertar pedido:', err);
+            return res.status(500).json({ error: 'Error al insertar venta' });
+        }
+    
+        const id_venta = result.insertId; // Obtener el ID de la venta insertada
+    
+        // Iterar sobre el detalle de la venta y realizar inserciones en detalle
+        const sqlDetalle = 'INSERT INTO detalle (id_venta, id_producto, cantidad) VALUES ?';
+        const values = detallesVenta.map((item) => [id_venta, item.id_producto, item.cantidad]);
+        db.query(sqlDetalle, [values], (err, result) => {
+            if (err) {
+            console.error('Error al insertar detalle del pedido:', err);
+            return res.status(500).json({ error: 'Error al insertar detalle de la venta.' });
+            }
+    
+            // Devolver respuesta exitosa
+            res.status(201).json({ message: 'Pedido y detalle del pedido agregados con éxito' });
+        });
+        });
     });
-  });
-  
+    
 
   //Sentencia
   //curl -X POST -H "Content-Type: application/json" " http://localhost:5000/crud/createVenta
