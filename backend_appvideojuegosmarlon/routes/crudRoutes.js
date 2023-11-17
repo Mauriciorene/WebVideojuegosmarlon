@@ -377,22 +377,16 @@ router.put('/updateProducto/:id_producto', (req, res) => {
 
     // Ruta para leer registros
     // Ruta para leer registros de la tabla Venta
+// En tu servidor Node.js (simplificado)
     router.get('/readVenta', (req, res) => {
-        // Utiliza la instancia de la base de datos pasada como parámetro
-        // Realizar una consulta SQL para seleccionar todos los registros
-        const sql = 'SELECT * FROM Venta';
-
-    // Ejecutar la consulta
-        db.query(sql, (err, result) => {
-            if (err) {
-                console.error('Error al leer registros de la tabla Venta:', err);
-                res.status(500).json({ error: 'Error al leer registros de la tabla Venta' });
-            } else {
-            // Devolver los registros en formato JSON como respuesta
-                res.status(200).json(result);
-            }
+        const query = 'SELECT Venta.id_venta, Cliente.nombre AS nombreCliente, Venta.fecha, Detalle.id_detalle, Producto.nombreProducto, Detalle.cantidad FROM Venta INNER JOIN Cliente ON Venta.id_cliente = Cliente.id_cliente LEFT JOIN Detalle ON Venta.id_venta = Detalle.id_venta INNER JOIN Producto ON Detalle.id_producto = Producto.id_producto';
+        
+        db.query(query, (error, results) => {
+        if (error) throw error;
+        res.json(results);
         });
     });
+
 
   //Sentencia
   //curl http://localhost:5000/crud/readVenta
@@ -481,24 +475,34 @@ router.put('/updateProducto/:id_producto', (req, res) => {
   //-------------------------------------------------------------------------------------
 
 // Ruta para eliminar una venta existente por ID en la tabla Venta
-    router.delete('/deleteVenta/:idVenta', (req, res) => {
-        // Obtén el ID del registro a eliminar desde los parámetros de la URL
-        const idVenta = req.params.idVenta;
+// En tu servidor Node.js (simplificado)
+    router.delete('/deleteVenta/:id_venta', (req, res) => {
+        const idVenta = req.params.id_venta;
 
-        // Realiza la consulta SQL para eliminar el registro por ID
-        const sql = 'DELETE FROM Venta WHERE id_venta = ?';
+        // Elimina el detalle de venta asociado
+        const deleteDetalleQuery = 'DELETE FROM Detalle WHERE id_venta = ?';
 
-        // Ejecuta la consulta
-        db.query(sql, [idVenta], (err, result) => {
-            if (err) {
-                console.error('Error al eliminar un registro de la tabla Venta:', err);
-                res.status(500).json({ error: 'Error al eliminar un registro de la tabla Venta' });
+        db.query(deleteDetalleQuery, [idVenta], (error, results) => {
+            if (error) {
+                console.error('Error al eliminar el detalle de venta:', error);
+                res.status(500).send('Error al eliminar el detalle de venta');
             } else {
-            // Devuelve un mensaje de éxito
-                res.status(200).json({ message: 'Registro eliminada exitosamente' });
+                // Después de eliminar el detalle, elimina la venta
+                const deleteVentaQuery = 'DELETE FROM Venta WHERE id_venta = ?';
+
+                db.query(deleteVentaQuery, [idVenta], (error, results) => {
+                    if (error) {
+                        console.error('Error al eliminar la venta:', error);
+                        res.status(500).send('Error al eliminar la venta');
+                    } else {
+                        res.status(200).send('Venta y detalle eliminados con éxito');
+                    }
+                });
             }
         });
     });
+
+
 
     return router;
 };

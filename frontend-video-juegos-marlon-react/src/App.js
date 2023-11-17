@@ -10,6 +10,7 @@ import ProductoList from './pages/ProductoList';
 import Categoria from './pages/Categoria';
 import CategoriaList from './pages/CategoriaList';
 import Venta from './pages/Venta';
+import VentaList from './pages/VentaList';
 import Login from './pages/Login';
 import Estadisticas from './pages/Estadisticas';
 import Galeria from './pages/Galeria';
@@ -33,6 +34,7 @@ function App() {
         <Route path="/Categoria" element={<Categoria Rol={userRol} />}  />
         <Route path="/CategoriaList" element={<CategoriaList Rol={userRol} />} />
         <Route path="/Venta" element={<Venta Rol={userRol} />} />
+        <Route path="/VentaList" element={<VentaList Rol={userRol} />} />
         <Route path="/estadisticas" element={<Estadisticas Rol={userRol} />} />
       </Routes>
     </Router>

@@ -37,14 +37,14 @@ function Venta({ Rol }) {
       };
       setDetallesVenta([...detallesVenta, nuevoDetalle]);
       setCantidad('');
-      setSelectedProducto('null');
+      setSelectedProducto('');
     } else {
       alert('Asegúrese de selecionar un producto o ingresar una cantidad.');
     }
   };
 
-  const EliminarDetalle = (idProducto) => {
-    const detallesActualizados = detallesVenta.filter(detalle => detalle.idProducto !== idProducto);
+  const EliminarDetalle = (id_producto) => {
+    const detallesActualizados = detallesVenta.filter(detalle => detalle.id_producto !== id_producto);
     setDetallesVenta(detallesActualizados);
   };
 
@@ -110,12 +110,11 @@ function Venta({ Rol }) {
     setShowProductoModal(false);
   };
 
-  const registrarVenta = () => {
+  const validarVenta = () => {
     const validationErrors = validateForm();
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log('Venta registrada con éxito');
-      alert('¡Venta registrada con éxito!');
+      registrarVenta();
       setErrors({});
     } else {
       alert('Por favor, complete todos los campos obligatorios.');
@@ -138,9 +137,6 @@ function Venta({ Rol }) {
     loadProductos();
   }, []);
 
-    // Validación
-  const validateForm = () => {
-    const newErrors = {};
 
   const registrarVenta = () => {
     if (fecha && selectedCliente && detallesVenta.length > 0) {
@@ -165,6 +161,7 @@ function Venta({ Rol }) {
             setFecha('');
             setDetallesVenta([]);
             setSelectedCliente('');
+            setSelectedProducto('');
             setCantidad('');
             // Limpia otros estados según sea necesario
           } else {
@@ -181,7 +178,9 @@ function Venta({ Rol }) {
     }
   };
 
-  
+    // Validación
+  const validateForm = () => {
+    const newErrors = {}; 
 
   // Validación de campos vacíos y notificar al usuario sobre los campos incompletos
 
@@ -191,16 +190,6 @@ function Venta({ Rol }) {
 
   if (!selectedCliente) {
     newErrors.cliente = 'Por favor, seleccione un cliente.';
-  }
-
-  if (!selectedProducto) {
-    newErrors.producto = 'Por favor, seleccione un producto.';
-  }
-
-  if (!cantidad.trim()) {
-    newErrors.cantidad = 'Por favor, ingrese la cantidad de producto.';
-  } else if (!/^\d{1,6}$/.test(cantidad)) {
-    newErrors.cantidad = 'La cantidad debe ser un número con un máximo de 6 dígitos.';
   }
 
   setErrors(newErrors);
@@ -220,7 +209,7 @@ function Venta({ Rol }) {
             <Form className="mt-3" >
               <Row className="g-3">
 
-                <Col sm="12" md="6" lg="3">
+                <Col sm="12" md="6" lg="2">
                   <FloatingLabel controlId="fecha" label="Fecha">
                     <Form.Control 
                       type="date" 
@@ -238,7 +227,7 @@ function Venta({ Rol }) {
                       type="text"
                       placeholder="Seleccionar Cliente"
                       name="cliente"
-                      value={selectedCliente ? selectedCliente.Nombre : ''}
+                      value={selectedCliente ? selectedCliente.nombre : ''}
                       readOnly
                     />
                     <div className="button-container">
@@ -250,13 +239,13 @@ function Venta({ Rol }) {
                   {errors.cliente && <div className="text-danger">{errors.cliente}</div>}
                 </Col>
 
-                <Col sm="12" md="6" lg="3">
+                <Col sm="12" md="6" lg="4">
                   <FloatingLabel controlId="producto" label="Producto">
                     <Form.Control
                       type="text"
                       placeholder="Seleccionar Producto"
                       name="producto"
-                      value={selectedProducto ? selectedProducto.Nombre_Producto : ''}
+                      value={selectedProducto ? selectedProducto.nombreProducto : ''}
                       readOnly
                     />
                     <div className="button-container">
@@ -271,11 +260,16 @@ function Venta({ Rol }) {
                 <Col xs="10" sm="10" md="4" lg="2" className="">
                   <FloatingLabel controlId="cantidad" label="Cantidad">
                     <Form.Control 
-                      type="number" 
+                      type="number"
+                      min={1} 
                       placeholder="Cantidad de Producto"
                       value={cantidad}
-                      onChange={(e) => setCantidad 
-                        (e.target.value)}
+                      onChange={(e) => {
+                        const inputValue = e.target.value;
+                        if (/^\d*$/.test(inputValue)) {
+                          setCantidad(inputValue);
+                        }
+                      }}
                     />
                   </FloatingLabel>
                   {errors.cantidad && <div className="text-danger">{errors.cantidad}</div>}
@@ -329,7 +323,7 @@ function Venta({ Rol }) {
 
               </Row>
               <div className="center-button">
-                <Button variant="primary" onClick={registrarVenta} className="mt-3" size="lg">
+                <Button variant="primary" onClick={validarVenta} className="mt-3" size="lg">
                   Registrar
                 </Button>
               </div>

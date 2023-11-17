@@ -79,12 +79,18 @@ function Header({ Rol }) {
                   </NavDropdown.Item>
                 </NavDropdown>
 
-                <Nav.Link>
-                    <Link to="/estadisticas" className="link-unstyled">Estadísticas</Link>
-                </Nav.Link>
+                <NavDropdown title="Venta" id="venta">
+                  <NavDropdown.Item>
+                    <Link to="/venta" className="link-unstyled">Registrar Venta</Link>
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Item>
+                    <Link to="/ventaList" className="link-unstyled">Listar Ventas</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
 
                 <Nav.Link>
-                    <Link to="/venta" className="link-unstyled">Venta</Link>
+                    <Link to="/estadisticas" className="link-unstyled">Estadísticas</Link>
                 </Nav.Link>
 
               </Nav>
@@ -146,17 +152,24 @@ function Header({ Rol }) {
                 <NavDropdown.Item>
                   <Link to="/categoria" className="link-unstyled">Registrar Categoría</Link>
                 </NavDropdown.Item>
+
                 <NavDropdown.Item>
                   <Link to="/categoriaList" className="link-unstyled">Listar Categorías</Link>
                 </NavDropdown.Item>
               </NavDropdown>
 
-              <Nav.Link>
-                    <Link to="/estadisticas" className="link-unstyled">Estadísticas</Link>
-              </Nav.Link>
+              <NavDropdown title="Venta" id="venta">
+                  <NavDropdown.Item>
+                    <Link to="/venta" className="link-unstyled">Registrar Venta</Link>
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Item>
+                    <Link to="/ventaList" className="link-unstyled">Listar Ventas</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
 
               <Nav.Link>
-                    <Link to="/venta" className="link-unstyled">Venta</Link>
+                    <Link to="/estadisticas" className="link-unstyled">Estadísticas</Link>
               </Nav.Link>
 
             </Nav>
