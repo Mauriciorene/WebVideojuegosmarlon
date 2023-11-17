@@ -83,11 +83,9 @@ function VentaList({ Rol }) {
                     <td>{venta.nombreCliente}</td>
                     <td>{formatDateForInput(venta.fecha)}</td>
                     <td className="d-flex justify-content-center">
-                      <Button variant="success" onClick={() => openModal(venta)}>
-                        <FaFileLines />
+                      <Button variant="success" onClick={() => openModal(venta)} style={{ marginRight: '15px' }}><FaFileLines />
                       </Button>
-                      <Button variant="danger" onClick={() => handleDelete(venta.id_venta)}>
-                        <FaTrashCan />
+                      <Button variant="danger" onClick={() => handleDelete(venta.id_venta)}><FaTrashCan />
                       </Button>
                     </td>
                   </tr>

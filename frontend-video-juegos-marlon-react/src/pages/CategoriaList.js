@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
+import { Table, Button, Card, Row, Col, Container, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
 import { FaTrashCan, FaPencil } from 'react-icons/fa6';
 import '../styles/App.css';
@@ -106,7 +106,8 @@ function CategoriaList({ Rol }) {
   return (
     <div>
       <Header Rol={ Rol } />
-
+      
+      <Container>
       <Card className="margen-contenedor">
         <Card.Body>
           <Card.Title className="mb-3">Listado de Categoria</Card.Title>
@@ -129,7 +130,8 @@ function CategoriaList({ Rol }) {
               <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Acciones</th>
+                <td className="d-flex justify-content-center">
+                <th>Acciones</th></td>
               </tr>
             </thead>
             <tbody>
@@ -137,7 +139,7 @@ function CategoriaList({ Rol }) {
                 <tr key={categoria.id_categoria}>
                   <td>{categoria.id_categoria}</td>
                   <td>{categoria.nombre}</td>
-                  <td>
+                  <td className="d-flex justify-content-center">
                     <Button variant="success" onClick={() => openModal(categoria)} style={{ marginRight: '15px' }}> <FaPencil /></Button>
                     <Button variant="danger" onClick={() => handleDelete(categoria.id_categoria)}><FaTrashCan /></Button>
                   </td>
@@ -147,6 +149,7 @@ function CategoriaList({ Rol }) {
           </Table>
         </Card.Body>
       </Card>
+      </Container>
 
       <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
         <Modal.Header closeButton>

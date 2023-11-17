@@ -60,9 +60,9 @@ function Estadisticas({Rol}) { // Declaración del componente Estadisticas con e
       .then((response) => response.json())  // Convierte la respuesta a formato JSON
       .then((productos) => {
         const doc = new jsPDF();  // Crea un nuevo documento PDF con jsPDF
-        let y = 15; // Posición inicial en el eje Y dentro del documento PDF
+        let y = 25; // Posición inicial en el eje Y dentro del documento PDF
 
-        doc.setTextColor(76, 176, 20);
+        doc.setTextColor(128, 0, 128);
         doc.text("Reporte de Estado de Almacén", 20, 10);  // Agrega un título al documento PDF
         doc.setTextColor(0, 0, 0);
 
@@ -92,9 +92,17 @@ const generarReporteAlmacenImg = async () => {
     // Convierte el objeto canvas a una URL de datos en formato PNG
     const imgData = canvas.toDataURL('image/png');
     // Añade un texto al documento PDF
-    pdf.text("Reporte de Estado de Almacén", 20, 10);
+    pdf.text("Reporte de Estado de Almacén", 67, 10);
     // Añade la imagen capturada del gráfico al documento PDF, con ajustes de coordenadas y tamaño
-    pdf.addImage(imgData, 'PNG', 10, 20, 100, 100);
+    
+    // Calcula las coordenadas para centrar la imagen en la página
+    const pageWidth = pdf.internal.pageSize.width;
+    const imgWidth = 100; // Ancho deseado de la imagen
+    const imgHeight = (canvas.height * imgWidth) / canvas.width; // Calcula la altura proporcional
+    const xPos = (pageWidth - imgWidth) / 2; // Calcula la posición X para centrar    
+    // Añade la imagen capturada del gráfico al documento PDF, con ajustes de coordenadas y tamaño
+    pdf.addImage(imgData, xPos, 20, imgWidth, imgHeight);
+
     // Guarda el documento PDF con un nombre específico
     pdf.save("reporte_almacen_con_grafico.pdf");
   } catch (error) {

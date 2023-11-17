@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
+import { Table, Button, Card, Row, Col, Container, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
 import { FaTrashCan, FaPencil } from 'react-icons/fa6';
 import '../styles/App.css';
@@ -163,13 +163,14 @@ function ProductoList({Rol}) {
   return (
     <div>
       <Header Rol={ Rol }/>
-
+      
+      <Container>
       <Card className="margen-contenedor">
         <Card.Body>
           <Card.Title className="mb-3">Listado de Productos</Card.Title>
 
           <Row className="mb-3">
-            <Col sm="6" md="6" lg="4">
+            <Col sm="6" md="6" lg="8">
               <FloatingLabel controlId="search" label="Buscar">
                 <Form.Control
                   type="text"
@@ -191,6 +192,8 @@ function ProductoList({Rol}) {
                 <th>Stock</th>
                 <th>Categoria</th>
                 <th>Imagen</th>
+                <td className="d-flex justify-content-center">
+                <th>Acciones</th></td>
               </tr>
             </thead>
             <tbody>
@@ -208,7 +211,7 @@ function ProductoList({Rol}) {
                   {/* Muestra la imagen en base64 */}
                   <img src={producto.imagen} alt={producto.nombre} style={{ width: '50px' }} />
                 </td>
-                <td>
+                <td className="d-flex justify-content-center">
                     <Button variant="success" onClick={() => openModal(producto)} style={{ marginRight: '15px' }}> <FaPencil /></Button>
                     <Button variant="danger" onClick={() => handleDelete(producto.id_producto)}><FaTrashCan /></Button>
                   </td>
@@ -218,6 +221,7 @@ function ProductoList({Rol}) {
           </Table>
         </Card.Body>
       </Card>
+      </Container>
 
       <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
         <Modal.Header closeButton>

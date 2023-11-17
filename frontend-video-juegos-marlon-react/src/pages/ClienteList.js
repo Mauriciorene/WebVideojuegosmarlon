@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel } from 'react-bootstrap';
+import { Table, Button, Card, Row, Col, Container, Form, Modal, FloatingLabel } from 'react-bootstrap';
 import Header from '../components/Header';
 import { FaTrashCan, FaPencil } from 'react-icons/fa6';
 import '../styles/App.css';
@@ -109,6 +109,7 @@ function ClienteList({Rol}) {
     <div>
       <Header Rol={ Rol } />
 
+      <Container>
       <Card className="margen-contenedor">
         <Card.Body>
           <Card.Title className="mb-3">Listado de Clientes</Card.Title>
@@ -133,7 +134,8 @@ function ClienteList({Rol}) {
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Teléfono</th>
-                <th>Acciones</th>
+                <td className="d-flex justify-content-center">
+                <th>Acciones</th></td>
               </tr>
             </thead>
             <tbody>
@@ -143,7 +145,7 @@ function ClienteList({Rol}) {
                 <td>{cliente.nombre}</td>
                 <td>{cliente.apellido}</td>
                 <td>{cliente.telefono}</td>
-                <td>
+                <td className="d-flex justify-content-center">
                   <Button variant="primary" onClick={() => openModal(cliente)}  style={{ marginRight: '15px' }}><FaPencil/></Button>
                   <Button variant="danger" onClick={() => handleDelete(cliente.id_cliente)}><FaTrashCan/></Button>
             </td>
@@ -154,6 +156,7 @@ function ClienteList({Rol}) {
           </Table>
         </Card.Body>
       </Card>
+      </Container>
 
       <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
         <Modal.Header closeButton>

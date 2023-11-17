@@ -203,6 +203,7 @@ function Cliente({ userRol }) {
             <Card.Title>Registro de Cliente</Card.Title>
             <Form className="mt-3" onSubmit={handleSubmit}>
               <Row className="g-3">
+                
                 <Col sm="6" md="6" lg="4">
                   {/* Campo de nombre */}
                   <FloatingLabel controlId="nombre" label="Nombre">

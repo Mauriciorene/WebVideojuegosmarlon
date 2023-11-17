@@ -84,29 +84,33 @@ function Galeria({Rol}) {  // Define un componente funcional Galeria que recibe 
         </Row>
 
         <Row className="g-3">
-            {filteredProductos.map((producto) => (
-            <Col sm="12" md="4" lg="3">
-                <Card>
-                <Card.Img className="image-card" variant="top" src={producto.imagen} alt={producto.nombre} />
-                <Card.Body>
-                    <Card.Title>{producto.nombreProducto}</Card.Title>
-                    <Card.Text>
-                    {producto.descripcion}
-                    </Card.Text>
-                    <div>
-                    <Badge bg="primary">Stock: {producto.Stock}</Badge>
-                    <Badge bg="success">Precio: {producto.precio}</Badge>
-                    <Badge bg="warning" text="dark">
-                        Categoria: {getCategoryNameById(producto.id_categoria)}
-                    </Badge>
-                    </div>
-                </Card.Body>
-                <Card.Body>
-                    <Card.Link href="/producto">Comprar</Card.Link>
-                </Card.Body>
-                </Card>
-            </Col>            
-            ))}
+    {filteredProductos.map((producto) => (
+        <Col sm="12" md="4" lg="3" key={producto.id_producto}>
+        <Card style={{ height: '100%' }}>
+            <Card.Img
+            className="image-card"
+            variant="top"
+            src={producto.imagen}
+            alt={producto.nombre}
+            style={{ width: '100%', height: '400px', objectFit: 'cover' }}
+            />
+            <Card.Body>
+            <Card.Title>{producto.nombreProducto}</Card.Title>
+            <Card.Text>{producto.descripcion}</Card.Text>
+            <div>
+                <Badge bg="primary">Stock: {producto.Stock}</Badge>
+                <Badge bg="success">Precio: {producto.precio}</Badge>
+                <Badge bg="warning" text="dark">
+                Categoria: {getCategoryNameById(producto.id_categoria)}
+                </Badge>
+            </div>
+            </Card.Body>
+            <Card.Body>
+            <Card.Link href="/producto">Comprar</Card.Link>
+            </Card.Body>
+        </Card>
+        </Col>
+        ))}
         </Row>
         </Container>
 
