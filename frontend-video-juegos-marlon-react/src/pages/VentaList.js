@@ -9,19 +9,12 @@ function VentaList({ Rol }) {
   const [selectedVenta, setSelectedVenta] = useState({});
   const [detalleVenta, setDetalleVenta] = useState([]);
 
-  // Función para abrir el modal y cargar los detalles de la venta
   const openModal = (venta) => {
     setSelectedVenta(venta);
     setShowModal(true);
-
-    // Cargar detalles de la venta
-    fetch(`http://localhost:5000/crud/readDetalleVenta/${venta.id_venta}`)
-      .then((response) => response.json())
-      .then((data) => setDetalleVenta(data))
-      .catch((error) => console.error('Error al obtener los detalles de la venta:', error));
+    loadDetalleVenta(venta.id_venta);
   };
 
-  // Función para cargar las ventas desde el servidor
   const loadVentas = () => {
     fetch('http://localhost:5000/crud/readVenta')
       .then((response) => response.json())
@@ -29,7 +22,13 @@ function VentaList({ Rol }) {
       .catch((error) => console.error('Error al obtener las ventas:', error));
   };
 
-  // Función para eliminar una venta
+  const loadDetalleVenta = (idVenta) => {
+    fetch(`http://localhost:5000/crud/readDetalleVenta/${idVenta}`)
+      .then((response) => response.json())
+      .then((data) => setDetalleVenta(data))
+      .catch((error) => console.error('Error al obtener los detalles de la venta:', error));
+  };
+
   const handleDelete = (id_venta) => {
     const confirmation = window.confirm('¿Seguro que deseas eliminar esta venta?');
     if (confirmation) {
@@ -45,7 +44,6 @@ function VentaList({ Rol }) {
     }
   };
 
-  // Realiza una solicitud GET al servidor para obtener las ventas
   useEffect(() => {
     loadVentas();
   }, []);
@@ -83,9 +81,18 @@ function VentaList({ Rol }) {
                     <td>{venta.nombreCliente}</td>
                     <td>{formatDateForInput(venta.fecha)}</td>
                     <td className="d-flex justify-content-center">
-                      <Button variant="success" onClick={() => openModal(venta)} style={{ marginRight: '15px' }}><FaFileLines />
+                      <Button
+                        variant="success"
+                        onClick={() => openModal(venta)}
+                        style={{ marginRight: '15px' }}
+                      >
+                        <FaFileLines />
                       </Button>
-                      <Button variant="danger" onClick={() => handleDelete(venta.id_venta)}><FaTrashCan />
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDelete(venta.id_venta)}
+                      >
+                        <FaTrashCan />
                       </Button>
                     </td>
                   </tr>
@@ -103,14 +110,31 @@ function VentaList({ Rol }) {
         <Modal.Body>
           <Card className="mt-3">
             <Card.Body>
-              <Card.Title>Detalles de la Venta</Card.Title>
-              <ul>
-                {detalleVenta.map((detalle) => (
-                  <li key={detalle.id_detalle}>
-                    Producto: {detalle.nombreProducto}, Cantidad: {detalle.cantidad}
-                  </li>
-                ))}
-              </ul>
+              <Card.Title>ID: {selectedVenta.id_venta}</Card.Title>
+              <p>Cliente: {selectedVenta.nombreCliente}</p>
+              <p>Fecha: {formatDateForInput(selectedVenta.fecha)}</p>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>ID Detalle</th>
+                      <th>Producto</th>
+                      <th>Precio</th>
+                      <th>Cantidad</th>
+                      <th>Subtotal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {detalleVenta.map((detalle) => (
+                      <tr key={detalle.id_detalle}>
+                        <td>{detalle.id_detalle}</td>
+                        <td>{detalle.nombreProducto}</td>
+                        <td>{detalle.precio}</td>
+                        <td>{detalle.cantidad}</td>
+                        <td>{detalle.cantidad * detalle.precio}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
             </Card.Body>
           </Card>
         </Modal.Body>

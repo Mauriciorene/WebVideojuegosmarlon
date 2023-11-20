@@ -377,15 +377,43 @@ router.put('/updateProducto/:id_producto', (req, res) => {
 
     // Ruta para leer registros
     // Ruta para leer registros de la tabla Venta
-// En tu servidor Node.js (simplificado)
+    // En tu servidor Node.js (simplificado)
+    // En tu servidor Node.js
+
     router.get('/readVenta', (req, res) => {
-        const query = 'SELECT Venta.id_venta, Cliente.nombre AS nombreCliente, Venta.fecha, Detalle.id_detalle, Producto.nombreProducto, Detalle.cantidad FROM Venta INNER JOIN Cliente ON Venta.id_cliente = Cliente.id_cliente LEFT JOIN Detalle ON Venta.id_venta = Detalle.id_venta INNER JOIN Producto ON Detalle.id_producto = Producto.id_producto';
-        
-        db.query(query, (error, results) => {
-        if (error) throw error;
+    const query = `
+        SELECT Venta.id_venta, Cliente.nombre AS nombreCliente, Venta.fecha
+        FROM Venta
+        INNER JOIN Cliente ON Venta.id_cliente = Cliente.id_cliente`;
+
+    db.query(query, (error, results) => {
+        if (error) {
+        res.status(500).json({ error: 'Error al obtener las ventas' });
+        } else {
         res.json(results);
+        }
+    });
+    });
+
+
+    // En tu servidor Node.js
+    router.get('/readDetalleVenta/:id_venta', (req, res) => {
+        const idVenta = req.params.id_venta;
+        const query = `
+        SELECT Producto.nombreProducto, Producto.precio, Detalle.cantidad, Detalle.id_detalle
+        FROM Detalle
+        INNER JOIN Producto ON Detalle.id_producto = Producto.id_producto
+        WHERE Detalle.id_venta = ?`;
+    
+        db.query(query, [idVenta], (error, results) => {
+        if (error) {
+            res.status(500).json({ error: 'Error al obtener los detalles de la venta' });
+        } else {
+            res.json(results);
+        }
         });
     });
+  
 
 
   //Sentencia
