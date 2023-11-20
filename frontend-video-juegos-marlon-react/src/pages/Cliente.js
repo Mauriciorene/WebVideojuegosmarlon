@@ -87,8 +87,16 @@ function Cliente({ userRol }) {
 
   // Validar y limitar longitud de caracteres para la contraseña
   const handleContraseñaChange = (e) => {
-    // Limitar la longitud a 8 caracteres
-    setContraseña(e.target.value.slice(0, 8));
+    // Validar que solo se ingresen números
+    const regex = /^[0-9]*$/;
+
+    if (regex.test(e.target.value) || e.target.value === '') {
+      // Limitar la longitud a 8 caracteres
+      setContraseña(e.target.value.slice(0, 8));
+      clearError('contraseña'); // Limpiar el mensaje de error si el campo no está vacío
+    } else {
+      setError('contraseña', 'Por favor, ingrese solo números.');
+    }
 
     if (e.target.value.trim() === '') {
       setError('contraseña', 'Por favor, ingrese la contraseña.');

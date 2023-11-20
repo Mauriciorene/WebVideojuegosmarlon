@@ -92,7 +92,7 @@ function Galeria({Rol}) {  // Define un componente funcional Galeria que recibe 
             variant="top"
             src={producto.imagen}
             alt={producto.nombre}
-            style={{ width: '100%', height: '400px', objectFit: 'cover' }}
+            style={{ width: '100%', height: '330px', objectFit: 'cover' }}
             />
             <Card.Body>
             <Card.Title>{producto.nombreProducto}</Card.Title>

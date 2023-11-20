@@ -17,7 +17,7 @@ import Galeria from './pages/Galeria';
 
 function App() {
 
-  const [userRol, setUserRol] = useState('');
+  const [userRol, setUserRol] = useState('administrador');
 
   return (
     <Router>

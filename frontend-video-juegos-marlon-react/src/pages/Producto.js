@@ -29,7 +29,7 @@ function Producto({Rol}) {
         //Validacion y limite de lingitud de caracteres para el Producto------------------------------------------
         const handleDescripcionChange = (e) => {
           // Validar que solo se ingresen letras y espacios 
-          const regex = /^[A-Za-z\s]+$/;
+          const regex = /^[A-Za-z0-9.,\s]+$/;
           
           // Validar longitud máxima
           if (regex.test(e.target.value) || e.target.value === '') {

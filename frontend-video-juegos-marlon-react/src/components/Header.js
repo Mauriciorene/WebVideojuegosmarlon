@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Offcanvas, Button, NavDropdown, Container } from 'react-bootstrap';
+import { FaRightFromBracket } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 
 
@@ -20,7 +21,7 @@ function Header({ Rol }) {
         <Navbar className="navbar-color" variant="dark" expand="md" fixed='top'>
           <Container>
 
-          <Navbar.Brand href="#home" className="ml-auto">
+          <Navbar.Brand href="#home" className="mr-auto">
           <img
             src={process.env.PUBLIC_URL + '/Logo.png'}
             alt="Videojuegos Marlón"
@@ -92,6 +93,11 @@ function Header({ Rol }) {
                 <Nav.Link>
                     <Link to="/estadisticas" className="link-unstyled">Estadísticas</Link>
                 </Nav.Link>
+
+                <Nav.Link>
+                    <Link to="/" className="link-unstyled"><FaRightFromBracket /></Link>
+                </Nav.Link>
+
 
               </Nav>
             </Navbar.Collapse>
@@ -172,6 +178,10 @@ function Header({ Rol }) {
                     <Link to="/estadisticas" className="link-unstyled">Estadísticas</Link>
               </Nav.Link>
 
+              <Nav.Link>
+                    <Link to="/" className="link-unstyled"><FaRightFromBracket /></Link>
+              </Nav.Link>
+
             </Nav>
           </Offcanvas.Body>
         </Offcanvas>
@@ -214,6 +224,10 @@ function Header({ Rol }) {
                     <Link to="/galeria" className="link-unstyled">Galería</Link>
                 </Nav.Link>
 
+                <Nav.Link>
+                    <Link to="/" className="link-unstyled"><FaRightFromBracket /></Link>
+                </Nav.Link>
+
               </Nav>
             </Navbar.Collapse>
             <Button
@@ -247,6 +261,10 @@ function Header({ Rol }) {
 
               <Nav.Link>
                     <Link to="/galeria" className="link-unstyled">Galería</Link>
+              </Nav.Link>
+
+              <Nav.Link>
+                    <Link to="/" className="link-unstyled"><FaRightFromBracket /></Link>
               </Nav.Link>
 
             </Nav>
