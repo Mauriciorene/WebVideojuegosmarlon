@@ -6,6 +6,12 @@ import { Link } from 'react-router-dom';
 
 
 function Header({ Rol }) {
+
+  const cerrarSesion = () => {
+    localStorage.removeItem('userRol');
+  };
+
+
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = () => {
@@ -94,7 +100,7 @@ function Header({ Rol }) {
                     <Link to="/estadisticas" className="link-unstyled">Estadísticas</Link>
                 </Nav.Link>
 
-                <Nav.Link>
+                <Nav.Link onClick={cerrarSesion}>
                     <Link to="/" className="link-unstyled"><FaRightFromBracket /></Link>
                 </Nav.Link>
 
@@ -225,7 +231,7 @@ function Header({ Rol }) {
                 </Nav.Link>
 
                 <Nav.Link>
-                    <Link to="/" className="link-unstyled"><FaRightFromBracket /></Link>
+                    <Link to="/" className="link-unstyled" onClick={cerrarSesion}><FaRightFromBracket /></Link>
                 </Nav.Link>
 
               </Nav>

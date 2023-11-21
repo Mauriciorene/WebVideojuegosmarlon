@@ -54,6 +54,7 @@ const Login = ({ setRol }) => {
         const { Rol } = await response.json();
 
         setRol(Rol); // Actualiza el estado del rol solo si las credenciales son correctas 
+        
         navigate('/home');
       } else {
         console.log('Credenciales incorrectas');
