@@ -71,15 +71,15 @@ function Galeria({Rol}) {  // Define un componente funcional Galeria que recibe 
         <Container className="margen-contenedor">
 
         <Row className="mb-3">
-            <Col sm="6" md="6" lg="4">
-            <FloatingLabel controlId="search" label="Buscar">
+            <Col sm="6" md="6" lg="4" style={{ position: 'sticky', top: '0', zIndex: '100' }}>
+                <FloatingLabel controlId="search" label="Buscar">
                 <Form.Control
-                type="text"
-                placeholder="Buscar"
-                value={searchQuery}
-                onChange={handleSearchChange}
+                    type="text"
+                    placeholder="Buscar"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
                 />
-            </FloatingLabel>
+                </FloatingLabel>
             </Col>
         </Row>
 
