@@ -36,6 +36,19 @@ function About({ Rol }) {
           </p>
         </div>
       </Container>
+
+      {/* contenedor para las imágenes */}
+      <Container id="additional-images" style={{ textAlign: 'center' }}>
+        <img src="/Imágenes/sala.jpeg" alt="imagen 1" style={{ margin: '10px' }} />
+        <img src="/Imágenes/sala 2.jpeg" alt="imagen 2" style={{ margin: '10px' }} />
+        <img src="/Imágenes/vitrina.jpeg" alt="imagen 2" style={{ margin: '10px' }} />
+        <img src="/Imágenes/c.jpeg" alt="imagen 2" style={{ width: '29%', margin: '10px' }} />
+        <img src="/Imágenes/cartel 2.jpeg" alt="imagen 2" style={{ width: '47%', margin: '10px' }} />
+        <img src="/Imágenes/vitrina 2.jpeg" alt="imagen 2" style={{ margin: '10px' }} />
+        <img src="/Imágenes/jugadores.jpeg" alt="imagen 2" style={{ margin: '10px' }} />
+      {/* Agrega más imágenes según sea necesario */}
+      </Container>
+
     </div>
   );
 }

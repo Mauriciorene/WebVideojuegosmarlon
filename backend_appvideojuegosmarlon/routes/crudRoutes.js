@@ -413,7 +413,7 @@ router.put('/updateProducto/:id_producto', (req, res) => {
         }
         });
     });
-  
+
 
 
   //Sentencia

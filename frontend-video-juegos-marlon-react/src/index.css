@@ -24,3 +24,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Agregar imágenes debajo del contenedor */
+#additional-images {
+  text-align: center;
+}
+
+#additional-images img {
+  width: 40%; /* Ajusta según sea necesario */
+  height: auto; /* Mantendrá la proporción de aspecto original de la imagen */
+  margin-top: 10px; /* Ajusta según sea necesario */
+}
