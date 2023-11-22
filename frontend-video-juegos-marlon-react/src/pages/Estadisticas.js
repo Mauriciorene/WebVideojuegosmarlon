@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'; // Importación de React, us
 import Header from '../components/Header'; // Importación del componente Header desde la ruta '../components/Header'
 import { Button, Row, Col, Card, Container } from 'react-bootstrap';  // Importación de componentes específicos desde 'react-bootstrap'
 import jsPDF from 'jspdf';  // Importación de jsPDF para la generación de documentos PDF
+import 'jspdf-autotable'; // Impotar una tabla
 import Chart from 'chart.js/auto';  // Importación de Chart.js para gráficos
 import '../styles/App.css'; // Importación de estilos CSS desde '../styles/App.css'
 import Footer from '../components/Footer';
@@ -67,26 +68,31 @@ function Estadisticas({Rol}) { // Declaración del componente Estadisticas con e
       .then((response) => response.json())  // Convierte la respuesta a formato JSON
       .then((productos) => {
         const doc = new jsPDF();  // Crea un nuevo documento PDF con jsPDF
-        let y = 25; // Posición inicial en el eje Y dentro del documento PDF
 
         doc.setTextColor(128, 0, 128);
-        doc.text("Reporte de Estado de Almacén", 20, 10);  // Agrega un título al documento PDF
+        doc.text("Reporte de Estado de Almacén", 20, 15);  // Agrega un título al documento PDF
         doc.setTextColor(0, 0, 0);
 
-        productos.forEach((producto) => {  // Itera sobre los productos para generar el reporte
-          doc.text(`Nombre: ${producto.nombreProducto}`, 20, y);  // Agrega el nombre del producto al documento PDF
-          doc.text(`Cantidad: ${producto.Stock}`, 20, y + 10);  // Agrega la cantidad del producto al documento PDF
+        const columns = ["Nombre", "Cantidad"];
+        const rows = productos.map((producto) => [producto.nombreProducto, producto.Stock]);
+  
+        // Configura el color de las líneas antes de la generación de la tabla
+        doc.setDrawColor(0); // 0 representa negro
 
-          y += 30; // Incrementa la posición Y para el siguiente producto
-          if (y >= 280) {  // Si alcanza el final de la página, crea una nueva página
-            doc.addPage();
-            y = 20; // Reinicia la posición Y en la nueva página
-          }
+        doc.autoTable({
+          head: [columns],
+          body: rows,
+          startY: 25,
+          margin: { top: 15 },
+          styles: {
+           lineColor: [0, 0, 0], // Establecer el color de las líneas a negro
+           lineWidth: 0.5,       // Establecer el ancho de las líneas
+          },
         });
-
-        doc.save("reporte_almacen.pdf");  // Descarga el documento PDF con el nombre 'reporte_almacen.pdf'
+  
+        doc.save("reporte_almacen.pdf");
       })
-      .catch((error) => console.error('Error al obtener los productos:', error));  // Manejo de errores en caso de fallar la solicitud
+      .catch((error) => console.error('Error al obtener los productos:', error));
   };
 
   // Definición de la función generarReporteAlmacenImg como una función asíncrona
