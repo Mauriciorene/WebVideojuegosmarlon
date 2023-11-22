@@ -21,25 +21,31 @@ function Estadisticas({Rol}) { // Declaración del componente Estadisticas con e
   }, []);  // Se ejecuta esta función solo una vez al cargar el componente
 
   useEffect(() => {
-    if (productos.length > 0) {  // Si hay productos disponibles
-      const ctx = document.getElementById('myChart');  // Obtiene el elemento canvas con el ID 'myChart'
-
+    if (productos.length > 0) { // Si hay productos disponibles
+      const ctx = document.getElementById('myChart'); // Obtiene el elemento canvas con el ID 'myChart'
+  
       if (myChart !== null) {
-        myChart.destroy(); // Destruye el gráfico existente antes de crear uno nuevo para evitar conflictos
+        myChart.destroy();  // Destruye el gráfico existente antes de crear uno nuevo para evitar conflictos
       }
-
-      const nombresProductos = productos.map((producto) => producto.nombreProducto);  // Extrae los nombres de los productos
-      const stokcs = productos.map((producto) => producto.Stock);  // Extrae las cantidades de los productos
-
-      const almacen = new Chart(ctx, {  // Crea un nuevo gráfico de tipo 'bar' con Chart.js y lo asigna al elemento canvas
+  
+      const nombresProductos = productos.map((producto) => producto.nombreProducto); // Extrae los nombres de los productos
+      const stokcs = productos.map((producto) => producto.Stock); // Extrae las cantidades de los productos
+  
+      const dynamicColors = stokcs.map(() => {
+        // Genera colores dinámicamente para cada barra
+        const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.5)`;
+        return randomColor;
+      });
+  
+      const almacen = new Chart(ctx, { // Crea un nuevo gráfico de tipo 'bar' con Chart.js y lo asigna al elemento canvas
         type: 'bar',
         data: {
-          labels: nombresProductos,  // Asigna los nombres de productos como etiquetas para el eje X
+          labels: nombresProductos,   // Asigna los nombres de productos como etiquetas para el eje X
           datasets: [{
-            label: 'Cantidad disponible',  // Etiqueta para la leyenda del gráfico
+            label: 'Cantidad disponible',   // Etiqueta para la leyenda del gráfico
             data: stokcs,  // Asigna las cantidades de productos para la visualización
-            backgroundColor: 'rgba(54, 162, 235, 0.5)',  // Define el color de fondo de las barras
-            borderColor: 'rgba(54, 162, 235, 1)',  // Define el color del borde de las barras
+            backgroundColor: dynamicColors,   // Define los colores dinamicos de las barras
+            borderColor: dynamicColors.map(color => color.replace('0.5', '1')), // Ajusta la opacidad del borde
             borderWidth: 1  // Define el ancho del borde de las barras
           }]
         },
@@ -51,7 +57,8 @@ function Estadisticas({Rol}) { // Declaración del componente Estadisticas con e
           }
         }
       });
-      setMyChart(almacen); // Guarda la referencia al nuevo gráfico en el estado 'myChart'
+  
+      setMyChart(almacen); // Guarda la referencia al nuevo gráfico en el estado
     }
   }, [productos]);  // Se ejecuta cada vez que hay cambios en 'productos'
 
